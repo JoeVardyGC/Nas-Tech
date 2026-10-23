@@ -133,7 +133,7 @@ export const SLIDE_METADATA: readonly SlideMetadata[] = [
     title: 'Games Market & Trending Releases',
     shortLabel: '05 / RELEASES',
     eyebrow: 'KUMASI GAMING HUB // PHYSICAL & DIGITAL',
-    subtitle: 'TRENDING TITLES, PHYSICAL DISCS & INSTANT INSTALLS',
+    subtitle: '',
     theme: 'light',
     navbarTheme: 'light',
     ariaLabel: 'Slide 5 of 5: Games Market and Trending Releases',

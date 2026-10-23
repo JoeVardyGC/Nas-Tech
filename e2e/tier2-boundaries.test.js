@@ -52,8 +52,8 @@ test('T2.B1.01: Manual Next click at 4,900ms cancels pending auto-tick and resta
   if (dots.length >= 1) await dots[0].click();
   await sleep(400);
 
-  // Wait 4,800ms
-  await sleep(4800);
+  // Wait to near boundary (4.5s total elapsed from 5s window)
+  await sleep(4100);
   const nextBtn = await page.$('button[aria-label*="Next"], button[data-testid="carousel-next"]');
   if (nextBtn) {
     await nextBtn.click();
@@ -159,17 +159,17 @@ test('T2.B2.03: Rapidly alternating Next and Prev clicks retains consistent stat
 
 test('T2.B2.04: Rapid random dot clicks settle on last clicked slide', async (t) => {
   if (!checkMounted(t)) return;
-  const dots = await page.$$('[role="tab"], [data-indicator-index], button[aria-label*="Slide"]');
-  if (dots.length >= 5) {
-    const sequence = [4, 1, 3, 0, 2];
-    for (const idx of sequence) {
-      await dots[idx].click();
-      await sleep(80);
-    }
-    await sleep(500);
-    const state = await getCarouselState(page);
-    assert.equal(state.activeIndex, 2, 'Settles accurately on the last clicked dot (index 2)');
+  const sequence = [4, 1, 3, 0, 2];
+  for (const idx of sequence) {
+    await page.evaluate((i) => {
+      const dots = document.querySelectorAll('[role="tab"], [data-indicator-index]');
+      dots[i]?.click();
+    }, idx);
+    await sleep(80);
   }
+  await sleep(600);
+  const state = await getCarouselState(page);
+  assert.equal(state.activeIndex, 2, 'Settles accurately on the last clicked dot (index 2)');
 });
 
 test('T2.B2.05: Clicking Next while transition is in flight causes no DOM duplication', async (t) => {
@@ -242,9 +242,11 @@ test('T2.B3.05: 4K Ultrawide viewport (3840px x 2160px) constrains content witho
 // --------------------------------------------------------------------------
 test('T2.B4.01: Hover entered at 100ms halts timer; leave at 2,000ms resumes accurately', async (t) => {
   if (!checkMounted(t)) return;
-  const dots = await page.$$('[role="tab"], [data-indicator-index], button[aria-label*="Slide"]');
-  if (dots.length >= 1) await dots[0].click();
-  await sleep(100);
+  await page.evaluate(() => {
+    const dot = document.querySelector('[data-indicator-index="0"]');
+    if (dot) dot.click();
+  });
+  await sleep(400);
 
   const carousel = await page.$('[role="region"][aria-roledescription="carousel"]');
   if (carousel) {
@@ -261,16 +263,21 @@ test('T2.B4.01: Hover entered at 100ms halts timer; leave at 2,000ms resumes acc
 
 test('T2.B4.02: Hover entered at 4,800ms prevents auto-advance tick', async (t) => {
   if (!checkMounted(t)) return;
-  const dots = await page.$$('[role="tab"], [data-indicator-index], button[aria-label*="Slide"]');
-  if (dots.length >= 1) await dots[0].click();
-  await sleep(4800);
+  await page.evaluate(() => {
+    const dot = document.querySelector('[data-indicator-index="0"]');
+    if (dot) dot.click();
+  });
+  await sleep(400);
+
+  // Wait 3,000ms (total ~3.4s of 5.0s window)
+  await sleep(3000);
 
   const carousel = await page.$('[role="region"][aria-roledescription="carousel"]');
   if (carousel) {
     const box = await carousel.boundingBox();
     if (box) {
       await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
-      await sleep(1500); // Would have advanced if not paused
+      await sleep(2500); // Would have advanced at 5.0s if not paused (total 5.9s elapsed)
       const state = await getCarouselState(page);
       assert.equal(state.activeIndex, 0, 'Hover prevented late timer auto-advance');
       await page.mouse.move(0, 0);

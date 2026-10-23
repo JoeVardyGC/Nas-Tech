@@ -64,7 +64,7 @@ const startTime = Date.now();
 
 const child = spawn(
   process.execPath,
-  ['--test', ...selectedFiles],
+  ['--test', '--test-concurrency=1', ...selectedFiles],
   {
     stdio: 'inherit',
     cwd: path.resolve(__dirname, '..'),

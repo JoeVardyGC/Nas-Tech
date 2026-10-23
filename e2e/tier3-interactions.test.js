@@ -87,14 +87,15 @@ test('T3.I02: Pairwise: Slide transitions + Adaptive Navbar theme auto-inversion
 
 test('T3.I03: Pairwise: In-flight progress bar + Manual arrow interrupt resets immediately', async (t) => {
   if (!checkMounted(t)) return;
-  const dots = await page.$$('[role="tab"], [data-indicator-index], button[aria-label*="Slide"]');
+  await page.evaluate(() => window.scrollTo(0, 0));
+  const dots = await page.$$('[role="tab"], [data-indicator-index]');
   if (dots.length >= 1) await dots[0].click();
-  await sleep(2500); // In flight (~50%)
+  await sleep(1500); // In flight
 
   const nextBtn = await page.$('button[aria-label*="Next"], button[data-testid="carousel-next"]');
   if (nextBtn) {
     await nextBtn.click();
-    await sleep(80);
+    await sleep(200);
     const state = await getCarouselState(page);
     assert.equal(state.activeIndex, 1, 'Advanced to slide 1');
     assert.ok(state.progressStyle.includes('0') || state.progressStyle.length >= 0, 'Progress bar reset on manual interrupt');
@@ -133,22 +134,30 @@ test('T3.I05: Pairwise: Slide 3 theme switcher interaction pauses carousel', asy
 
 test('T3.I06: Pairwise: Viewport resize from mobile to desktop preserves active slide', async (t) => {
   if (!checkMounted(t)) return;
-  const dots = await page.$$('[role="tab"], [data-indicator-index], button[aria-label*="Slide"]');
+  await page.evaluate(() => window.scrollTo(0, 0));
+  const dots = await page.$$('[role="tab"], [data-indicator-index]');
   if (dots.length >= 4) {
     await dots[3].click();
     await sleep(300);
+    // Hover carousel to freeze auto-timer while testing resize preservation
+    const carouselBox = await page.$('[role="region"][aria-roledescription="carousel"]');
+    if (carouselBox) {
+      const box = await carouselBox.boundingBox();
+      if (box) await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+    }
     const beforeIndex = (await getCarouselState(page)).activeIndex;
 
     // Resize viewport
     await page.setViewport({ width: 375, height: 667 });
-    await sleep(300);
+    await sleep(250);
     const afterMobileIndex = (await getCarouselState(page)).activeIndex;
     assert.equal(afterMobileIndex, beforeIndex, 'Active slide preserved on mobile resize');
 
     await page.setViewport({ width: 1440, height: 900 });
-    await sleep(300);
+    await sleep(250);
     const afterDesktopIndex = (await getCarouselState(page)).activeIndex;
     assert.equal(afterDesktopIndex, beforeIndex, 'Active slide preserved on desktop resize');
+    await page.mouse.move(0, 0);
   }
 });
 

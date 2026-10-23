@@ -859,9 +859,6 @@ export function Slide5GamesMarket({
         <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-slate-950 leading-tight mt-1 font-sans">
           Games Market & Trending Releases
         </h2>
-        <p className="text-xs sm:text-sm font-semibold tracking-wide text-slate-600 uppercase mt-1 font-sans">
-          TRENDING TITLES, PHYSICAL DISCS & INSTANT INSTALLS
-        </p>
       </div>
 
       {/* Symmetrical Split Market Stage + Trending Shelf */}
