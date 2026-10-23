@@ -185,6 +185,9 @@ test('T3.I08: Pairwise: Product Detail Modal opening pauses carousel rotation', 
 
 test('T3.I09: Pairwise: 3D cursor tilt physics updates without breaking slide navigation', async (t) => {
   if (!checkMounted(t)) return;
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await sleep(200);
+
   const dots = await page.$$('[role="tab"], [data-indicator-index], button[aria-label*="Slide"]');
   if (dots.length >= 1) await dots[0].click();
   await sleep(300);
@@ -196,7 +199,8 @@ test('T3.I09: Pairwise: 3D cursor tilt physics updates without breaking slide na
   await sleep(100);
 
   // Transition away
-  if (dots.length >= 2) await dots[1].click();
+  const updatedDots = await page.$$('[role="tab"], [data-indicator-index], button[aria-label*="Slide"]');
+  if (updatedDots.length >= 2) await updatedDots[1].click();
   await sleep(400);
   const state = await getCarouselState(page);
   assert.equal(state.activeIndex, 1, 'Cleanly transitioned away from 3D stage');
@@ -204,6 +208,9 @@ test('T3.I09: Pairwise: 3D cursor tilt physics updates without breaking slide na
 
 test('T3.I10: Pairwise: Slide 5 game cover shelf hover expansion pauses rotation', async (t) => {
   if (!checkMounted(t)) return;
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await sleep(200);
+
   const dots = await page.$$('[role="tab"], [data-indicator-index], button[aria-label*="Slide"]');
   if (dots.length >= 5) await dots[4].click();
   await sleep(400);

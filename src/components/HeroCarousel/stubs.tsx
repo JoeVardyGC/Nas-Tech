@@ -432,52 +432,132 @@ export function Slide2DualSenseColorways({
 }
 
 // ============================================================================
-// SLIDE 3: LIMITED EDITION COLLECTOR SERIES
+// SLIDE 3: LIMITED EDITION COLLECTOR SERIES (INTERACTIVE GAMEPAD COLORWAY STAGE)
 // ============================================================================
+
+type CollectorTeamId = 'gold' | 'red' | 'blue' | 'green';
+
+interface CollectorTeam {
+  id: CollectorTeamId;
+  legacyId: '007-first-light' | 'god-of-war' | 'genshin-impact' | 'cyber-green';
+  teamName: string;
+  editionName: string;
+  badge: string;
+  accentHex: string;
+  glowRgba: string;
+  backdropRadial: string;
+  btnGradient: string;
+  btnTextColor: string;
+  activeBorder: string;
+  image: string;
+}
+
+const COLLECTOR_TEAMS: CollectorTeam[] = [
+  {
+    id: 'gold',
+    legacyId: '007-first-light',
+    teamName: 'Gold Team',
+    editionName: '007 First Light Gold',
+    badge: 'CHAMPAGNE GOLD // 007 EDITION',
+    accentHex: '#E5B84B',
+    glowRgba: 'rgba(229, 184, 75, 0.35)',
+    backdropRadial:
+      'radial-gradient(ellipse at 50% 48%, rgba(245, 158, 11, 0.22) 0%, rgba(217, 119, 6, 0.08) 40%, rgba(255, 255, 255, 0.95) 75%)',
+    btnGradient: 'from-amber-500 via-amber-400 to-yellow-300 hover:from-amber-400 hover:to-yellow-200',
+    btnTextColor: 'text-slate-950',
+    activeBorder: 'border-amber-500 ring-2 ring-amber-400/40 shadow-amber-500/25',
+    image: '/assets/hero/carousel/gamepad_gold_isolated.png',
+  },
+  {
+    id: 'red',
+    legacyId: 'god-of-war',
+    teamName: 'Red Team',
+    editionName: 'God of War Crimson',
+    badge: 'CRIMSON RED // GOD OF WAR',
+    accentHex: '#E11937',
+    glowRgba: 'rgba(225, 25, 55, 0.35)',
+    backdropRadial:
+      'radial-gradient(ellipse at 50% 48%, rgba(239, 68, 68, 0.22) 0%, rgba(185, 28, 28, 0.08) 40%, rgba(255, 255, 255, 0.95) 75%)',
+    btnGradient: 'from-red-600 via-rose-500 to-red-500 hover:from-red-500 hover:to-rose-400',
+    btnTextColor: 'text-white',
+    activeBorder: 'border-red-500 ring-2 ring-red-400/40 shadow-red-500/25',
+    image: '/assets/hero/carousel/gamepad_red_isolated.png',
+  },
+  {
+    id: 'blue',
+    legacyId: 'genshin-impact',
+    teamName: 'Blue Team',
+    editionName: 'Special Forces Cobalt',
+    badge: 'ELECTRIC COBALT // CELESTIAL',
+    accentHex: '#0072F5',
+    glowRgba: 'rgba(0, 114, 245, 0.38)',
+    backdropRadial:
+      'radial-gradient(ellipse at 50% 48%, rgba(0, 114, 245, 0.22) 0%, rgba(6, 182, 212, 0.08) 40%, rgba(255, 255, 255, 0.95) 75%)',
+    btnGradient: 'from-blue-600 via-blue-500 to-cyan-400 hover:from-blue-500 hover:to-cyan-300',
+    btnTextColor: 'text-white',
+    activeBorder: 'border-blue-500 ring-2 ring-blue-400/40 shadow-blue-500/25',
+    image: '/assets/hero/carousel/gamepad_blue_isolated.png',
+  },
+  {
+    id: 'green',
+    legacyId: 'cyber-green',
+    teamName: 'Green Team',
+    editionName: 'Cyber Emerald',
+    badge: 'CYBER GREEN // MATRIX RUNNER',
+    accentHex: '#10D778',
+    glowRgba: 'rgba(16, 215, 120, 0.35)',
+    backdropRadial:
+      'radial-gradient(ellipse at 50% 48%, rgba(16, 185, 129, 0.22) 0%, rgba(5, 150, 105, 0.08) 40%, rgba(255, 255, 255, 0.95) 75%)',
+    btnGradient: 'from-emerald-600 via-emerald-500 to-teal-400 hover:from-emerald-500 hover:to-teal-300',
+    btnTextColor: 'text-white',
+    activeBorder: 'border-emerald-500 ring-2 ring-emerald-400/40 shadow-emerald-500/25',
+    image: '/assets/hero/carousel/gamepad_green_isolated.png',
+  },
+];
+
 export function Slide3CollectorSeries({
   isActive,
   onInteractionStart,
   onInteractionEnd,
 }: SlideProps) {
-  const [selectedTheme, setSelectedTheme] = useState<'007-first-light' | 'genshin-impact' | 'god-of-war'>('007-first-light');
+  const [selectedTeam, setSelectedTeam] = useState<CollectorTeamId>('gold');
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  const themes = [
-    {
-      id: '007-first-light' as const,
-      name: '007 First Light',
-      accent: 'text-amber-400',
-      glow: 'shadow-amber-500/20',
-      image: '/assets/hero/carousel/collector_007_gold.jpg',
-    },
-    {
-      id: 'genshin-impact' as const,
-      name: 'Genshin Impact',
-      accent: 'text-cyan-400',
-      glow: 'shadow-cyan-500/20',
-      image: '/assets/hero/carousel/collector_genshin_cyan.jpg',
-    },
-    {
-      id: 'god-of-war' as const,
-      name: 'God of War',
-      accent: 'text-red-500',
-      glow: 'shadow-red-500/20',
-      image: '/assets/hero/carousel/collector_gow_crimson.jpg',
-    },
-  ];
+  // Physics-based spring tilt for interactiveGamepad stage
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const springConfig = { damping: 26, stiffness: 220 };
+  const tiltX = useSpring(useTransform(mouseY, [-0.5, 0.5], [6, -6]), springConfig);
+  const tiltY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-8, 8]), springConfig);
+
+  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    mouseX.set(x);
+    mouseY.set(y);
+  };
+
+  const activeTeam = COLLECTOR_TEAMS.find((t) => t.id === selectedTeam) || COLLECTOR_TEAMS[0];
 
   return (
     <div className="relative w-full h-full flex flex-col justify-between pt-4 pb-24 sm:pb-28 px-4 sm:px-8 lg:px-12 bg-gradient-to-b from-white via-slate-50 to-amber-50/20 text-slate-900 font-sans select-none overflow-hidden">
-      {/* Ambient Electric Blue & Gold Underglow */}
+      {/* Ambient Electric Spotlight that shifts with active team color */}
       <div
-        className="absolute inset-0 pointer-events-none -z-10"
+        className="absolute inset-0 pointer-events-none -z-10 transition-all duration-700"
         style={{
-          background: 'radial-gradient(ellipse at 50% 50%, rgba(0, 114, 245, 0.12) 0%, rgba(248, 250, 252, 0.95) 75%)',
+          background: activeTeam.backdropRadial,
         }}
       />
 
       {/* Header */}
       <div className="w-full text-center mt-2 sm:mt-4 z-10">
-        <p className="text-[9px] sm:text-xs font-bold tracking-[0.28em] uppercase text-amber-600 font-sans">
+        <p
+          className="text-[9px] sm:text-xs font-bold tracking-[0.28em] uppercase font-sans transition-colors duration-300"
+          style={{ color: activeTeam.accentHex }}
+        >
           EXCLUSIVE CUSTOM BUILDS // SIGNATURE SERIES
         </p>
         <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-slate-950 leading-tight mt-1 font-sans">
@@ -485,64 +565,153 @@ export function Slide3CollectorSeries({
         </h2>
       </div>
 
-      {/* Visual Showcase Stage */}
-      <div className="relative w-full max-w-4xl mx-auto my-auto flex flex-col items-center justify-center z-20">
-        <div className="relative w-full max-w-2xl aspect-[16/9] rounded-3xl overflow-hidden shadow-2xl border border-amber-500/30 bg-white flex items-center justify-center">
-          <Image
-            src={themes.find((t) => t.id === selectedTheme)?.image || '/assets/hero/carousel/slide3_collector.jpg'}
-            alt="Limited Edition Collector Series Controllers Showcase"
-            fill
-            unoptimized
-            priority
-            className="object-cover transition-opacity duration-300"
+      {/* Main Showcase Stage: ONLY THE FLOATING GAMEPAD & DYNAMIC LIGHTING */}
+      <div
+        ref={containerRef}
+        onMouseMove={handleMouseMove}
+        onMouseEnter={() => onInteractionStart?.()}
+        onMouseLeave={() => {
+          mouseX.set(0);
+          mouseY.set(0);
+          onInteractionEnd?.();
+        }}
+        className="relative w-full max-w-4xl mx-auto my-auto flex flex-col items-center justify-center z-20"
+      >
+        {/* Active Custom Build Badge Pill */}
+        <div className="flex items-center space-x-2 px-3 py-1 rounded-full bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-sm text-[10px] sm:text-xs font-extrabold uppercase tracking-wider mb-2">
+          <span
+            className="w-2.5 h-2.5 rounded-full animate-pulse shadow-sm"
+            style={{ backgroundColor: activeTeam.accentHex }}
           />
+          <span className="text-slate-800 font-sans">{activeTeam.badge}</span>
         </div>
 
-        {/* Theme Switcher */}
-        <div className="mt-4 flex items-center justify-center space-x-2 sm:space-x-3">
-          {themes.map((theme) => {
-            const isSelected = selectedTheme === theme.id;
-            return (
-              <button
-                key={theme.id}
-                type="button"
-                data-theme-choice={theme.id}
-                aria-label={`Select ${theme.name} edition`}
-                onClick={() => {
-                  setSelectedTheme(theme.id);
-                  onInteractionStart?.();
-                }}
-                className={`px-3.5 py-1.5 rounded-full border text-xs font-bold transition-all font-sans ${
-                  isSelected
-                    ? 'bg-amber-500 text-slate-950 border-amber-500 shadow-lg shadow-amber-500/30 scale-105'
-                    : 'bg-white text-slate-700 border-slate-300 hover:border-amber-500 hover:bg-amber-50/50'
-                }`}
-              >
-                {theme.name}
-              </button>
-            );
-          })}
+        {/* Floating Isolated DualSense Gamepad Stage */}
+        <motion.div
+          style={{
+            rotateX: tiltX,
+            rotateY: tiltY,
+            transformStyle: 'preserve-3d',
+          }}
+          animate={{
+            y: [-3, 3, -3],
+          }}
+          transition={{
+            repeat: Infinity,
+            duration: 4.8,
+            ease: 'easeInOut',
+          }}
+          className="relative w-48 sm:w-64 md:w-76 lg:w-[340px] aspect-[16/11] flex items-center justify-center cursor-grab active:cursor-grabbing my-1"
+        >
+          {/* Dynamic Ambient Underglow */}
+          <div
+            className="absolute inset-0 rounded-full pointer-events-none transition-all duration-500"
+            style={{
+              background: activeTeam.glowRgba,
+              filter: 'blur(38px)',
+              transform: 'scale(0.85)',
+            }}
+          />
+          <div className="relative w-full h-full">
+            <Image
+              key={activeTeam.id}
+              src={activeTeam.image}
+              alt={`Custom PS5 DualSense Controller - ${activeTeam.editionName} (${activeTeam.teamName})`}
+              fill
+              unoptimized
+              priority
+              className="object-contain transition-all duration-300"
+              style={{
+                filter: `drop-shadow(0 18px 28px rgba(0, 0, 0, 0.18)) drop-shadow(0 0 24px ${activeTeam.glowRgba})`,
+              }}
+            />
+          </div>
+        </motion.div>
+
+        {/* Interactive Miniature Gamepad Selector Dock */}
+        <div className="mt-2 w-full max-w-xl mx-auto px-2">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
+            {COLLECTOR_TEAMS.map((team) => {
+              const isSelected = selectedTeam === team.id;
+              return (
+                <motion.button
+                  key={team.id}
+                  whileHover={{ y: -3, scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  type="button"
+                  data-theme-choice={team.legacyId}
+                  aria-label={`Select ${team.editionName} (${team.teamName})`}
+                  onClick={() => {
+                    setSelectedTeam(team.id);
+                    onInteractionStart?.();
+                  }}
+                  className={`relative flex flex-col items-center p-2 rounded-2xl border transition-all duration-300 font-sans group ${
+                    isSelected
+                      ? `${team.activeBorder} bg-white shadow-lg scale-[1.03]`
+                      : 'bg-white/85 backdrop-blur-md border-slate-200/90 hover:border-slate-400 hover:bg-white shadow-sm'
+                  }`}
+                >
+                  {/* Miniature Isolated Gamepad */}
+                  <div className="relative w-14 sm:w-16 aspect-[16/11] my-0.5">
+                    <Image
+                      src={team.image}
+                      alt={team.editionName}
+                      fill
+                      unoptimized
+                      className="object-contain group-hover:scale-105 transition-transform"
+                    />
+                  </div>
+
+                  {/* Color Dot & Team Name */}
+                  <div className="flex items-center space-x-1.5 mt-1">
+                    <span
+                      className="w-2 h-2 rounded-full shadow-sm"
+                      style={{ backgroundColor: team.accentHex }}
+                    />
+                    <span className="text-[11px] sm:text-xs font-extrabold text-slate-900 font-sans">
+                      {team.teamName}
+                    </span>
+                  </div>
+
+                  {/* Edition Subtitle */}
+                  <span className="text-[9px] font-semibold text-slate-500 truncate max-w-full font-sans mt-0.5">
+                    {team.editionName}
+                  </span>
+
+                  {/* Active Pill */}
+                  {isSelected && (
+                    <span
+                      className="absolute -top-1.5 -right-1 px-1.5 py-0.2 rounded-full text-[8px] font-extrabold text-white tracking-wider shadow-sm font-sans uppercase"
+                      style={{ backgroundColor: team.accentHex }}
+                    >
+                      ACTIVE
+                    </span>
+                  )}
+                </motion.button>
+              );
+            })}
+          </div>
         </div>
 
         {/* 3 Technical Spec Cards */}
-        <div className="mt-4 grid grid-cols-3 gap-2 sm:gap-4 w-full max-w-lg">
-          <div className="flex items-center space-x-2 px-3 py-2 rounded-xl bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-sm text-slate-900">
-            <Zap className="w-4 h-4 text-amber-500 shrink-0" />
-            <span className="text-[11px] sm:text-xs font-bold font-sans tabular-nums">⚡ 1ms Low Latency</span>
+        <div className="mt-3 grid grid-cols-3 gap-2 sm:gap-3 w-full max-w-lg">
+          <div className="flex items-center justify-center space-x-1.5 sm:space-x-2 px-2.5 py-1.5 sm:py-2 rounded-xl bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-sm text-slate-900">
+            <Zap className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-500 shrink-0" />
+            <span className="text-[10px] sm:text-xs font-bold font-sans tabular-nums">⚡ 1ms Low Latency</span>
           </div>
-          <div className="flex items-center space-x-2 px-3 py-2 rounded-xl bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-sm text-slate-900">
-            <Battery className="w-4 h-4 text-emerald-600 shrink-0" />
-            <span className="text-[11px] sm:text-xs font-bold font-sans tabular-nums">🔋 12hr Battery Life</span>
+          <div className="flex items-center justify-center space-x-1.5 sm:space-x-2 px-2.5 py-1.5 sm:py-2 rounded-xl bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-sm text-slate-900">
+            <Battery className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-600 shrink-0" />
+            <span className="text-[10px] sm:text-xs font-bold font-sans tabular-nums">🔋 12hr Battery Life</span>
           </div>
-          <div className="flex items-center space-x-2 px-3 py-2 rounded-xl bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-sm text-slate-900">
-            <Gamepad className="w-4 h-4 text-blue-600 shrink-0" />
-            <span className="text-[11px] sm:text-xs font-bold font-sans">🎮 Adaptive Triggers</span>
+          <div className="flex items-center justify-center space-x-1.5 sm:space-x-2 px-2.5 py-1.5 sm:py-2 rounded-xl bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-sm text-slate-900">
+            <Gamepad className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-600 shrink-0" />
+            <span className="text-[10px] sm:text-xs font-bold font-sans">🎮 Adaptive Triggers</span>
           </div>
         </div>
       </div>
 
-      {/* CTA Button */}
-      <div className="w-full flex justify-center z-20">
+      {/* CTA Button with Active Team Accent Gradient */}
+      <div className="w-full flex justify-center z-20 mt-2 sm:mt-3">
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
@@ -550,7 +719,7 @@ export function Slide3CollectorSeries({
           data-testid="order-collector"
           onClick={() => scrollToSection('storefront')}
           aria-label="ORDER COLLECTOR EDITION • GH₵ 1,200"
-          className="inline-flex items-center space-x-2 px-6 sm:px-8 py-2.5 sm:py-3 rounded-full bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-300 hover:from-amber-400 hover:to-yellow-200 text-slate-950 font-extrabold text-xs sm:text-sm uppercase tracking-wider shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300 font-sans"
+          className={`inline-flex items-center space-x-2 px-6 sm:px-8 py-2.5 sm:py-3 rounded-full bg-gradient-to-r ${activeTeam.btnGradient} ${activeTeam.btnTextColor} font-extrabold text-xs sm:text-sm uppercase tracking-wider shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300 font-sans border border-white/20`}
         >
           <span>⚡</span>
           <span className="font-sans tabular-nums">ORDER COLLECTOR EDITION • GH₵ 1,200</span>

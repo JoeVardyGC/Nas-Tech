@@ -58,10 +58,46 @@ async function main() {
       await heroEl.screenshot({ path: outPath });
       console.log(`Saved screenshot to ${outPath}`);
     }
+
+    // If Slide 3, also capture Red, Blue, and Green team interactions!
+    if (s.index === 2 && heroEl) {
+      await heroEl.hover(); // Freeze carousel autoplay on Slide 3
+      const teamVariations = [
+        { team: 'red', name: 'white_hero_slide3_red_team.png', choice: 'god-of-war' },
+        { team: 'blue', name: 'white_hero_slide3_blue_team.png', choice: 'genshin-impact' },
+        { team: 'green', name: 'white_hero_slide3_green_team.png', choice: 'cyber-green' },
+      ];
+
+      for (const t of teamVariations) {
+        console.log(`Clicking ${t.team} gamepad card on Slide 3...`);
+        // Ensure we are on Slide 3
+        await page.evaluate(() => {
+          const tab = document.querySelector('[data-indicator-index="2"]');
+          if (tab) tab.click();
+        });
+        await new Promise((r) => setTimeout(r, 200));
+
+        await page.evaluate((choice) => {
+          const btn = document.querySelector(`button[data-theme-choice="${choice}"]`);
+          if (btn) btn.click();
+        }, t.choice);
+        await new Promise((r) => setTimeout(r, 500));
+        const teamPath = path.join(ARTIFACT_DIR, t.name);
+        await heroEl.screenshot({ path: teamPath });
+        console.log(`Saved ${t.team} team screenshot to ${teamPath}`);
+      }
+
+      // Restore gold team
+      await page.evaluate(() => {
+        const btn = document.querySelector('button[data-theme-choice="007-first-light"]');
+        if (btn) btn.click();
+      });
+      await new Promise((r) => setTimeout(r, 400));
+    }
   }
 
   await browser.close();
-  console.log('All 5 slides captured successfully!');
+  console.log('All slides and gamepad team variations captured successfully!');
 }
 
 main().catch((err) => {
