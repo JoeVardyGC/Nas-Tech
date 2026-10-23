@@ -10,15 +10,22 @@ async function main() {
   console.log('Launching browser with Chrome:', CHROME_PATH);
   const browser = await puppeteer.launch({
     executablePath: CHROME_PATH,
-    headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
+    headless: 'new',
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-dev-shm-usage',
+      '--disable-gpu',
+      '--disable-extensions',
+    ],
   });
 
   const page = await browser.newPage();
   await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 2 });
 
   console.log('Navigating to', BASE_URL);
-  await page.goto(BASE_URL, { waitUntil: 'networkidle2', timeout: 30000 });
+  await page.goto(BASE_URL, { waitUntil: 'domcontentloaded', timeout: 15000 });
+  await new Promise((r) => setTimeout(r, 1000));
 
   // Wait for hero carousel to be visible
   await page.waitForSelector('[data-testid="hero-carousel"]', { timeout: 10000 });

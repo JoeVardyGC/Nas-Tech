@@ -183,17 +183,6 @@ export default function Slide1FeelTheGame({ onExplore, onPreOrder }: SlideProps)
 
       </div>
 
-      {/* 4. BOTTOM CORNER TAGS */}
-      <div className="w-full flex items-end justify-between mt-4 sm:mt-6 text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.22em] text-slate-300 font-sans z-10">
-        <div className="leading-snug">
-          <div>PLAY WITHOUT</div>
-          <div>LIMITS</div>
-        </div>
-        <div className="text-right leading-snug">
-          <div>A NEW LEVEL OF SPEED, IMMERSION</div>
-          <div>AND CONTROL.</div>
-        </div>
-      </div>
     </div>
   );
 }
