@@ -281,8 +281,43 @@ export default function HeroCarousel({
         })}
       </div>
 
-      {/* 3. BOTTOM FLOATING INTERACTIVE INDICATOR DOCK (FLOATS OVER CONTENT WITHOUT BLOCKING OR SUPPRESSING IT) */}
-      <div className="absolute bottom-4 sm:bottom-6 inset-x-0 flex justify-center z-40 px-4 font-sans pointer-events-none">
+      {/* 3. SPLIT FLANKING CONTROLS (EDGE CHEVRONS + BOTTOM-RIGHT COMPACT SLIDE INDEX PILL) */}
+      {/* 3A. FLOATING LEFT CHEVRON (SCREEN EDGE FLANKING CONTROL) */}
+      <div className="absolute left-3 sm:left-6 lg:left-8 top-1/2 -translate-y-1/2 z-40 pointer-events-none">
+        <motion.button
+          whileHover={{ scale: 1.12, x: -2 }}
+          whileTap={{ scale: 0.92 }}
+          type="button"
+          data-testid="carousel-prev"
+          onClick={prevSlide}
+          aria-label="Previous"
+          aria-controls="nas-tech-hero-carousel"
+          className="pointer-events-auto relative w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/90 hover:bg-white backdrop-blur-2xl border border-slate-200/90 shadow-[0_12px_30px_-6px_rgba(0,114,245,0.12),0_2px_6px_rgba(0,0,0,0.04)] text-slate-700 hover:text-blue-600 flex items-center justify-center transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 group"
+        >
+          <div className="pointer-events-none absolute inset-x-3 top-0 h-[1px] bg-gradient-to-r from-transparent via-white to-transparent opacity-90" />
+          <ChevronLeft className="w-5 h-5 stroke-[2.5] group-hover:-translate-x-0.5 transition-transform" aria-hidden="true" />
+        </motion.button>
+      </div>
+
+      {/* 3B. FLOATING RIGHT CHEVRON (SCREEN EDGE FLANKING CONTROL) */}
+      <div className="absolute right-3 sm:right-6 lg:right-8 top-1/2 -translate-y-1/2 z-40 pointer-events-none">
+        <motion.button
+          whileHover={{ scale: 1.12, x: 2 }}
+          whileTap={{ scale: 0.92 }}
+          type="button"
+          data-testid="carousel-next"
+          onClick={nextSlide}
+          aria-label="Next"
+          aria-controls="nas-tech-hero-carousel"
+          className="pointer-events-auto relative w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/90 hover:bg-white backdrop-blur-2xl border border-slate-200/90 shadow-[0_12px_30px_-6px_rgba(0,114,245,0.12),0_2px_6px_rgba(0,0,0,0.04)] text-slate-700 hover:text-blue-600 flex items-center justify-center transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 group"
+        >
+          <div className="pointer-events-none absolute inset-x-3 top-0 h-[1px] bg-gradient-to-r from-transparent via-white to-transparent opacity-90" />
+          <ChevronRight className="w-5 h-5 stroke-[2.5] group-hover:translate-x-0.5 transition-transform" aria-hidden="true" />
+        </motion.button>
+      </div>
+
+      {/* 3C. COMPACT SLIDE INDEX PILL (BOTTOM-RIGHT CORNER DOCK) */}
+      <div className="absolute bottom-4 sm:bottom-6 right-4 sm:right-8 lg:right-10 z-40 flex items-center font-sans pointer-events-none">
         <div
           role="toolbar"
           aria-label="Carousel navigation controls"
@@ -294,30 +329,16 @@ export default function HeroCarousel({
             e.stopPropagation();
             setIsHovered(false);
           }}
-          className="pointer-events-auto relative inline-flex items-center space-x-2 sm:space-x-3 px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full bg-white/95 backdrop-blur-2xl border border-slate-200/90 shadow-[0_16px_40px_-10px_rgba(0,114,245,0.1),0_2px_6px_rgba(0,0,0,0.04)] font-sans"
+          className="pointer-events-auto relative inline-flex items-center space-x-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white/95 backdrop-blur-2xl border border-slate-200/90 shadow-[0_12px_36px_-6px_rgba(0,114,245,0.12),0_2px_6px_rgba(0,0,0,0.04)] font-sans"
         >
           {/* Specular Top Rim Sheen */}
           <div className="pointer-events-none absolute inset-x-6 top-0 h-[1px] bg-gradient-to-r from-transparent via-white to-transparent opacity-90" />
-
-          {/* Previous Slide Button with Tactile Spring */}
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            type="button"
-            data-testid="carousel-prev"
-            onClick={prevSlide}
-            aria-label="Previous"
-            aria-controls="nas-tech-hero-carousel"
-            className="w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-slate-700 hover:text-blue-600 hover:bg-slate-100 transition-colors font-sans focus:outline-none"
-          >
-            <ChevronLeft className="w-4 h-4 stroke-[2.5]" aria-hidden="true" />
-          </motion.button>
 
           {/* 5 Slide Indicator Tabs */}
           <div
             role="tablist"
             aria-label="Slide indicators"
-            className="flex items-center space-x-2 font-sans"
+            className="flex items-center space-x-1.5 sm:space-x-2 font-sans"
             onMouseLeave={() => setHoveredDot(null)}
           >
             {SLIDE_METADATA.map((slide, index) => {
@@ -355,13 +376,13 @@ export default function HeroCarousel({
                     onMouseEnter={() => setHoveredDot(index)}
                     className={`relative flex items-center justify-center transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 font-sans ${
                       isSelected
-                        ? 'w-28 sm:w-36 h-5 sm:h-6 rounded-full bg-slate-100 border border-slate-200/90 overflow-hidden shadow-inner'
-                        : 'w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-slate-300 hover:bg-blue-400 hover:scale-110'
+                        ? 'w-24 sm:w-28 h-5 sm:h-5.5 rounded-full bg-slate-100 border border-slate-200/90 overflow-hidden shadow-inner'
+                        : 'w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-slate-300 hover:bg-blue-500 hover:scale-125'
                     }`}
                   >
                     {isSelected && (
                       <>
-                        {/* Live 5-Second Linear Progress Bar Fill with Blue Gradient */}
+                        {/* Live 3-Second Linear Progress Bar Fill with Blue Gradient */}
                         <div
                           ref={progressBarRef}
                           data-testid="carousel-progress-bar"
@@ -373,7 +394,7 @@ export default function HeroCarousel({
                           style={{ transform: 'scaleX(0)', transformOrigin: 'left' }}
                         />
                         {/* Slide Label Overlay */}
-                        <span className="relative z-10 text-[9px] sm:text-[10px] font-extrabold text-white uppercase tracking-wider px-2 drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)] whitespace-nowrap select-none font-sans">
+                        <span className="relative z-10 text-[8.5px] sm:text-[9.5px] font-extrabold text-white uppercase tracking-wider px-2 drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)] whitespace-nowrap select-none font-sans">
                           {slide.shortLabel}
                         </span>
                       </>
@@ -383,20 +404,6 @@ export default function HeroCarousel({
               );
             })}
           </div>
-
-          {/* Next Slide Button with Tactile Spring */}
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            type="button"
-            data-testid="carousel-next"
-            onClick={nextSlide}
-            aria-label="Next"
-            aria-controls="nas-tech-hero-carousel"
-            className="w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-slate-700 hover:text-blue-600 hover:bg-slate-100 transition-colors font-sans focus:outline-none"
-          >
-            <ChevronRight className="w-4 h-4 stroke-[2.5]" aria-hidden="true" />
-          </motion.button>
         </div>
       </div>
     </section>
