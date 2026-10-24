@@ -105,16 +105,22 @@ export default function AdaptiveNavbar({
         className={`relative inline-flex items-center justify-between gap-2 sm:gap-4 lg:gap-6 px-3.5 sm:px-6 py-2 sm:py-2.5 rounded-full backdrop-blur-2xl transition-colors duration-500 ease-in-out font-sans ${
           isDark
             ? 'bg-[#060913]/95 text-white border border-slate-800 shadow-[0_12px_40px_-10px_rgba(0,0,0,0.6),0_2px_6px_rgba(0,0,0,0.4)]'
-            : 'bg-white/95 text-slate-900 border border-slate-200/90 shadow-[0_12px_40px_-10px_rgba(0,114,245,0.08),0_2px_6px_rgba(0,0,0,0.04)]'
+            : 'bg-white/95 text-slate-900 border border-slate-200/90 shadow-[0_14px_44px_-10px_rgba(0,114,245,0.09),0_2px_8px_rgba(0,0,0,0.03),inset_0_1px_1px_rgba(255,255,255,0.95)]'
         }`}
         role="navigation"
         aria-label="Nas Tech Hero Navigation"
       >
         {/* Specular Liquid Glass Top Sheen (Liquid Glass inspired) */}
         <div
-          className={`pointer-events-none absolute inset-x-8 top-0 h-[1px] bg-gradient-to-r from-transparent ${
+          className={`pointer-events-none absolute inset-x-8 top-0 h-[1.5px] bg-gradient-to-r from-transparent ${
             isDark ? 'via-white/20' : 'via-white'
-          } to-transparent opacity-90`}
+          } to-transparent opacity-95`}
+        />
+        {/* Bottom Subtle Occlusion Line */}
+        <div
+          className={`pointer-events-none absolute inset-x-12 bottom-0 h-[1px] bg-gradient-to-r from-transparent ${
+            isDark ? 'via-cyan-500/10' : 'via-slate-300/40'
+          } to-transparent opacity-60`}
         />
 
         {/* 1. NAS TECH BRAND LOGO & LIVE STATUS INDICATOR */}
@@ -129,7 +135,7 @@ export default function AdaptiveNavbar({
         >
           {/* Logo 2 Squircle Icon with Vibrant Gradient & Glow */}
           <div
-            className="w-7 h-7 sm:w-8 sm:h-8 rounded-[10px] sm:rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-cyan-400 flex items-center justify-center text-white shadow-[0_4px_14px_rgba(37,99,235,0.38)] group-hover:scale-105 group-hover:shadow-[0_6px_20px_rgba(37,99,235,0.55)] transition-all duration-300 shrink-0"
+            className="w-7 h-7 sm:w-8 sm:h-8 rounded-[10px] sm:rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-cyan-400 flex items-center justify-center text-white shadow-[0_4px_14px_rgba(37,99,235,0.38),inset_0_1px_1px_rgba(255,255,255,0.45)] border border-white/25 group-hover:scale-105 group-hover:shadow-[0_6px_22px_rgba(37,99,235,0.55)] transition-all duration-300 shrink-0"
           >
             <Gamepad2 className="w-4 h-4 stroke-[2.2] text-white" />
           </div>
@@ -146,12 +152,12 @@ export default function AdaptiveNavbar({
             {/* Glowing Live Inventory Indicator */}
             <span className="relative flex h-2 w-2" title="Kumasi Hub Live & In-Stock">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.6)]" />
             </span>
           </div>
         </button>
 
-        {/* 2. DESKTOP NAVIGATION LINKS WITH MOTION PRIMITIVES HOVER PILL */}
+        {/* 2. DESKTOP NAVIGATION LINKS WITH MOTION PRIMITIVES HOVER PILL GLIDER */}
         <nav
           className="hidden lg:flex items-center space-x-1"
           aria-label="Main menu"
@@ -163,10 +169,10 @@ export default function AdaptiveNavbar({
                 type="button"
                 onClick={() => scrollToSection(item.target)}
                 onMouseEnter={() => setHoveredNavIndex(idx)}
-                className={`relative z-10 text-[11px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full transition-colors duration-200 font-sans focus:outline-none ${
+                className={`relative z-10 text-[11px] font-bold uppercase tracking-wider px-3.5 py-1.5 rounded-full transition-colors duration-200 font-sans focus:outline-none ${
                   isDark
-                    ? 'text-slate-300 hover:text-white'
-                    : 'text-slate-700 hover:text-blue-600'
+                    ? hoveredNavIndex === idx ? 'text-white font-extrabold' : 'text-slate-300 hover:text-white'
+                    : hoveredNavIndex === idx ? 'text-blue-600 font-extrabold' : 'text-slate-700 hover:text-blue-600'
                 }`}
               >
                 {item.label}
@@ -174,10 +180,12 @@ export default function AdaptiveNavbar({
               {hoveredNavIndex === idx && (
                 <motion.div
                   layoutId="navbar-hover-pill"
-                  className={`absolute inset-0 rounded-full -z-0 shadow-2xs ${
-                    isDark ? 'bg-slate-800/90 border border-slate-700' : 'bg-slate-100/90 border border-slate-200/80'
+                  className={`absolute inset-0 rounded-full -z-0 ${
+                    isDark
+                      ? 'bg-gradient-to-b from-slate-800 to-slate-800/80 border border-slate-700 shadow-sm'
+                      : 'bg-gradient-to-b from-blue-50/90 to-slate-100/90 border border-blue-200/80 shadow-[0_2px_8px_rgba(0,114,245,0.06),inset_0_1px_0_rgba(255,255,255,0.9)]'
                   }`}
-                  transition={{ type: 'spring', stiffness: 450, damping: 32 }}
+                  transition={{ type: 'spring', stiffness: 450, damping: 30 }}
                 />
               )}
             </div>
@@ -190,7 +198,7 @@ export default function AdaptiveNavbar({
           className={`relative hidden sm:flex items-center rounded-full px-2.5 py-1 transition-all duration-300 font-sans ${
             isDark
               ? 'bg-slate-900/90 border border-slate-800 text-white focus-within:border-cyan-400 focus-within:bg-slate-950 focus-within:shadow-xs'
-              : 'bg-slate-100/90 border border-slate-200/90 text-slate-800 focus-within:border-blue-600 focus-within:bg-white focus-within:shadow-xs'
+              : 'bg-slate-100/80 hover:bg-slate-100 border border-slate-200/90 hover:border-slate-300 text-slate-800 focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-500/20 focus-within:bg-white shadow-[inset_0_1px_2px_rgba(0,0,0,0.03)]'
           }`}
           role="search"
         >
@@ -208,10 +216,10 @@ export default function AdaptiveNavbar({
           />
           <kbd
             onClick={() => searchInputRef.current?.focus()}
-            className={`hidden md:inline-flex items-center px-1.5 py-0.5 text-[9px] font-bold rounded shadow-2xs cursor-pointer select-none font-sans ${
+            className={`hidden md:inline-flex items-center px-1.5 py-0.5 text-[9px] font-bold rounded-md shadow-2xs cursor-pointer select-none font-sans transition-all duration-200 ${
               isDark
                 ? 'text-slate-400 bg-slate-800 border border-slate-700 hover:text-cyan-400 hover:border-cyan-500'
-                : 'text-slate-400 bg-white border border-slate-200/90 hover:text-blue-600 hover:border-blue-300'
+                : 'text-slate-500 bg-white border border-slate-200/90 hover:text-blue-600 hover:border-blue-300 shadow-[0_1px_2px_rgba(0,0,0,0.04)]'
             }`}
             title="Press ⌘K or Ctrl+K to search"
           >
@@ -226,10 +234,10 @@ export default function AdaptiveNavbar({
             type="button"
             onClick={() => setIsCartOpen(true)}
             aria-label={`Open shopping cart containing ${cartCount} items`}
-            className={`relative w-7 h-7 sm:w-8 sm:h-8 rounded-full border flex items-center justify-center transition-all duration-200 active:scale-95 focus:outline-none ${
+            className={`relative w-7 h-7 sm:w-8 sm:h-8 rounded-full border flex items-center justify-center transition-all duration-200 active:scale-95 focus:outline-none shadow-2xs ${
               isDark
                 ? 'border-slate-800 bg-slate-900 text-slate-200 hover:bg-slate-800 hover:text-cyan-400'
-                : 'border-slate-200 bg-slate-100 text-slate-800 hover:bg-slate-200 hover:text-blue-600'
+                : 'border-slate-200/90 bg-slate-100/90 hover:bg-slate-200/80 text-slate-800 hover:text-blue-600 shadow-[inset_0_1px_1px_rgba(255,255,255,0.8)]'
             }`}
           >
             <ShoppingBag className="w-3.5 h-3.5 stroke-[2.2]" aria-hidden="true" />
