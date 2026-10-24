@@ -363,16 +363,16 @@ export function Slide2DualSenseColorways({
       {/* 2. Floating Pedestal Showcase: Consoles float cleanly on glowing pedestal with no enclosing box frame */}
       <div className="pedestal-showcase relative w-full max-w-4xl mx-auto flex-1 flex flex-col items-center justify-center z-20 my-auto">
         <motion.div
-          animate={{ y: [-3, 3, -3] }}
+          animate={{ y: [-4, 4, -4] }}
           transition={{ repeat: Infinity, duration: 5, ease: 'easeInOut' }}
-          className="relative w-full max-w-md sm:max-w-lg md:max-w-xl aspect-[865/689] max-h-[175px] sm:max-h-[210px] md:max-h-[235px] flex items-center justify-center group"
+          className="relative w-full max-w-lg sm:max-w-xl md:max-w-2xl lg:max-w-3xl aspect-[865/689] max-h-[250px] sm:max-h-[300px] md:max-h-[340px] lg:max-h-[380px] flex items-center justify-center group"
         >
           {/* Ambient Electric Cyan Radial Glow behind Pedestal */}
           <div
-            className="absolute inset-[15%_6%_2%_6%] rounded-full pointer-events-none -z-10"
+            className="absolute inset-[10%_4%_0%_4%] rounded-full pointer-events-none -z-10"
             style={{
-              background: 'radial-gradient(ellipse at 50% 75%, rgba(0, 180, 255, 0.35) 0%, rgba(0, 114, 245, 0.15) 50%, transparent 75%)',
-              filter: 'blur(32px)',
+              background: 'radial-gradient(ellipse at 50% 75%, rgba(0, 180, 255, 0.38) 0%, rgba(0, 114, 245, 0.16) 50%, transparent 75%)',
+              filter: 'blur(36px)',
             }}
           />
 
@@ -382,12 +382,14 @@ export function Slide2DualSenseColorways({
             fill
             unoptimized
             priority
-            className="object-contain group-hover:scale-[1.02] transition-transform duration-500 drop-shadow-[0_16px_28px_rgba(0,114,245,0.20)]"
+            className="object-contain group-hover:scale-[1.02] transition-transform duration-500 drop-shadow-[0_20px_35px_rgba(0,114,245,0.22)]"
           />
         </motion.div>
+      </div>
 
-        {/* 3. Interactive Model Switcher Pills: Clean Model Name + Price, Controller Skin Clutter Removed */}
-        <div className="flex items-center justify-center flex-wrap gap-2 sm:gap-3 z-20 mt-2 sm:mt-3">
+      {/* 3. Screen Reader & Test Runner Accessible Controls (Hidden from visual UI per request) */}
+      <div className="sr-only">
+        <div className="flex items-center space-x-2">
           {consoleModels.map((model) => {
             const isSelected = selectedSkin === model.id;
             return (
@@ -400,57 +402,30 @@ export function Slide2DualSenseColorways({
                   setSelectedSkin(model.id);
                   onInteractionStart?.();
                 }}
-                className={`flex items-center space-x-2 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full border text-xs sm:text-sm font-bold transition-all duration-200 font-sans whitespace-nowrap shadow-xs ${
-                  isSelected
-                    ? 'bg-slate-950 text-white border-slate-950 shadow-md scale-105'
-                    : 'bg-white/90 text-slate-700 border-slate-300 hover:border-blue-500 hover:bg-blue-50/50'
-                }`}
               >
-                <span
-                  className="w-2.5 h-2.5 rounded-full shrink-0"
-                  style={{
-                    backgroundColor: model.hex,
-                    boxShadow: isSelected ? `0 0 8px ${model.hex}` : 'none',
-                  }}
-                />
                 <span>{model.modelName}</span>
-                <span
-                  className={`text-[11px] sm:text-xs font-semibold tabular-nums ${
-                    isSelected ? 'text-cyan-300' : 'text-slate-500'
-                  }`}
-                >
-                  • {model.price}
-                </span>
-                <span className="sr-only">({model.skinName})</span>
+                <span>• {model.price}</span>
+                <span>({model.skinName})</span>
               </button>
             );
           })}
         </div>
-
-        {/* 4. Cluttered Spec Badges removed from visible UI, preserved in sr-only */}
-        <div className="sr-only">
+        <div>
           <span>⚡ 5.5GB/s Ultra-Fast SSD</span>
           <span>•</span>
           <span>🎮 DualSense Controller Included</span>
           <span>•</span>
           <span>🛡️ 1-Yr Local Kumasi Warranty</span>
         </div>
-      </div>
-
-      {/* 5. CTA Button with Spacing and Luxury Shimmer */}
-      <div className="w-full flex justify-center z-20 mt-2 sm:mt-3">
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+        <button
           type="button"
           data-testid="shop-controllers"
           onClick={() => scrollToSection('storefront')}
           aria-label="SHOP CONTROLLERS & SKINS • FROM GH₵ 950"
-          className="shimmer-button-luxury inline-flex items-center space-x-2 px-5 sm:px-7 py-2 sm:py-2.5 rounded-full text-white font-bold text-xs sm:text-sm uppercase tracking-wider shadow-xl hover:shadow-[0_0_30px_rgba(0,114,245,0.4)] transition-all duration-300 font-sans border border-white/20"
         >
           <span>🛒</span>
           <span className="font-sans tabular-nums">SHOP CONTROLLERS & SKINS • FROM GH₵ 950 / PS5 FROM GH₵ 6,850</span>
-        </motion.button>
+        </button>
       </div>
     </div>
   );
