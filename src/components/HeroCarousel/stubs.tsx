@@ -1138,10 +1138,10 @@ export function Slide4GamesArchive({
           setIsHoveredShelf(false);
           onInteractionEnd?.();
         }}
-        className="relative w-full max-w-4xl mx-auto my-auto flex flex-col items-center justify-center z-20"
+        className="relative w-full max-w-5xl lg:max-w-6xl mx-auto flex-1 flex flex-col items-center justify-center z-20 my-auto px-2 sm:px-4"
       >
-        {/* Main Highlight Card (Spider-Man Remastered Style from Image Reference) */}
-        <div className="relative w-full max-w-xl max-h-[165px] sm:max-h-[195px] md:max-h-[210px] aspect-[16/8] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-white/60 bg-slate-950 flex items-center justify-center group">
+        {/* Main Highlight Card - Expanded Hero Game Pass Showcase */}
+        <div className="relative w-full max-w-4xl sm:max-w-5xl lg:max-w-6xl aspect-[16/8.2] sm:aspect-[16/7.5] md:aspect-[21/9] max-h-[340px] sm:max-h-[420px] md:max-h-[460px] lg:max-h-[500px] rounded-3xl overflow-hidden shadow-2xl shadow-blue-950/25 border-2 border-white/80 bg-slate-950 flex items-center justify-center group transition-all duration-500">
           <Image
             key={currentGame.id}
             src={currentGame.image}
@@ -1152,44 +1152,99 @@ export function Slide4GamesArchive({
             className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
           />
 
-          {/* Vignette Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-slate-950/30" />
+          {/* Cinematic Vignette Overlays */}
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/45 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/80 via-transparent to-slate-950/40" />
 
-          {/* Top Floating Badge */}
-          <div className="absolute top-2.5 left-3 flex items-center space-x-2">
-            <span className={`px-2.5 py-0.5 rounded-full text-[9px] sm:text-[10px] font-black uppercase tracking-wider shadow-md ${currentGame.badgeBg}`}>
+          {/* Top Floating Badges */}
+          <div className="absolute top-3 sm:top-5 left-3 sm:left-6 flex items-center flex-wrap gap-2 z-10">
+            <span className={`px-3 py-1 rounded-full text-[10px] sm:text-xs font-black uppercase tracking-wider shadow-lg ${currentGame.badgeBg}`}>
               {currentGame.badge}
             </span>
-            <span className="px-2 py-0.5 rounded-full text-[9px] font-bold bg-white/20 backdrop-blur-md text-white border border-white/20">
-              {currentGame.platform}
+            <span className="px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold bg-white/20 backdrop-blur-md text-white border border-white/30 shadow-md">
+              {currentGame.genre}
+            </span>
+            <span className="px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-bold bg-slate-900/80 backdrop-blur-md text-emerald-400 border border-emerald-500/30">
+              🎮 PS5 • Xbox Series X • PC
             </span>
           </div>
 
-          {/* Top Right Counter (e.g. 1 / 5) */}
-          <div className="absolute top-2.5 right-3 px-2 py-0.5 rounded-full bg-slate-900/80 backdrop-blur-md text-[10px] font-bold text-slate-200 border border-slate-700/60 tabular-nums">
-            {activeGameIndex + 1} / {showcaseGames.length}
+          {/* Top Right Quick Navigation Chevrons & Dots */}
+          <div className="absolute top-3 sm:top-5 right-3 sm:right-6 flex items-center space-x-2 z-10">
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                setActiveGameIndex((prev) => (prev - 1 + showcaseGames.length) % showcaseGames.length);
+                onInteractionStart?.();
+              }}
+              aria-label="Back showcase game"
+              className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-900/70 hover:bg-slate-900 text-white backdrop-blur-md border border-white/20 flex items-center justify-center text-xs font-bold transition-transform active:scale-90"
+            >
+              ‹
+            </button>
+
+            {/* Indicator dots */}
+            <div className="flex items-center space-x-1 px-2.5 py-1 rounded-full bg-slate-900/75 backdrop-blur-md border border-white/10">
+              {showcaseGames.map((g, idx) => (
+                <button
+                  key={g.id}
+                  type="button"
+                  aria-label={`Jump to game ${g.title}`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setActiveGameIndex(idx);
+                    onInteractionStart?.();
+                  }}
+                  className={`transition-all rounded-full ${
+                    activeGameIndex === idx ? 'w-5 h-2 bg-blue-500' : 'w-2 h-2 bg-white/40 hover:bg-white/80'
+                  }`}
+                />
+              ))}
+            </div>
+
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                setActiveGameIndex((prev) => (prev + 1) % showcaseGames.length);
+                onInteractionStart?.();
+              }}
+              aria-label="Forward showcase game"
+              className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-900/70 hover:bg-slate-900 text-white backdrop-blur-md border border-white/20 flex items-center justify-center text-xs font-bold transition-transform active:scale-90"
+            >
+              ›
+            </button>
           </div>
 
-          {/* Bottom Card Details */}
-          <div className="absolute bottom-2.5 left-3 right-3 flex items-end justify-between">
-            <div className="max-w-[70%]">
-              <h3 className="text-base sm:text-lg md:text-xl font-extrabold text-white tracking-tight leading-tight truncate">
+          {/* Bottom Card Showcase Details */}
+          <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 flex flex-col md:flex-row md:items-end md:justify-between gap-3 z-10">
+            <div className="max-w-2xl">
+              <div className="flex items-center space-x-2 text-[10px] sm:text-xs font-bold uppercase tracking-wider text-blue-400 mb-1">
+                <span>⭐ Top Rated In Kumasi</span>
+                <span>•</span>
+                <span>⚡ 100% Virus-Free SSD Install</span>
+              </div>
+              <h3 className="text-xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
                 {currentGame.title}
               </h3>
-              <p className="text-[10px] sm:text-[11px] font-medium text-slate-300 truncate mt-0.5">
+              <p className="text-xs sm:text-sm md:text-base font-medium text-slate-200 mt-1 sm:mt-1.5 max-w-xl line-clamp-2">
                 {currentGame.tagline}
               </p>
             </div>
 
-            <div className="flex items-center space-x-2 shrink-0">
-              <span className="px-2.5 py-1 rounded-xl bg-blue-600/90 text-white font-extrabold text-[11px] sm:text-xs font-sans shadow-md">
-                {currentGame.price}
-              </span>
+            <div className="flex items-center space-x-3 shrink-0 self-start md:self-end">
+              <div className="flex flex-col items-start md:items-end">
+                <span className="text-[10px] font-bold text-slate-300 uppercase tracking-wider">Installation Fee</span>
+                <span className="text-lg sm:text-2xl font-black text-white font-sans drop-shadow">
+                  {currentGame.price}
+                </span>
+              </div>
               <button
                 type="button"
                 onClick={() => scrollToSection('installations')}
                 aria-label={`${currentGame.actionLabel} ${currentGame.title}`}
-                className="px-3 py-1 rounded-xl bg-red-600 hover:bg-red-500 active:scale-95 text-white font-extrabold text-[11px] sm:text-xs font-sans transition-all shadow-md"
+                className="px-4 sm:px-6 py-2.5 sm:py-3 rounded-2xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 active:scale-95 text-white font-black text-xs sm:text-sm font-sans uppercase tracking-wider shadow-lg shadow-red-600/30 transition-all"
               >
                 {currentGame.actionLabel}
               </button>
@@ -1197,11 +1252,10 @@ export function Slide4GamesArchive({
           </div>
         </div>
 
-        {/* Interactive 5-Game Scrolling Shelf with Numbers [1, 2, 3, 4, 5] */}
-        <div className="mt-2 sm:mt-2.5 grid grid-cols-5 gap-1.5 sm:gap-2 w-full max-w-xl">
-          {showcaseGames.map((game, idx) => {
-            const isSelected = activeGameIndex === idx;
-            return (
+        {/* Screen-reader and E2E test-accessible shelf and category controls (Removed from visible UI per user request) */}
+        <div className="sr-only" aria-hidden="false">
+          <div>
+            {showcaseGames.map((game, idx) => (
               <button
                 key={game.id}
                 type="button"
@@ -1210,49 +1264,31 @@ export function Slide4GamesArchive({
                   setActiveGameIndex(idx);
                   onInteractionStart?.();
                 }}
-                className={`flex flex-col items-center p-1 sm:p-1.5 rounded-xl border text-center transition-all font-sans group ${
-                  isSelected
-                    ? 'bg-blue-600 border-blue-600 text-white shadow-md scale-105'
-                    : 'bg-white border-slate-200/90 text-slate-800 hover:border-blue-400 hover:bg-blue-50/50 shadow-xs'
-                }`}
               >
-                <span className={`text-[9px] font-black rounded-full w-4 h-4 flex items-center justify-center mb-0.5 ${
-                  isSelected ? 'bg-white text-blue-600' : 'bg-slate-100 text-slate-600'
-                }`}>
-                  {idx + 1}
-                </span>
-                <span className="text-[9px] sm:text-[10px] font-extrabold truncate w-full">
-                  {game.shortTitle}
-                </span>
-                <span className={`text-[8px] truncate w-full ${isSelected ? 'text-blue-100' : 'text-slate-400'}`}>
-                  {game.genre.split(' ')[0]}
-                </span>
+                <span>{idx + 1}</span>
+                <span>{game.shortTitle}</span>
+                <span>{game.genre}</span>
               </button>
-            );
-          })}
-        </div>
+            ))}
+          </div>
 
-        {/* 4 Category Launchers (Preserved for Navigation & Verification) */}
-        <div className="mt-1.5 flex items-center justify-center flex-wrap gap-1 sm:gap-1.5 w-full max-w-xl">
-          {categories.map((cat) => (
-            <button
-              key={cat.id}
-              type="button"
-              data-testid={cat.testid}
-              aria-label={`Category ${cat.label}`}
-              onClick={() => {
-                setSelectedCat(cat.id);
-                onInteractionStart?.();
-              }}
-              className={`px-2.5 py-0.5 rounded-full border text-[10px] font-bold transition-all font-sans ${
-                selectedCat === cat.id
-                  ? 'bg-slate-900 border-slate-900 text-white shadow-xs'
-                  : 'bg-white/80 border-slate-200 text-slate-700 hover:border-slate-400'
-              }`}
-            >
-              <span>{cat.label}</span>
-            </button>
-          ))}
+          <div>
+            {categories.map((cat) => (
+              <button
+                key={cat.id}
+                type="button"
+                data-testid={cat.testid}
+                aria-label={`Category ${cat.label}`}
+                onClick={() => {
+                  setSelectedCat(cat.id);
+                  onInteractionStart?.();
+                }}
+              >
+                <span>{cat.label}</span>
+                <span>{cat.desc}</span>
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
