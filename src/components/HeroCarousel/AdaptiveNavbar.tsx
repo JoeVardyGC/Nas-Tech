@@ -86,7 +86,7 @@ export default function AdaptiveNavbar({
   const navbarY = -scrollProgress * 28;
   const navbarScale = 1 - scrollProgress * 0.05;
 
-  const effectiveTheme = navbarTheme || (activeSlide === 1 || activeSlide === 4 ? 'dark' : 'light');
+  const effectiveTheme = navbarTheme || 'light';
   const isDark = effectiveTheme === 'dark';
 
   return (

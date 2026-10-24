@@ -33,10 +33,10 @@ export type SlideTheme = 'light' | 'dark';
  */
 export const SLIDE_NAVBAR_THEMES: Record<SlideIndex, NavbarTheme> = {
   0: 'light', // Slide 1 (PS5 Master) -> Crisp White Pill Navbar
-  1: 'dark',  // Slide 2 (DualSense Colorways) -> Dark Obsidian Pill Navbar
+  1: 'light', // Slide 2 (DualSense Colorways) -> Crisp White Pill Navbar
   2: 'light', // Slide 3 (Collector Series) -> Crisp White Pill Navbar
   3: 'light', // Slide 4 (Games Archive) -> Crisp White Pill Navbar
-  4: 'dark',  // Slide 5 (Games Market) -> Dark Obsidian Pill Navbar
+  4: 'light', // Slide 5 (Games Market) -> Crisp White Pill Navbar
 };
 
 /**
@@ -102,8 +102,8 @@ export const SLIDE_METADATA: readonly SlideMetadata[] = [
     title: 'PlayStation®5 Consoles & Hardware',
     shortLabel: '02 / CONSOLES',
     eyebrow: 'IN-STOCK IN KUMASI // ADUM SHOWROOM',
-    theme: 'dark',
-    navbarTheme: 'dark',
+    theme: 'light',
+    navbarTheme: 'light',
     ariaLabel: 'Slide 2 of 5: PlayStation 5 Consoles and DualSense Controllers',
   },
   {
@@ -134,8 +134,8 @@ export const SLIDE_METADATA: readonly SlideMetadata[] = [
     shortLabel: '05 / RELEASES',
     eyebrow: 'KUMASI GAMING HUB // PHYSICAL & DIGITAL',
     subtitle: '',
-    theme: 'dark',
-    navbarTheme: 'dark',
+    theme: 'light',
+    navbarTheme: 'light',
     ariaLabel: 'Slide 5 of 5: Games Market and Trending Releases',
   },
 ] as const;

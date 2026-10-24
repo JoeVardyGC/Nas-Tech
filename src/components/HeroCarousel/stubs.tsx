@@ -81,7 +81,7 @@ export function Slide1PS5Master({
       onMouseLeave={handleMouseLeave}
       data-brand-cobalt="#0070F3"
       data-brand-obsidian="#060913"
-      className="relative w-full h-full flex flex-col justify-between pt-1 sm:pt-2 pb-16 sm:pb-20 px-3 sm:px-6 lg:px-10 overflow-hidden font-sans select-none"
+      className="relative w-full h-full flex flex-col justify-between pt-1 sm:pt-2 pb-24 sm:pb-28 lg:pb-32 px-3 sm:px-6 lg:px-10 overflow-hidden font-sans select-none"
     >
       {/* Aceternity-inspired Layered Studio Spotlights */}
       <div className="absolute inset-0 pointer-events-none -z-10 overflow-hidden">
@@ -204,7 +204,7 @@ export function Slide1PS5Master({
               duration: 4.8,
               ease: 'easeInOut',
             }}
-            className="relative w-64 sm:w-80 md:w-96 lg:w-[400px] xl:w-[440px] aspect-[16/11] flex items-center justify-center cursor-grab active:cursor-grabbing z-10"
+            className="relative w-60 sm:w-72 md:w-80 lg:w-[360px] xl:w-[400px] aspect-[16/11] flex items-center justify-center cursor-grab active:cursor-grabbing z-10"
           >
             {/* Dynamic Core Radial Glow */}
             <div
@@ -231,10 +231,6 @@ export function Slide1PS5Master({
             </div>
           </motion.div>
 
-          <div className="mt-1 text-blue-600 text-[10px] select-none animate-pulse">
-            ▲
-          </div>
-
           {/* EXPLORE CONSOLES ACTION BUTTON WITH SHIMMER (Magic UI inspired) */}
           <motion.button
             whileHover={{ scale: 1.05 }}
@@ -243,7 +239,7 @@ export function Slide1PS5Master({
             data-testid="explore-ps5"
             onClick={() => scrollToSection('storefront')}
             aria-label="Explore Our Consoles"
-            className="shimmer-button-luxury mt-1.5 inline-flex items-center space-x-2 px-5 sm:px-6 py-2 sm:py-2.5 rounded-full text-white font-bold text-xs sm:text-sm tracking-wider shadow-xl hover:shadow-[0_0_30px_rgba(0,114,245,0.45)] transition-all duration-300 font-sans border border-white/20"
+            className="shimmer-button-luxury mt-2 sm:mt-3 mb-1 inline-flex items-center space-x-2 px-5 sm:px-6 py-2 sm:py-2.5 rounded-full text-white font-bold text-xs sm:text-sm tracking-wider shadow-xl hover:shadow-[0_0_30px_rgba(0,114,245,0.45)] transition-all duration-300 font-sans border border-white/20"
           >
             <Gamepad className="w-3.5 h-3.5 text-white stroke-[2.4]" />
             <span className="font-sans">Explore Our Consoles</span>
@@ -432,7 +428,7 @@ export function Slide2DualSenseColorways({
   );
 
   return (
-    <div className="relative w-full h-full flex flex-col justify-between pt-2 pb-16 sm:pb-20 px-3 sm:px-6 lg:px-10 bg-gradient-to-b from-white via-slate-50 to-blue-50/30 text-slate-900 font-sans select-none overflow-hidden">
+    <div className="relative w-full h-full flex flex-col justify-between pt-2 pb-24 sm:pb-28 lg:pb-32 px-3 sm:px-6 lg:px-10 bg-gradient-to-b from-white via-slate-50 to-blue-50/30 text-slate-900 font-sans select-none overflow-hidden">
       {/* Studio Electric Blue Ambient Radial Glow */}
       <div
         className="absolute inset-0 pointer-events-none -z-10"
@@ -751,7 +747,7 @@ export function Slide3CollectorSeries({
   };
 
   return (
-    <div className="relative w-full h-full flex flex-col justify-between pt-2 pb-16 sm:pb-20 px-3 sm:px-6 lg:px-10 bg-gradient-to-b from-white via-slate-50 to-amber-50/20 text-slate-900 font-sans select-none overflow-hidden">
+    <div className="relative w-full h-full flex flex-col justify-between pt-2 pb-24 sm:pb-28 lg:pb-32 px-3 sm:px-6 lg:px-10 bg-gradient-to-b from-white via-slate-50 to-amber-50/20 text-slate-900 font-sans select-none overflow-hidden">
       {/* Ambient Electric Spotlight that shifts with active team color */}
       <div
         className="absolute inset-0 pointer-events-none -z-10 transition-all duration-700"
@@ -1122,7 +1118,7 @@ export function Slide4GamesArchive({
   ];
 
   return (
-    <div className="relative w-full h-full flex flex-col justify-between pt-2 pb-16 sm:pb-20 px-3 sm:px-6 lg:px-10 bg-gradient-to-b from-white via-slate-50 to-blue-50/30 text-slate-900 font-sans select-none overflow-hidden">
+    <div className="relative w-full h-full flex flex-col justify-between pt-2 pb-24 sm:pb-28 lg:pb-32 px-3 sm:px-6 lg:px-10 bg-gradient-to-b from-white via-slate-50 to-blue-50/30 text-slate-900 font-sans select-none overflow-hidden">
       {/* Dynamic Ambient Spotlight matching active game color */}
       <div
         className="absolute inset-0 pointer-events-none -z-10 transition-all duration-700"
@@ -1131,17 +1127,14 @@ export function Slide4GamesArchive({
         }}
       />
 
-      {/* Header */}
+      {/* Header - Only Main Heading per user request */}
       <div className="w-full text-center mt-1 sm:mt-2 z-10">
-        <p className="text-[9px] sm:text-xs font-bold tracking-[0.28em] uppercase text-blue-600 font-sans">
-          DIRECT-TO-DRIVE PRE-LOAD SERVICE // ADUM, KUMASI
-        </p>
-        <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-950 leading-tight mt-0.5 sm:mt-1 font-sans">
+        <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-950 leading-tight font-sans">
           Over 2,000 Games Available
         </h2>
-        <p className="text-[10px] sm:text-xs font-semibold tracking-wide text-slate-600 uppercase mt-0.5 font-sans">
-          IN-SHOP CONSOLE & PC GAME PRE-LOADS // BRING YOUR DRIVE TO ADUM, KUMASI
-        </p>
+        <div className="sr-only">
+          DIRECT-TO-DRIVE PRE-LOAD SERVICE // IN-SHOP CONSOLE & PC GAME PRE-LOADS // BRING YOUR DRIVE TO ADUM, KUMASI
+        </div>
       </div>
 
       {/* Auto-Scrolling Game Showcase Stage */}
@@ -1157,7 +1150,7 @@ export function Slide4GamesArchive({
         className="relative w-full max-w-5xl lg:max-w-6xl mx-auto flex-1 flex flex-col items-center justify-center z-20 my-auto px-2 sm:px-4"
       >
         {/* Main Highlight Card - Expanded Hero Game Pass Showcase */}
-        <div className="relative w-full max-w-4xl sm:max-w-5xl lg:max-w-6xl aspect-[16/8.2] sm:aspect-[16/7.5] md:aspect-[21/9] max-h-[370px] sm:max-h-[450px] md:max-h-[500px] lg:max-h-[540px] rounded-3xl overflow-hidden shadow-2xl shadow-blue-950/25 border-2 border-white/80 bg-slate-950 flex items-center justify-center group transition-all duration-500">
+        <div className="relative w-full max-w-4xl sm:max-w-5xl lg:max-w-6xl aspect-[16/9.5] sm:aspect-[16/8.5] md:aspect-[21/10] max-h-[380px] sm:max-h-[440px] md:max-h-[480px] lg:max-h-[520px] rounded-3xl overflow-hidden shadow-2xl shadow-blue-950/25 border-2 border-white/80 bg-slate-950 flex items-center justify-center group transition-all duration-500">
           <Image
             key={currentGame.id}
             src={currentGame.image}
@@ -1234,25 +1227,25 @@ export function Slide4GamesArchive({
           </div>
 
           {/* Bottom Card Showcase Details */}
-          <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 flex flex-col md:flex-row md:items-end md:justify-between gap-3 z-10">
+          <div className="absolute bottom-3 sm:bottom-5 left-3 sm:left-6 right-3 sm:right-6 flex flex-col md:flex-row md:items-end md:justify-between gap-3 z-10 p-3 sm:p-4 rounded-2xl bg-slate-950/75 backdrop-blur-md border border-white/10 shadow-2xl">
             <div className="max-w-2xl">
               <div className="flex items-center space-x-2 text-[10px] sm:text-xs font-bold uppercase tracking-wider text-blue-400 mb-1">
                 <span>⭐ Top Rated In Kumasi</span>
                 <span>•</span>
                 <span>⚡ 100% Virus-Free SSD Install</span>
               </div>
-              <h3 className="text-xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
+              <h3 className="text-lg sm:text-2xl md:text-3xl lg:text-4xl font-black text-white tracking-tight leading-tight">
                 {currentGame.title}
               </h3>
-              <p className="text-xs sm:text-sm md:text-base font-medium text-slate-200 mt-1 sm:mt-1.5 max-w-xl line-clamp-2">
+              <p className="text-xs sm:text-sm font-medium text-slate-200 mt-0.5 sm:mt-1 max-w-xl line-clamp-1 sm:line-clamp-2">
                 {currentGame.tagline}
               </p>
             </div>
 
             <div className="flex items-center space-x-3 shrink-0 self-start md:self-end">
               <div className="flex flex-col items-start md:items-end">
-                <span className="text-[10px] font-bold text-slate-300 uppercase tracking-wider">Installation Fee</span>
-                <span className="text-lg sm:text-2xl font-black text-white font-sans drop-shadow">
+                <span className="text-[9px] sm:text-[10px] font-bold text-slate-300 uppercase tracking-wider">Installation Fee</span>
+                <span className="text-base sm:text-xl md:text-2xl font-black text-white font-sans drop-shadow">
                   {currentGame.price}
                 </span>
               </div>
@@ -1260,7 +1253,7 @@ export function Slide4GamesArchive({
                 type="button"
                 onClick={() => scrollToSection('installations')}
                 aria-label={`${currentGame.actionLabel} ${currentGame.title}`}
-                className="px-4 sm:px-6 py-2.5 sm:py-3 rounded-2xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 active:scale-95 text-white font-black text-xs sm:text-sm font-sans uppercase tracking-wider shadow-lg shadow-red-600/30 transition-all"
+                className="px-4 sm:px-6 py-2 sm:py-2.5 rounded-xl sm:rounded-2xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 active:scale-95 text-white font-black text-xs sm:text-sm font-sans uppercase tracking-wider shadow-lg shadow-red-600/30 transition-all"
               >
                 {currentGame.actionLabel}
               </button>
@@ -1340,7 +1333,7 @@ export function Slide5GamesMarket({
   ];
 
   return (
-    <div className="relative w-full h-full flex flex-col justify-between pt-2 pb-16 sm:pb-20 px-3 sm:px-6 lg:px-10 bg-gradient-to-b from-white via-slate-50 to-emerald-50/30 text-slate-900 font-sans select-none overflow-hidden">
+    <div className="relative w-full h-full flex flex-col justify-between pt-2 pb-24 sm:pb-28 lg:pb-32 px-3 sm:px-6 lg:px-10 bg-gradient-to-b from-white via-slate-50 to-emerald-50/30 text-slate-900 font-sans select-none overflow-hidden">
       {/* Dynamic Market Underglow with Electric Blue */}
       <div
         className="absolute inset-0 pointer-events-none -z-10"
