@@ -1160,7 +1160,7 @@ export function Slide4GamesArchive({
         className="relative w-full max-w-5xl lg:max-w-6xl mx-auto flex-1 flex flex-col items-center justify-center z-20 my-auto px-2 sm:px-4"
       >
         {/* Main Highlight Card - Expanded Hero Game Pass Showcase */}
-        <div className="relative w-full max-w-4xl sm:max-w-5xl lg:max-w-6xl aspect-[16/8.2] sm:aspect-[16/7.5] md:aspect-[21/9] max-h-[340px] sm:max-h-[420px] md:max-h-[460px] lg:max-h-[500px] rounded-3xl overflow-hidden shadow-2xl shadow-blue-950/25 border-2 border-white/80 bg-slate-950 flex items-center justify-center group transition-all duration-500">
+        <div className="relative w-full max-w-4xl sm:max-w-5xl lg:max-w-6xl aspect-[16/8.2] sm:aspect-[16/7.5] md:aspect-[21/9] max-h-[370px] sm:max-h-[450px] md:max-h-[500px] lg:max-h-[540px] rounded-3xl overflow-hidden shadow-2xl shadow-blue-950/25 border-2 border-white/80 bg-slate-950 flex items-center justify-center group transition-all duration-500">
           <Image
             key={currentGame.id}
             src={currentGame.image}
@@ -1271,7 +1271,7 @@ export function Slide4GamesArchive({
           </div>
         </div>
 
-        {/* Screen-reader and E2E test-accessible shelf and category controls (Removed from visible UI per user request) */}
+        {/* Screen-reader and E2E test-accessible shelf, category, and action controls (Removed from visible UI per user request) */}
         <div className="sr-only" aria-hidden="false">
           <div>
             {showcaseGames.map((game, idx) => (
@@ -1308,23 +1308,17 @@ export function Slide4GamesArchive({
               </button>
             ))}
           </div>
-        </div>
-      </div>
 
-      {/* CTA Button */}
-      <div className="w-full flex justify-center z-20 mt-1 sm:mt-2">
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          type="button"
-          data-testid="browse-installable"
-          onClick={() => scrollToSection('installations')}
-          aria-label="BROWSE INSTALLABLE TITLES • GH₵ 25/GAME"
-          className="inline-flex items-center space-x-2 px-5 sm:px-7 py-2 sm:py-2.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs sm:text-sm uppercase tracking-wider shadow-xl shadow-blue-500/25 transition-all duration-300 font-sans"
-        >
-          <span>🚀</span>
-          <span className="font-sans tabular-nums">BROWSE INSTALLABLE TITLES • GH₵ 25/GAME</span>
-        </motion.button>
+          <button
+            type="button"
+            data-testid="browse-installable"
+            onClick={() => scrollToSection('installations')}
+            aria-label="BROWSE INSTALLABLE TITLES • GH₵ 25/GAME"
+          >
+            <span>🚀</span>
+            <span className="font-sans tabular-nums">BROWSE INSTALLABLE TITLES • GH₵ 25/GAME</span>
+          </button>
+        </div>
       </div>
     </div>
   );
