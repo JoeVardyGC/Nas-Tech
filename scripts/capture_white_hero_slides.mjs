@@ -3,8 +3,8 @@ import fs from 'fs';
 import path from 'path';
 
 const CHROME_PATH = process.env.CHROME_BIN || '/usr/bin/google-chrome';
-const BASE_URL = 'http://localhost:3000';
-const ARTIFACT_DIR = '/home/thejoevardy/.gemini/antigravity/brain/06fafef6-3f38-48fa-abcc-bfeb9c63d8b6';
+const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
+const ARTIFACT_DIR = process.env.ARTIFACT_DIR || '/home/thejoevardy/.gemini/antigravity/brain/06fafef6-3f38-48fa-abcc-bfeb9c63d8b6';
 
 async function main() {
   console.log('Launching browser with Chrome:', CHROME_PATH);

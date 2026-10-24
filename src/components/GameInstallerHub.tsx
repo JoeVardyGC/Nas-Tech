@@ -218,7 +218,7 @@ export default function GameInstallerHub() {
               <div
                 key={game.id}
                 onClick={() => toggleGame(game)}
-                className={`group relative rounded-2xl border p-3 flex flex-col justify-between cursor-pointer transition-all duration-200 ${
+                className={`group relative rounded-2xl border p-3 flex flex-col justify-between cursor-pointer transition-all duration-200 min-w-0 w-full ${
                   isSelected
                     ? 'border-blue-600 bg-blue-50/70 shadow-sm'
                     : 'border-slate-200 bg-white hover:border-slate-300 hover:shadow-xs'
@@ -228,7 +228,7 @@ export default function GameInstallerHub() {
                   <img
                     src={game.coverImage}
                     alt={game.title}
-                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full max-w-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
                   />
                   <div className="absolute top-2 left-2">
                     <span className="px-2 py-0.5 rounded-md text-[10px] font-sans font-bold bg-white/95 text-slate-800 shadow-2xs border border-slate-200">

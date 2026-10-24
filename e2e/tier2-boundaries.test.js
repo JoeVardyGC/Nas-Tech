@@ -46,14 +46,14 @@ function checkMounted(t) {
 // --------------------------------------------------------------------------
 // B1: Timer Boundary & Reset Conditions (5 tests)
 // --------------------------------------------------------------------------
-test('T2.B1.01: Manual Next click at 4,900ms cancels pending auto-tick and restarts 5s window', async (t) => {
+test('T2.B1.01: Manual Next click at 2,500ms cancels pending auto-tick and restarts 3s window', async (t) => {
   if (!checkMounted(t)) return;
   const dots = await page.$$('[role="tab"], [data-indicator-index], button[aria-label*="Slide"]');
   if (dots.length >= 1) await dots[0].click();
   await sleep(400);
 
-  // Wait to near boundary (4.5s total elapsed from 5s window)
-  await sleep(4100);
+  // Wait to near boundary (2.5s total elapsed from 3s window)
+  await sleep(2500);
   const nextBtn = await page.$('button[aria-label*="Next"], button[data-testid="carousel-next"]');
   if (nextBtn) {
     await nextBtn.click();
@@ -61,7 +61,7 @@ test('T2.B1.01: Manual Next click at 4,900ms cancels pending auto-tick and resta
     const state = await getCarouselState(page);
     assert.equal(state.activeIndex, 1, 'Advanced to slide 1 on click');
 
-    // Wait 1000ms: if timer was NOT reset, it would have fired immediately at ~200ms
+    // Wait 1000ms: if timer was NOT reset, it would have fired immediately at ~300ms
     await sleep(1000);
     const stateCheck = await getCarouselState(page);
     assert.equal(stateCheck.activeIndex, 1, 'Slide does not advance prematurely; timer reset verified');
@@ -261,7 +261,7 @@ test('T2.B4.01: Hover entered at 100ms halts timer; leave at 2,000ms resumes acc
   }
 });
 
-test('T2.B4.02: Hover entered at 4,800ms prevents auto-advance tick', async (t) => {
+test('T2.B4.02: Hover entered at 2,400ms prevents auto-advance tick', async (t) => {
   if (!checkMounted(t)) return;
   await page.evaluate(() => {
     const dot = document.querySelector('[data-indicator-index="0"]');
@@ -269,15 +269,15 @@ test('T2.B4.02: Hover entered at 4,800ms prevents auto-advance tick', async (t) 
   });
   await sleep(400);
 
-  // Wait 3,000ms (total ~3.4s of 5.0s window)
-  await sleep(3000);
+  // Wait 1,800ms (total ~2.2s of 3.0s window)
+  await sleep(1800);
 
   const carousel = await page.$('[role="region"][aria-roledescription="carousel"]');
   if (carousel) {
     const box = await carousel.boundingBox();
     if (box) {
       await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
-      await sleep(2500); // Would have advanced at 5.0s if not paused (total 5.9s elapsed)
+      await sleep(2000); // Would have advanced at 3.0s if not paused (total 4.2s elapsed)
       const state = await getCarouselState(page);
       assert.equal(state.activeIndex, 0, 'Hover prevented late timer auto-advance');
       await page.mouse.move(0, 0);

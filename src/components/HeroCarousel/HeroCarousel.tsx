@@ -60,11 +60,13 @@ export default function HeroCarousel({
         progressBarRef.current.style.transform = 'scaleX(0)';
         progressBarRef.current.setAttribute('aria-valuenow', '0');
       }
-      if (index === activeSlide) return;
-      setDirection(index > activeSlide ? 1 : -1);
-      setActiveSlide(index);
+      setActiveSlide((prev) => {
+        if (index === prev) return prev;
+        setDirection(index > prev ? 1 : -1);
+        return index;
+      });
     },
-    [activeSlide]
+    []
   );
 
   const nextSlide = useCallback(() => {
@@ -280,7 +282,7 @@ export default function HeroCarousel({
       </div>
 
       {/* 3. BOTTOM CENTERED INTERACTIVE INDICATOR DOCK (Liquid Glass & Motion Primitives) */}
-      <div className="w-full flex justify-center z-40 pb-6 sm:pb-8 px-4 font-sans">
+      <div className="w-full flex justify-center shrink-0 z-40 pt-2 sm:pt-3 pb-4 sm:pb-6 px-4 font-sans">
         <div
           role="toolbar"
           aria-label="Carousel navigation controls"
@@ -292,7 +294,7 @@ export default function HeroCarousel({
             e.stopPropagation();
             setIsHovered(false);
           }}
-          className="relative inline-flex items-center space-x-2 sm:space-x-3 px-3.5 sm:px-5 py-2 rounded-full bg-white/95 backdrop-blur-2xl border border-slate-200/90 shadow-[0_16px_40px_-10px_rgba(0,114,245,0.1),0_2px_6px_rgba(0,0,0,0.04)] font-sans"
+          className="relative inline-flex items-center space-x-2 sm:space-x-3 px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full bg-white/95 backdrop-blur-2xl border border-slate-200/90 shadow-[0_16px_40px_-10px_rgba(0,114,245,0.1),0_2px_6px_rgba(0,0,0,0.04)] font-sans"
         >
           {/* Specular Top Rim Sheen */}
           <div className="pointer-events-none absolute inset-x-6 top-0 h-[1px] bg-gradient-to-r from-transparent via-white to-transparent opacity-90" />
@@ -353,7 +355,7 @@ export default function HeroCarousel({
                     onMouseEnter={() => setHoveredDot(index)}
                     className={`relative flex items-center justify-center transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 font-sans ${
                       isSelected
-                        ? 'w-24 sm:w-32 h-4 rounded-full bg-slate-100 border border-slate-200/90 overflow-hidden shadow-inner'
+                        ? 'w-28 sm:w-36 h-5 sm:h-6 rounded-full bg-slate-100 border border-slate-200/90 overflow-hidden shadow-inner'
                         : 'w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-slate-300 hover:bg-blue-400 hover:scale-110'
                     }`}
                   >
@@ -371,7 +373,7 @@ export default function HeroCarousel({
                           style={{ transform: 'scaleX(0)', transformOrigin: 'left' }}
                         />
                         {/* Slide Label Overlay */}
-                        <span className="relative z-10 text-[8px] sm:text-[9px] font-extrabold text-white uppercase tracking-wider px-2 drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)] truncate select-none font-sans">
+                        <span className="relative z-10 text-[9px] sm:text-[10px] font-extrabold text-white uppercase tracking-wider px-2 drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)] whitespace-nowrap select-none font-sans">
                           {slide.shortLabel}
                         </span>
                       </>

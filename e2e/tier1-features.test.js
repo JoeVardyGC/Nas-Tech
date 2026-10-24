@@ -52,13 +52,16 @@ test('T1.R1.1.01: Carousel initial load defaults to Slide 1 (index 0)', async (t
   assert.equal(state.activeIndex, 0, 'Active slide should be index 0 on initial load');
 });
 
-test('T1.R1.1.02: Carousel auto-advances from Slide 1 to Slide 2 after 5s', async (t) => {
+test('T1.R1.1.02: Carousel auto-advances from Slide 1 to Slide 2 after 3s', async (t) => {
   if (!checkMounted(t)) return;
   // Ensure we are on slide 0 and not hovered
+  const dots = await page.$$('[role="tab"], [data-indicator-index], button[aria-label*="Slide"]');
+  if (dots.length >= 1) await dots[0].click();
+  await sleep(300);
   await page.mouse.move(0, 0);
-  await sleep(5200);
+  await sleep(3200);
   const state = await getCarouselState(page);
-  assert.equal(state.activeIndex, 1, 'Active slide should advance to index 1 after 5 seconds');
+  assert.equal(state.activeIndex, 1, 'Active slide should advance to index 1 after 3 seconds');
 });
 
 test('T1.R1.1.03: Sequential forward rotation cycles through slides', async (t) => {
@@ -80,13 +83,13 @@ test('T1.R1.1.04: Carousel wraps around from Slide 5 (index 4) to Slide 1 (index
 
     // Wait for auto-advance wrap
     await page.mouse.move(0, 0);
-    await sleep(5300);
+    await sleep(3300);
     const stateAfter = await getCarouselState(page);
     assert.equal(stateAfter.activeIndex, 0, 'Should wrap around to slide index 0');
   }
 });
 
-test('T1.R1.1.05: Auto-advance interval is consistent (5000ms +/- 300ms)', async (t) => {
+test('T1.R1.1.05: Auto-advance interval is consistent (3000ms +/- 500ms)', async (t) => {
   if (!checkMounted(t)) return;
   const dots = await page.$$('[role="tab"], [data-indicator-index], button[aria-label*="Slide"]');
   if (dots.length >= 1) {
@@ -101,7 +104,7 @@ test('T1.R1.1.05: Auto-advance interval is consistent (5000ms +/- 300ms)', async
       { timeout: 7000 }
     );
     const elapsed = Date.now() - start;
-    assert.ok(elapsed >= 4500 && elapsed <= 6200, `Elapsed ${elapsed}ms is within 5s +/- tolerance`);
+    assert.ok(elapsed >= 2500 && elapsed <= 3800, `Elapsed ${elapsed}ms is within 3s +/- tolerance`);
   }
 });
 

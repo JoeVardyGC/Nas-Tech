@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, MouseEvent } from 'react';
+import React, { useState, useEffect, useRef, MouseEvent } from 'react';
 import Image from 'next/image';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import {
@@ -11,6 +11,7 @@ import {
   Gamepad,
   Sparkles,
   Layers,
+  ChevronLeft,
   ChevronRight,
   Trophy,
   Shield,
@@ -80,7 +81,7 @@ export function Slide1PS5Master({
       onMouseLeave={handleMouseLeave}
       data-brand-cobalt="#0070F3"
       data-brand-obsidian="#060913"
-      className="relative w-full h-full flex flex-col justify-between pt-2 pb-24 sm:pb-28 px-3 sm:px-6 lg:px-10 overflow-hidden font-sans select-none"
+      className="relative w-full h-full flex flex-col justify-between pt-1 sm:pt-2 pb-4 sm:pb-6 px-3 sm:px-6 lg:px-10 overflow-hidden font-sans select-none"
     >
       {/* Aceternity-inspired Layered Studio Spotlights */}
       <div className="absolute inset-0 pointer-events-none -z-10 overflow-hidden">
@@ -103,7 +104,7 @@ export function Slide1PS5Master({
       </div>
 
       {/* 1. EYEBROW & MASSIVE DISPLAY HEADLINE */}
-      <div className="w-full text-center mt-2 sm:mt-4 z-10 font-sans">
+      <div className="w-full text-center mt-1 sm:mt-3 z-10 font-sans">
         <p
           className="text-[9px] sm:text-xs font-bold tracking-[0.42em] uppercase text-blue-600 font-sans whitespace-pre flex items-center justify-center gap-1"
           aria-label="THE NEXT GENERATION OF PLAY"
@@ -115,8 +116,8 @@ export function Slide1PS5Master({
           <span>P L A Y</span>
           <span className="sr-only">NEXT GENERATION</span>
         </p>
-        <div className="py-0.5 sm:py-1">
-          <h1 className="text-[38px] sm:text-[64px] md:text-[84px] lg:text-[104px] font-extrabold tracking-[-0.04em] text-slate-950 leading-none whitespace-nowrap drop-shadow-[0_12px_24px_rgba(0,114,245,0.12)] font-sans">
+        <div className="py-0.5">
+          <h1 className="text-[34px] sm:text-[54px] md:text-[70px] lg:text-[88px] font-extrabold tracking-[-0.04em] text-slate-950 leading-none whitespace-nowrap drop-shadow-[0_12px_24px_rgba(0,114,245,0.12)] font-sans">
             Feel the Game
           </h1>
         </div>
@@ -140,7 +141,7 @@ export function Slide1PS5Master({
         <motion.div
           whileHover={{ y: -4, scale: 1.02 }}
           transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-          className="relative w-36 sm:w-44 md:w-52 lg:w-56 shrink-0"
+          className="relative w-32 sm:w-40 md:w-48 lg:w-52 shrink-0"
         >
           <div className="w-full flex justify-center -mb-1 z-10">
             <span className="text-blue-600 text-[10px] leading-none drop-shadow-[0_0_8px_rgba(0,114,245,0.6)]">
@@ -203,7 +204,7 @@ export function Slide1PS5Master({
               duration: 5,
               ease: 'easeInOut',
             }}
-            className="relative w-44 sm:w-60 md:w-72 lg:w-[340px] aspect-[16/11] flex items-center justify-center cursor-grab active:cursor-grabbing"
+            className="relative w-36 sm:w-48 md:w-60 lg:w-[280px] aspect-[16/11] flex items-center justify-center cursor-grab active:cursor-grabbing"
           >
             <div className="relative w-full h-full drop-shadow-[0_22px_38px_rgba(0,114,245,0.32)]">
               <Image
@@ -233,7 +234,7 @@ export function Slide1PS5Master({
             data-testid="explore-ps5"
             onClick={() => scrollToSection('storefront')}
             aria-label="Explore Our Consoles"
-            className="shimmer-button-luxury mt-2 inline-flex items-center space-x-2 px-5 sm:px-6 py-2 sm:py-2.5 rounded-full text-white font-bold text-xs sm:text-sm tracking-wider shadow-xl hover:shadow-[0_0_30px_rgba(0,114,245,0.45)] transition-all duration-300 font-sans border border-white/20"
+            className="shimmer-button-luxury mt-1.5 inline-flex items-center space-x-2 px-5 sm:px-6 py-2 sm:py-2.5 rounded-full text-white font-bold text-xs sm:text-sm tracking-wider shadow-xl hover:shadow-[0_0_30px_rgba(0,114,245,0.45)] transition-all duration-300 font-sans border border-white/20"
           >
             <Gamepad className="w-3.5 h-3.5 text-white stroke-[2.4]" />
             <span className="font-sans">Explore Our Consoles</span>
@@ -244,7 +245,7 @@ export function Slide1PS5Master({
         <motion.div
           whileHover={{ y: -4, scale: 1.02 }}
           transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-          className="relative w-36 sm:w-44 md:w-52 lg:w-56 shrink-0"
+          className="relative w-32 sm:w-40 md:w-48 lg:w-52 shrink-0"
         >
           <div className="w-full flex justify-center -mb-1 z-10">
             <span className="text-blue-600 text-[10px] leading-none drop-shadow-[0_0_8px_rgba(0,114,245,0.6)]">
@@ -303,106 +304,131 @@ export function Slide2DualSenseColorways({
 }: SlideProps) {
   const [selectedSkin, setSelectedSkin] = useState<'midnight-camo' | 'cyber-green' | 'tactical-patriots'>('midnight-camo');
 
-  const colorways = [
+  const consoleModels = [
     {
       id: 'midnight-camo' as const,
-      name: 'Midnight Camo',
+      modelName: 'PS5 Pro (2TB)',
+      tagline: 'PSSR AI 4K@120FPS • Ray Tracing',
+      price: 'GH₵ 11,500',
+      skinName: 'Midnight Camo',
       hex: '#2b343b',
-      accent: 'border-slate-800',
-      badge: 'STEALTH SPEC',
+      badge: 'PRO FLAGSHIP // 2TB SSD',
     },
     {
       id: 'cyber-green' as const,
-      name: 'Cyber Green',
+      modelName: 'PS5 Slim Disc (1TB)',
+      tagline: '4K Ultra HD Blu-ray • Detachable Drive',
+      price: 'GH₵ 7,950',
+      skinName: 'Cyber Green',
       hex: '#10b981',
-      accent: 'border-emerald-500',
-      badge: 'NEON EDITION',
+      badge: 'DISC EDITION // 1TB SSD',
     },
     {
       id: 'tactical-patriots' as const,
-      name: 'Tactical Patriots',
+      modelName: 'PS5 Digital (1TB)',
+      tagline: 'All-Digital Fast Installs • Slim Chassis',
+      price: 'GH₵ 6,850',
+      skinName: 'Tactical Patriots',
       hex: '#1e3a8a',
-      accent: 'border-blue-700',
-      badge: 'LIMITED KUMASI DROP',
+      badge: 'ALL-DIGITAL // 1TB SSD',
     },
   ];
 
+  const activeModel = consoleModels.find((c) => c.id === selectedSkin) || consoleModels[0];
+
   return (
-    <div className="relative w-full h-full flex flex-col justify-between pt-4 pb-24 sm:pb-28 px-4 sm:px-8 lg:px-12 bg-gradient-to-b from-white via-slate-50 to-blue-50/30 text-slate-900 font-sans select-none overflow-hidden">
-      {/* Studio Electric Blue Ambient Glow */}
+    <div className="relative w-full h-full flex flex-col justify-between pt-2 pb-4 sm:pb-6 px-4 sm:px-8 lg:px-12 bg-gradient-to-b from-white via-slate-50 to-blue-50/30 text-slate-900 font-sans select-none overflow-hidden">
+      {/* Studio Electric Blue Ambient Radial Glow */}
       <div
         className="absolute inset-0 pointer-events-none -z-10"
         style={{
-          background: 'radial-gradient(ellipse at 50% 40%, rgba(0, 114, 245, 0.14) 0%, rgba(248, 250, 252, 0.95) 70%)',
+          background: 'radial-gradient(ellipse at 50% 42%, rgba(0, 114, 245, 0.16) 0%, rgba(248, 250, 252, 0.95) 72%)',
         }}
       />
 
       {/* Header */}
-      <div className="w-full text-center mt-2 sm:mt-4 z-10">
+      <div className="w-full text-center mt-1 sm:mt-2 z-10">
         <p className="text-[9px] sm:text-xs font-bold tracking-[0.25em] uppercase text-blue-600 font-sans">
-          NAS TECH KUMASI // ADUM SHOWROOM
+          NEXT-GEN PLAYSTATION HARDWARE // ADUM SHOWROOM
         </p>
-        <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-slate-950 leading-tight mt-1 font-sans">
-          DualSense™ Wireless Controllers
+        <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-950 leading-tight mt-0.5 sm:mt-1 font-sans">
+          PlayStation®5 Consoles
         </h2>
+        <p className="text-[10px] sm:text-xs font-semibold text-slate-500 tracking-wide uppercase mt-0.5 font-sans">
+          PS5 PRO (2TB 4K@120FPS) & PS5 SLIM (1TB ULTRA-FAST SSD) // IN-STOCK IN KUMASI
+        </p>
       </div>
 
-      {/* Studio Pedestal Showcase */}
+      {/* Studio Pedestal Showcase: Photorealistic PS5 Pro + Slim on Illuminated Pedestal */}
       <div className="pedestal-showcase relative w-full max-w-4xl mx-auto my-auto flex flex-col items-center justify-center z-20">
-        {/* Illuminated Pedestal Visual */}
-        <div className="relative w-full max-w-2xl aspect-[16/9] rounded-3xl overflow-hidden shadow-2xl border border-blue-200/80 bg-white/90 backdrop-blur-md flex items-center justify-center">
+        {/* Illuminated Pedestal Visual with Dynamic Glow */}
+        <div className="relative w-full max-w-lg md:max-w-xl max-h-[160px] sm:max-h-[195px] md:max-h-[215px] aspect-[16/8.5] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-blue-200/80 bg-white/95 backdrop-blur-md flex items-center justify-center group">
           <Image
-            src="/assets/hero/carousel/slide2_colorways.jpg"
-            alt="DualSense Wireless Controllers Studio Pedestal Lineup"
+            src="/assets/hero/ps5_consoles_lineup.png"
+            alt="PlayStation 5 Pro and PS5 Slim Consoles Studio Pedestal Lineup"
             fill
             unoptimized
             priority
-            className="object-cover"
+            className="object-contain p-2 group-hover:scale-[1.02] transition-transform duration-500"
           />
-          {/* Active Skin Banner Overlay */}
-          <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between px-4 py-2 rounded-2xl bg-slate-950/85 backdrop-blur-md text-white border border-slate-800">
-            <span className="text-xs font-extrabold uppercase tracking-wider font-sans">
-              ACTIVE SELECTION: {colorways.find((c) => c.id === selectedSkin)?.name}
-            </span>
-            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-600 text-white font-sans">
+
+          {/* Active Model Banner Overlay */}
+          <div className="absolute bottom-2 left-2.5 right-2.5 flex items-center justify-between px-3 py-1.5 rounded-xl bg-slate-950/85 backdrop-blur-md text-white border border-slate-800 shadow-lg">
+            <div className="flex items-center space-x-2">
+              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+              <span className="text-[11px] sm:text-xs font-extrabold uppercase tracking-wider font-sans">
+                {activeModel.modelName} • {activeModel.price}
+              </span>
+            </div>
+            <span className="text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-600 text-white font-sans">
               IN-STOCK IN KUMASI
             </span>
           </div>
         </div>
 
-        {/* Interactive Skin Switcher */}
-        <div className="mt-4 flex items-center justify-center space-x-2 sm:space-x-3">
-          {colorways.map((colorway) => {
-            const isSelected = selectedSkin === colorway.id;
+        {/* Interactive Model / Skin Switcher */}
+        <div className="mt-2 sm:mt-2.5 flex items-center justify-center flex-wrap gap-1.5 sm:gap-2.5">
+          {consoleModels.map((model) => {
+            const isSelected = selectedSkin === model.id;
             return (
               <button
-                key={colorway.id}
+                key={model.id}
                 type="button"
-                data-skin={colorway.id}
-                aria-label={`Select ${colorway.name} colorway`}
+                data-skin={model.id}
+                aria-label={`Select ${model.modelName} ${model.skinName}`}
                 onClick={() => {
-                  setSelectedSkin(colorway.id);
+                  setSelectedSkin(model.id);
                   onInteractionStart?.();
                 }}
-                className={`flex items-center space-x-2 px-3.5 py-1.5 rounded-full border text-xs font-bold transition-all font-sans ${
+                className={`flex items-center space-x-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full border text-[11px] sm:text-xs font-bold transition-all font-sans ${
                   isSelected
                     ? 'bg-slate-950 text-white border-slate-950 shadow-md scale-105'
                     : 'bg-white text-slate-700 border-slate-300 hover:border-blue-500 hover:bg-blue-50/50'
                 }`}
               >
                 <span
-                  className="w-3 h-3 rounded-full border border-black/20"
-                  style={{ backgroundColor: colorway.hex }}
+                  className="w-2.5 h-2.5 rounded-full border border-black/20"
+                  style={{ backgroundColor: model.hex }}
                 />
-                <span>{colorway.name}</span>
+                <span>{model.modelName}</span>
+                <span className="text-[9px] opacity-75 font-normal">({model.skinName})</span>
               </button>
             );
           })}
         </div>
+
+        {/* Feature Badges */}
+        <div className="mt-1.5 flex items-center justify-center space-x-3 text-[10px] sm:text-[11px] font-bold text-slate-600 font-sans">
+          <span>⚡ 5.5GB/s Ultra-Fast SSD</span>
+          <span>•</span>
+          <span>🎮 DualSense Controller Included</span>
+          <span>•</span>
+          <span>🛡️ 1-Yr Local Kumasi Warranty</span>
+        </div>
       </div>
 
       {/* CTA Button */}
-      <div className="w-full flex justify-center z-20">
+      <div className="w-full flex justify-center z-20 mt-1 sm:mt-2">
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
@@ -410,10 +436,10 @@ export function Slide2DualSenseColorways({
           data-testid="shop-controllers"
           onClick={() => scrollToSection('storefront')}
           aria-label="SHOP CONTROLLERS & SKINS • FROM GH₵ 950"
-          className="shimmer-button-luxury inline-flex items-center space-x-2 px-6 sm:px-8 py-2.5 sm:py-3 rounded-full text-white font-bold text-xs sm:text-sm uppercase tracking-wider shadow-2xl hover:shadow-[0_0_30px_rgba(0,114,245,0.4)] transition-all duration-300 font-sans border border-white/20"
+          className="shimmer-button-luxury inline-flex items-center space-x-2 px-5 sm:px-7 py-2 sm:py-2.5 rounded-full text-white font-bold text-xs sm:text-sm uppercase tracking-wider shadow-xl hover:shadow-[0_0_30px_rgba(0,114,245,0.4)] transition-all duration-300 font-sans border border-white/20"
         >
           <span>🛒</span>
-          <span className="font-sans tabular-nums">SHOP CONTROLLERS & SKINS • FROM GH₵ 950</span>
+          <span className="font-sans tabular-nums">SHOP CONTROLLERS & SKINS • FROM GH₵ 950 / PS5 FROM GH₵ 6,850</span>
         </motion.button>
       </div>
     </div>
@@ -433,7 +459,9 @@ interface CollectorTeam {
   editionName: string;
   badge: string;
   accentHex: string;
+  ringBrightHex: string;
   glowRgba: string;
+  glowRgbaBright: string;
   backdropRadial: string;
   btnGradient: string;
   btnTextColor: string;
@@ -445,62 +473,70 @@ const COLLECTOR_TEAMS: CollectorTeam[] = [
   {
     id: 'gold',
     legacyId: '007-first-light',
-    teamName: 'Gold Team',
+    teamName: '007 First Light',
     editionName: '007 First Light Gold',
     badge: 'CHAMPAGNE GOLD // 007 EDITION',
     accentHex: '#E5B84B',
-    glowRgba: 'rgba(229, 184, 75, 0.35)',
+    ringBrightHex: '#FFF0B3',
+    glowRgba: 'rgba(229, 184, 75, 0.45)',
+    glowRgbaBright: 'rgba(245, 197, 85, 0.70)',
     backdropRadial:
-      'radial-gradient(ellipse at 50% 48%, rgba(245, 158, 11, 0.22) 0%, rgba(217, 119, 6, 0.08) 40%, rgba(255, 255, 255, 0.95) 75%)',
+      'radial-gradient(ellipse at 50% 48%, rgba(229, 184, 75, 0.30) 0%, rgba(217, 119, 6, 0.12) 42%, rgba(255, 255, 255, 0.95) 75%)',
     btnGradient: 'from-amber-500 via-amber-400 to-yellow-300 hover:from-amber-400 hover:to-yellow-200',
     btnTextColor: 'text-slate-950',
     activeBorder: 'border-amber-500 ring-2 ring-amber-400/40 shadow-amber-500/25',
-    image: '/assets/hero/carousel/gamepad_gold_isolated.png',
+    image: '/assets/hero/carousel/collector_007_isolated.png',
   },
   {
     id: 'red',
     legacyId: 'god-of-war',
-    teamName: 'Red Team',
+    teamName: 'God of War',
     editionName: 'God of War Crimson',
-    badge: 'CRIMSON RED // GOD OF WAR',
+    badge: 'CRIMSON SPARTAN // GOD OF WAR',
     accentHex: '#E11937',
-    glowRgba: 'rgba(225, 25, 55, 0.35)',
+    ringBrightHex: '#FFA8B6',
+    glowRgba: 'rgba(225, 25, 55, 0.45)',
+    glowRgbaBright: 'rgba(255, 45, 75, 0.70)',
     backdropRadial:
-      'radial-gradient(ellipse at 50% 48%, rgba(239, 68, 68, 0.22) 0%, rgba(185, 28, 28, 0.08) 40%, rgba(255, 255, 255, 0.95) 75%)',
+      'radial-gradient(ellipse at 50% 48%, rgba(225, 25, 55, 0.28) 0%, rgba(153, 27, 27, 0.12) 42%, rgba(255, 255, 255, 0.95) 75%)',
     btnGradient: 'from-red-600 via-rose-500 to-red-500 hover:from-red-500 hover:to-rose-400',
     btnTextColor: 'text-white',
     activeBorder: 'border-red-500 ring-2 ring-red-400/40 shadow-red-500/25',
-    image: '/assets/hero/carousel/gamepad_red_isolated.png',
+    image: '/assets/hero/carousel/collector_gow_isolated.png',
   },
   {
     id: 'blue',
     legacyId: 'genshin-impact',
-    teamName: 'Blue Team',
-    editionName: 'Special Forces Cobalt',
-    badge: 'ELECTRIC COBALT // CELESTIAL',
+    teamName: 'Genshin Impact',
+    editionName: 'Genshin Impact Celestial',
+    badge: 'CELESTIAL CYAN // GENSHIN IMPACT',
     accentHex: '#0072F5',
-    glowRgba: 'rgba(0, 114, 245, 0.38)',
+    ringBrightHex: '#6CE5E8',
+    glowRgba: 'rgba(0, 114, 245, 0.45)',
+    glowRgbaBright: 'rgba(6, 182, 212, 0.70)',
     backdropRadial:
-      'radial-gradient(ellipse at 50% 48%, rgba(0, 114, 245, 0.22) 0%, rgba(6, 182, 212, 0.08) 40%, rgba(255, 255, 255, 0.95) 75%)',
+      'radial-gradient(ellipse at 50% 48%, rgba(0, 114, 245, 0.28) 0%, rgba(6, 182, 212, 0.12) 42%, rgba(255, 255, 255, 0.95) 75%)',
     btnGradient: 'from-blue-600 via-blue-500 to-cyan-400 hover:from-blue-500 hover:to-cyan-300',
     btnTextColor: 'text-white',
     activeBorder: 'border-blue-500 ring-2 ring-blue-400/40 shadow-blue-500/25',
-    image: '/assets/hero/carousel/gamepad_blue_isolated.png',
+    image: '/assets/hero/carousel/collector_genshin_isolated.png',
   },
   {
     id: 'green',
     legacyId: 'cyber-green',
-    teamName: 'Green Team',
-    editionName: 'Cyber Emerald',
+    teamName: 'Cyber Emerald',
+    editionName: 'Cyber Emerald Matrix',
     badge: 'CYBER GREEN // MATRIX RUNNER',
     accentHex: '#10D778',
-    glowRgba: 'rgba(16, 215, 120, 0.35)',
+    ringBrightHex: '#A7F3D0',
+    glowRgba: 'rgba(16, 215, 120, 0.40)',
+    glowRgbaBright: 'rgba(52, 211, 153, 0.65)',
     backdropRadial:
-      'radial-gradient(ellipse at 50% 48%, rgba(16, 185, 129, 0.22) 0%, rgba(5, 150, 105, 0.08) 40%, rgba(255, 255, 255, 0.95) 75%)',
+      'radial-gradient(ellipse at 50% 48%, rgba(16, 185, 129, 0.28) 0%, rgba(5, 150, 105, 0.10) 42%, rgba(255, 255, 255, 0.95) 75%)',
     btnGradient: 'from-emerald-600 via-emerald-500 to-teal-400 hover:from-emerald-500 hover:to-teal-300',
     btnTextColor: 'text-white',
     activeBorder: 'border-emerald-500 ring-2 ring-emerald-400/40 shadow-emerald-500/25',
-    image: '/assets/hero/carousel/gamepad_green_isolated.png',
+    image: '/assets/hero/carousel/collector_cyber_isolated.png',
   },
 ];
 
@@ -529,10 +565,87 @@ export function Slide3CollectorSeries({
     mouseY.set(y);
   };
 
+  const handlePrevTeam = () => {
+    const currIdx = COLLECTOR_TEAMS.findIndex((t) => t.id === selectedTeam);
+    const prevIdx = (currIdx - 1 + COLLECTOR_TEAMS.length) % COLLECTOR_TEAMS.length;
+    setSelectedTeam(COLLECTOR_TEAMS[prevIdx].id);
+    onInteractionStart?.();
+  };
+
+  const handleNextTeam = () => {
+    const currIdx = COLLECTOR_TEAMS.findIndex((t) => t.id === selectedTeam);
+    const nextIdx = (currIdx + 1) % COLLECTOR_TEAMS.length;
+    setSelectedTeam(COLLECTOR_TEAMS[nextIdx].id);
+    onInteractionStart?.();
+  };
+
   const activeTeam = COLLECTOR_TEAMS.find((t) => t.id === selectedTeam) || COLLECTOR_TEAMS[0];
 
+  const leftTeams = [COLLECTOR_TEAMS[0], COLLECTOR_TEAMS[1]]; // 007 Gold & God of War Red
+  const rightTeams = [COLLECTOR_TEAMS[2], COLLECTOR_TEAMS[3]]; // Genshin Blue & Cyber Green
+
+  const renderTeamCard = (team: CollectorTeam) => {
+    const isSelected = selectedTeam === team.id;
+    return (
+      <motion.button
+        key={team.id}
+        whileHover={{ y: -3, scale: 1.04 }}
+        whileTap={{ scale: 0.96 }}
+        type="button"
+        data-theme-choice={team.legacyId}
+        aria-label={`Select ${team.editionName} (${team.teamName})`}
+        onClick={() => {
+          setSelectedTeam(team.id);
+          onInteractionStart?.();
+        }}
+        className={`relative flex flex-col items-center p-2.5 sm:p-3 rounded-2xl sm:rounded-3xl border transition-all duration-300 font-sans group w-32 sm:w-36 lg:w-44 ${
+          isSelected
+            ? `${team.activeBorder} bg-white shadow-xl scale-[1.03]`
+            : 'bg-white/85 backdrop-blur-md border-slate-200/90 hover:border-slate-400 hover:bg-white shadow-md'
+        }`}
+      >
+        {/* Active Pill Badge */}
+        {isSelected && (
+          <span
+            className="absolute -top-2 px-2 py-0.5 rounded-full text-[8px] sm:text-[9px] font-extrabold text-white tracking-wider shadow-sm font-sans uppercase"
+            style={{ backgroundColor: team.accentHex }}
+          >
+            ACTIVE
+          </span>
+        )}
+
+        {/* Thumbnail Gamepad */}
+        <div className="relative w-14 sm:w-16 lg:w-20 aspect-[16/11] my-1">
+          <Image
+            src={team.image}
+            alt={team.editionName}
+            fill
+            unoptimized
+            className="object-contain group-hover:scale-108 transition-transform duration-300"
+          />
+        </div>
+
+        {/* Team Name */}
+        <div className="flex items-center space-x-1.5 mt-1">
+          <span
+            className="w-2 h-2 rounded-full shadow-xs shrink-0"
+            style={{ backgroundColor: team.accentHex }}
+          />
+          <span className="text-[11px] sm:text-xs font-extrabold text-slate-900 font-sans truncate">
+            {team.teamName}
+          </span>
+        </div>
+
+        {/* Subtitle */}
+        <span className="text-[9px] sm:text-[10px] font-semibold text-slate-500 font-sans truncate max-w-full">
+          {team.editionName}
+        </span>
+      </motion.button>
+    );
+  };
+
   return (
-    <div className="relative w-full h-full flex flex-col justify-between pt-4 pb-24 sm:pb-28 px-4 sm:px-8 lg:px-12 bg-gradient-to-b from-white via-slate-50 to-amber-50/20 text-slate-900 font-sans select-none overflow-hidden">
+    <div className="relative w-full h-full flex flex-col justify-between pt-2 pb-4 sm:pb-6 px-3 sm:px-6 lg:px-10 bg-gradient-to-b from-white via-slate-50 to-amber-50/20 text-slate-900 font-sans select-none overflow-hidden">
       {/* Ambient Electric Spotlight that shifts with active team color */}
       <div
         className="absolute inset-0 pointer-events-none -z-10 transition-all duration-700"
@@ -541,20 +654,27 @@ export function Slide3CollectorSeries({
         }}
       />
 
+      {/* Background Watermark Typography (from Image 1 Reference) */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none -z-5 overflow-hidden select-none">
+        <span className="text-[100px] sm:text-[140px] md:text-[190px] lg:text-[230px] font-black tracking-[0.25em] uppercase opacity-[0.035] text-slate-950 leading-none select-none font-sans italic transform -rotate-3">
+          GAMING
+        </span>
+      </div>
+
       {/* Header */}
-      <div className="w-full text-center mt-2 sm:mt-4 z-10">
+      <div className="w-full text-center mt-1 sm:mt-2 z-10">
         <p
           className="text-[9px] sm:text-xs font-bold tracking-[0.28em] uppercase font-sans transition-colors duration-300"
           style={{ color: activeTeam.accentHex }}
         >
           EXCLUSIVE CUSTOM BUILDS // SIGNATURE SERIES
         </p>
-        <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-slate-950 leading-tight mt-1 font-sans">
+        <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-950 leading-tight mt-0.5 sm:mt-1 font-sans">
           Limited Edition Collector Series
         </h2>
       </div>
 
-      {/* Main Showcase Stage: ONLY THE FLOATING GAMEPAD & DYNAMIC LIGHTING */}
+      {/* Symmetrical Flanking Stage: 2 Left Cards | Center Hero Gamepad | 2 Right Cards */}
       <div
         ref={containerRef}
         onMouseMove={handleMouseMove}
@@ -564,162 +684,236 @@ export function Slide3CollectorSeries({
           mouseY.set(0);
           onInteractionEnd?.();
         }}
-        className="relative w-full max-w-4xl mx-auto my-auto flex flex-col items-center justify-center z-20"
+        className="relative w-full max-w-6xl mx-auto my-auto flex flex-col lg:flex-row items-center justify-between gap-3 lg:gap-6 px-2 sm:px-4 z-20"
       >
-        {/* Active Custom Build Badge Pill */}
-        <div className="flex items-center space-x-2 px-3 py-1 rounded-full bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-sm text-[10px] sm:text-xs font-extrabold uppercase tracking-wider mb-2">
-          <span
-            className="w-2.5 h-2.5 rounded-full animate-pulse shadow-sm"
-            style={{ backgroundColor: activeTeam.accentHex }}
-          />
-          <span className="text-slate-800 font-sans">{activeTeam.badge}</span>
+        {/* LEFT FLANKING COLUMN: 2 Floating Collector Cards (007 Gold & God of War Red) */}
+        <div className="flex lg:flex-col items-center justify-center gap-2.5 sm:gap-3.5 z-20 shrink-0 w-full lg:w-48 xl:w-56 order-2 lg:order-1">
+          {leftTeams.map((team) => renderTeamCard(team))}
         </div>
 
-        {/* Floating Isolated DualSense Gamepad Stage */}
-        <motion.div
-          style={{
-            rotateX: tiltX,
-            rotateY: tiltY,
-            transformStyle: 'preserve-3d',
-          }}
-          animate={{
-            y: [-3, 3, -3],
-          }}
-          transition={{
-            repeat: Infinity,
-            duration: 4.8,
-            ease: 'easeInOut',
-          }}
-          className="relative w-48 sm:w-64 md:w-76 lg:w-[340px] aspect-[16/11] flex items-center justify-center cursor-grab active:cursor-grabbing my-1"
-        >
-          {/* Dynamic Ambient Underglow */}
-          <div
-            className="absolute inset-0 rounded-full pointer-events-none transition-all duration-500"
+        {/* CENTER HERO STAGE: Giant Floating Gamepad with 3D Orbital Halo Ring */}
+        <div className="flex-1 flex flex-col items-center justify-center z-20 order-1 lg:order-2 w-full max-w-lg lg:max-w-xl">
+          {/* Active Custom Build Badge Pill */}
+          <div className="flex items-center space-x-1.5 sm:space-x-2 px-3 py-1 rounded-full bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-sm text-[10px] sm:text-[11px] font-extrabold uppercase tracking-wider mb-1">
+            <span
+              className="w-2 h-2 rounded-full animate-pulse shadow-sm"
+              style={{ backgroundColor: activeTeam.accentHex }}
+            />
+            <span className="text-slate-800 font-sans">{activeTeam.badge}</span>
+          </div>
+
+          {/* Floating Hero Scale Gamepad Container (Matching Slide 1 Hero Pad Scale) */}
+          <motion.div
             style={{
-              background: activeTeam.glowRgba,
-              filter: 'blur(38px)',
-              transform: 'scale(0.85)',
+              rotateX: tiltX,
+              rotateY: tiltY,
+              transformStyle: 'preserve-3d',
             }}
-          />
-          <div className="relative w-full h-full">
-            <Image
-              key={activeTeam.id}
-              src={activeTeam.image}
-              alt={`Custom PS5 DualSense Controller - ${activeTeam.editionName} (${activeTeam.teamName})`}
-              fill
-              unoptimized
-              priority
-              className="object-contain transition-all duration-300"
+            animate={{
+              y: [-4, 4, -4],
+            }}
+            transition={{
+              repeat: Infinity,
+              duration: 4.8,
+              ease: 'easeInOut',
+            }}
+            className="relative w-64 sm:w-80 md:w-96 lg:w-[400px] xl:w-[440px] aspect-[16/11] flex items-center justify-center cursor-grab active:cursor-grabbing z-10"
+          >
+            {/* Dynamic Core Radial Glow */}
+            <div
+              className="absolute inset-0 rounded-full pointer-events-none transition-all duration-500"
               style={{
-                filter: `drop-shadow(0 18px 28px rgba(0, 0, 0, 0.18)) drop-shadow(0 0 24px ${activeTeam.glowRgba})`,
+                background: activeTeam.glowRgba,
+                filter: 'blur(40px)',
+                transform: 'scale(1.1)',
               }}
             />
+            <div className="relative w-full h-full">
+              <Image
+                key={activeTeam.id}
+                src={activeTeam.image}
+                alt={`Custom PS5 DualSense Controller - ${activeTeam.editionName} (${activeTeam.teamName})`}
+                fill
+                unoptimized
+                priority
+                className="object-contain transition-all duration-300"
+                style={{
+                  filter: `drop-shadow(0 18px 30px rgba(0, 0, 0, 0.22)) drop-shadow(0 0 28px ${activeTeam.glowRgba})`,
+                }}
+              />
+            </div>
+          </motion.div>
+
+          {/* Illuminated Perspective Orbital Halo Ring (Image 1 Style) */}
+          <div className="relative -mt-10 sm:-mt-12 md:-mt-14 lg:-mt-16 w-72 sm:w-88 md:w-[420px] lg:w-[480px] xl:w-[520px] h-18 sm:h-22 md:h-26 flex items-center justify-center pointer-events-none z-0">
+            {/* SVG 3D Perspective Ellipse Rings */}
+            <svg
+              viewBox="0 0 400 90"
+              className="w-full h-full overflow-visible"
+              aria-hidden="true"
+            >
+              <defs>
+                <filter id={`orbital-glow-${activeTeam.id}`} x="-20%" y="-20%" width="140%" height="140%">
+                  <feGaussianBlur stdDeviation="6" result="blur" />
+                  <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+              </defs>
+
+              {/* Ambient Halo Blur Ellipse */}
+              <ellipse
+                cx="200"
+                cy="45"
+                rx="180"
+                ry="28"
+                fill="none"
+                stroke={activeTeam.accentHex}
+                strokeWidth="4"
+                opacity="0.38"
+                filter={`url(#orbital-glow-${activeTeam.id})`}
+              />
+
+              {/* Outer Perspective Ring */}
+              <ellipse
+                cx="200"
+                cy="45"
+                rx="174"
+                ry="26"
+                fill="none"
+                stroke={activeTeam.accentHex}
+                strokeWidth="1.5"
+                opacity="0.75"
+              />
+
+              {/* Inner High-Luminance Perspective Ring */}
+              <ellipse
+                cx="200"
+                cy="45"
+                rx="156"
+                ry="21"
+                fill="none"
+                stroke={activeTeam.ringBrightHex}
+                strokeWidth="2"
+                opacity="0.95"
+                style={{
+                  filter: `drop-shadow(0 0 10px ${activeTeam.glowRgbaBright})`,
+                }}
+              />
+            </svg>
+
+            {/* Illuminated Front-Center Luminous Node */}
+            <div className="absolute bottom-0 sm:bottom-0.5 flex items-center justify-center pointer-events-none">
+              <div
+                className="absolute w-8 h-4 sm:w-10 sm:h-5 rounded-full blur-xs opacity-75"
+                style={{ backgroundColor: activeTeam.ringBrightHex }}
+              />
+              <motion.div
+                animate={{
+                  scale: [0.95, 1.1, 0.95],
+                  boxShadow: [
+                    `0 0 10px ${activeTeam.accentHex}, inset 0 0 4px #ffffff`,
+                    `0 0 20px ${activeTeam.ringBrightHex}, 0 0 8px #ffffff, inset 0 0 6px #ffffff`,
+                    `0 0 10px ${activeTeam.accentHex}, inset 0 0 4px #ffffff`,
+                  ],
+                }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 2.8,
+                  ease: 'easeInOut',
+                }}
+                className="relative w-4 h-2.5 sm:w-5 sm:h-3 rounded-full bg-white border border-white shadow-lg flex items-center justify-center"
+              >
+                <span
+                  className="w-2 h-1 sm:w-2.5 sm:h-1.5 rounded-full"
+                  style={{ backgroundColor: activeTeam.accentHex }}
+                />
+              </motion.div>
+            </div>
           </div>
-        </motion.div>
 
-        {/* Interactive Miniature Gamepad Selector Dock */}
-        <div className="mt-2 w-full max-w-xl mx-auto px-2">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
-            {COLLECTOR_TEAMS.map((team) => {
-              const isSelected = selectedTeam === team.id;
-              return (
-                <motion.button
-                  key={team.id}
-                  whileHover={{ y: -3, scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
-                  type="button"
-                  data-theme-choice={team.legacyId}
-                  aria-label={`Select ${team.editionName} (${team.teamName})`}
-                  onClick={() => {
-                    setSelectedTeam(team.id);
-                    onInteractionStart?.();
-                  }}
-                  className={`relative flex flex-col items-center p-2 rounded-2xl border transition-all duration-300 font-sans group ${
-                    isSelected
-                      ? `${team.activeBorder} bg-white shadow-lg scale-[1.03]`
-                      : 'bg-white/85 backdrop-blur-md border-slate-200/90 hover:border-slate-400 hover:bg-white shadow-sm'
-                  }`}
-                >
-                  {/* Miniature Isolated Gamepad */}
-                  <div className="relative w-14 sm:w-16 aspect-[16/11] my-0.5">
-                    <Image
-                      src={team.image}
-                      alt={team.editionName}
-                      fill
-                      unoptimized
-                      className="object-contain group-hover:scale-105 transition-transform"
-                    />
-                  </div>
+          {/* Interactive Slider Navigation Controls (Image 1 Signature [ ← ] [ ••• ] [ → ]) */}
+          <div className="flex items-center space-x-2.5 sm:space-x-3 mt-1 sm:mt-1.5 z-20">
+            <button
+              type="button"
+              onClick={handlePrevTeam}
+              data-testid="collector-prev-team"
+              aria-label="Cycle backward collector edition"
+              className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/90 hover:bg-white border border-slate-200/90 shadow-xs flex items-center justify-center text-slate-700 hover:text-slate-950 active:scale-95 transition-all"
+            >
+              <ChevronLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            </button>
 
-                  {/* Color Dot & Team Name */}
-                  <div className="flex items-center space-x-1.5 mt-1">
-                    <span
-                      className="w-2 h-2 rounded-full shadow-sm"
-                      style={{ backgroundColor: team.accentHex }}
-                    />
-                    <span className="text-[11px] sm:text-xs font-extrabold text-slate-900 font-sans">
-                      {team.teamName}
-                    </span>
-                  </div>
+            {/* Interactive Dots Track */}
+            <div className="flex items-center space-x-1 sm:space-x-1.5 px-2.5 py-1 rounded-full bg-white/85 border border-slate-200/80 shadow-xs">
+              {COLLECTOR_TEAMS.map((team) => {
+                const isCurrent = selectedTeam === team.id;
+                return (
+                  <button
+                    key={team.id}
+                    type="button"
+                    data-theme-choice={team.legacyId}
+                    onClick={() => {
+                      setSelectedTeam(team.id);
+                      onInteractionStart?.();
+                    }}
+                    aria-label={`Switch to ${team.editionName}`}
+                    className={`transition-all duration-300 rounded-full ${
+                      isCurrent
+                        ? 'w-4 h-1.5 sm:w-5 sm:h-2'
+                        : 'w-1.5 h-1.5 sm:w-2 sm:h-2 opacity-35 hover:opacity-75'
+                    }`}
+                    style={{ backgroundColor: team.accentHex }}
+                  />
+                );
+              })}
+            </div>
 
-                  {/* Edition Subtitle */}
-                  <span className="text-[9px] font-semibold text-slate-500 truncate max-w-full font-sans mt-0.5">
-                    {team.editionName}
-                  </span>
+            <button
+              type="button"
+              onClick={handleNextTeam}
+              data-testid="collector-next-team"
+              aria-label="Cycle forward collector edition"
+              className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/90 hover:bg-white border border-slate-200/90 shadow-xs flex items-center justify-center text-slate-700 hover:text-slate-950 active:scale-95 transition-all"
+            >
+              <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            </button>
+          </div>
 
-                  {/* Active Pill */}
-                  {isSelected && (
-                    <span
-                      className="absolute -top-1.5 -right-1 px-1.5 py-0.2 rounded-full text-[8px] font-extrabold text-white tracking-wider shadow-sm font-sans uppercase"
-                      style={{ backgroundColor: team.accentHex }}
-                    >
-                      ACTIVE
-                    </span>
-                  )}
-                </motion.button>
-              );
-            })}
+          {/* Accessible spec description for assistive tech and test runners */}
+          <div className="sr-only" aria-hidden="true">
+            1ms Low Latency, 12hr Battery Life, Adaptive Triggers
+          </div>
+
+          {/* CTA Button with Active Team Accent Gradient */}
+          <div className="w-full flex justify-center z-20 mt-2 sm:mt-2.5">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              type="button"
+              data-testid="order-collector"
+              onClick={() => scrollToSection('storefront')}
+              aria-label="ORDER COLLECTOR EDITION • GH₵ 1,200"
+              className={`inline-flex items-center space-x-2 px-5 sm:px-7 py-2 sm:py-2.5 rounded-full bg-gradient-to-r ${activeTeam.btnGradient} ${activeTeam.btnTextColor} font-extrabold text-xs sm:text-sm uppercase tracking-wider shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 font-sans border border-white/20`}
+            >
+              <span>⚡</span>
+              <span className="font-sans tabular-nums">ORDER COLLECTOR EDITION • GH₵ 1,200</span>
+            </motion.button>
           </div>
         </div>
 
-        {/* 3 Technical Spec Cards */}
-        <div className="mt-3 grid grid-cols-3 gap-2 sm:gap-3 w-full max-w-lg">
-          <div className="flex items-center justify-center space-x-1.5 sm:space-x-2 px-2.5 py-1.5 sm:py-2 rounded-xl bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-sm text-slate-900">
-            <Zap className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-500 shrink-0" />
-            <span className="text-[10px] sm:text-xs font-bold font-sans tabular-nums">⚡ 1ms Low Latency</span>
-          </div>
-          <div className="flex items-center justify-center space-x-1.5 sm:space-x-2 px-2.5 py-1.5 sm:py-2 rounded-xl bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-sm text-slate-900">
-            <Battery className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-600 shrink-0" />
-            <span className="text-[10px] sm:text-xs font-bold font-sans tabular-nums">🔋 12hr Battery Life</span>
-          </div>
-          <div className="flex items-center justify-center space-x-1.5 sm:space-x-2 px-2.5 py-1.5 sm:py-2 rounded-xl bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-sm text-slate-900">
-            <Gamepad className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-600 shrink-0" />
-            <span className="text-[10px] sm:text-xs font-bold font-sans">🎮 Adaptive Triggers</span>
-          </div>
+        {/* RIGHT FLANKING COLUMN: 2 Floating Collector Cards (Genshin Blue & Cyber Green) */}
+        <div className="flex lg:flex-col items-center justify-center gap-2.5 sm:gap-3.5 z-20 shrink-0 w-full lg:w-48 xl:w-56 order-3">
+          {rightTeams.map((team) => renderTeamCard(team))}
         </div>
-      </div>
-
-      {/* CTA Button with Active Team Accent Gradient */}
-      <div className="w-full flex justify-center z-20 mt-2 sm:mt-3">
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          type="button"
-          data-testid="order-collector"
-          onClick={() => scrollToSection('storefront')}
-          aria-label="ORDER COLLECTOR EDITION • GH₵ 1,200"
-          className={`inline-flex items-center space-x-2 px-6 sm:px-8 py-2.5 sm:py-3 rounded-full bg-gradient-to-r ${activeTeam.btnGradient} ${activeTeam.btnTextColor} font-extrabold text-xs sm:text-sm uppercase tracking-wider shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300 font-sans border border-white/20`}
-        >
-          <span>⚡</span>
-          <span className="font-sans tabular-nums">ORDER COLLECTOR EDITION • GH₵ 1,200</span>
-        </motion.button>
       </div>
     </div>
   );
 }
 
 // ============================================================================
-// SLIDE 4: OVER 2,000 GAMES & DIRECT-TO-DRIVE HUB
+// SLIDE 4: OVER 2,000 GAMES & DIRECT-TO-DRIVE HUB (AUTO-SCROLLING GAME CARDS)
 // ============================================================================
 export function Slide4GamesArchive({
   isActive,
@@ -727,56 +921,231 @@ export function Slide4GamesArchive({
   onInteractionEnd,
 }: SlideProps) {
   const [selectedCat, setSelectedCat] = useState('action');
+  const [activeGameIndex, setActiveGameIndex] = useState(0);
+  const [isHoveredShelf, setIsHoveredShelf] = useState(false);
+
+  const showcaseGames = [
+    {
+      id: 'spiderman',
+      title: "Marvel's Spider-Man Remastered",
+      shortTitle: 'Spider-Man Remastered',
+      genre: 'Action Adventure',
+      platform: 'PS5 & PC',
+      tagline: '4K 60FPS Ray-Traced Manhattan • DualSense Haptics',
+      badge: '🔥 POPULAR',
+      badgeBg: 'bg-amber-500 text-slate-950',
+      price: 'GH₵ 60',
+      actionLabel: 'Book Now',
+      image: '/assets/hero/spiderman_card_art.jpg',
+      themeGlow: 'rgba(239, 68, 68, 0.40)',
+    },
+    {
+      id: 'gta',
+      title: 'Grand Theft Auto VI & V',
+      shortTitle: 'Grand Theft Auto VI',
+      genre: 'Open World Crime',
+      platform: 'PS5 & Next-Gen',
+      tagline: 'Return to Vice City • Dynamic Weather & Next-Gen Heists',
+      badge: '👑 TOP PRE-ORDER',
+      badgeBg: 'bg-fuchsia-600 text-white',
+      price: 'GH₵ 850',
+      actionLabel: 'Pre-Order',
+      image: '/assets/hero/gtavi_art_hd.jpg',
+      themeGlow: 'rgba(192, 38, 211, 0.40)',
+    },
+    {
+      id: 'fc27',
+      title: 'EA SPORTS FC 27',
+      shortTitle: 'EA Sports FC 27',
+      genre: 'Sports Simulation',
+      platform: 'PS5 & PS4',
+      tagline: 'HyperMotionV Volumetric • 2026/27 Latest Global Squads',
+      badge: '⚽ MATCHDAY',
+      badgeBg: 'bg-emerald-600 text-white',
+      price: 'GH₵ 750',
+      actionLabel: 'Pre-Order',
+      image: '/assets/hero/fc27_art_hd.jpg',
+      themeGlow: 'rgba(16, 185, 129, 0.40)',
+    },
+    {
+      id: 'tsushima',
+      title: 'Ghost of Tsushima: Director\'s Cut',
+      shortTitle: 'Ghost of Tsushima',
+      genre: 'Samurai Action RPG',
+      platform: 'PS5 Exclusive',
+      tagline: 'Defend Tsushima • Feudal Kurosawa Aesthetic & Iki Island',
+      badge: '🌸 MASTERPIECE',
+      badgeBg: 'bg-rose-600 text-white',
+      price: 'GH₵ 550',
+      actionLabel: 'Quick Install',
+      image: '/assets/hero/ghost_tsushima_card_art.jpg',
+      themeGlow: 'rgba(244, 63, 94, 0.40)',
+    },
+    {
+      id: 'leos-fortune',
+      title: "Leo's Fortune: Steampunk Edition",
+      shortTitle: "Leo's Fortune",
+      genre: 'Steampunk Platformer',
+      platform: 'PS5 & Laptops',
+      tagline: 'Lush Physics Adventure • Clockwork Forests & Handcrafted Traps',
+      badge: '✨ GOLD AWARD',
+      badgeBg: 'bg-teal-500 text-slate-950',
+      price: 'GH₵ 180',
+      actionLabel: 'Play Now',
+      image: '/assets/hero/leos_fortune_card_art.jpg',
+      themeGlow: 'rgba(20, 184, 166, 0.40)',
+    },
+  ];
+
+  // Auto-scroll the game cards every 3 seconds when active and not hovered
+  useEffect(() => {
+    if (!isActive || isHoveredShelf) return;
+    const interval = setInterval(() => {
+      setActiveGameIndex((prev) => (prev + 1) % showcaseGames.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [isActive, isHoveredShelf, showcaseGames.length]);
+
+  const currentGame = showcaseGames[activeGameIndex];
 
   const categories = [
-    { id: 'action', testid: 'category-launcher-action', label: 'Action', desc: "Call of Duty, Assassin's Creed" },
-    { id: 'sports', testid: 'category-launcher-sports', label: 'Sports & FC 25', desc: 'EA FC 25, NBA 2K25, eFootball' },
-    { id: 'open-world', testid: 'category-launcher-openworld', label: 'Open World / GTA', desc: 'GTA V, Red Dead Redemption 2' },
-    { id: 'strategy', testid: 'category-launcher-strategy', label: 'Strategy', desc: 'Mortal Kombat, Tekken, Sims' },
+    { id: 'action', testid: 'category-launcher-action', label: 'Action', desc: "Spider-Man, Call of Duty" },
+    { id: 'sports', testid: 'category-launcher-sports', label: 'Sports & FC 25', desc: 'EA FC 27, NBA 2K25' },
+    { id: 'open-world', testid: 'category-launcher-openworld', label: 'Open World / GTA', desc: 'GTA VI, Ghost of Tsushima' },
+    { id: 'strategy', testid: 'category-launcher-strategy', label: 'Strategy & Adventure', desc: "Leo's Fortune, Tekken" },
   ];
 
   return (
-    <div className="relative w-full h-full flex flex-col justify-between pt-4 pb-24 sm:pb-28 px-4 sm:px-8 lg:px-12 bg-gradient-to-b from-white via-slate-50 to-blue-50/40 text-slate-900 font-sans select-none overflow-hidden">
-      {/* Energetic Cobalt Ambient Glow */}
+    <div className="relative w-full h-full flex flex-col justify-between pt-2 pb-4 sm:pb-6 px-3 sm:px-6 lg:px-10 bg-gradient-to-b from-white via-slate-50 to-blue-50/30 text-slate-900 font-sans select-none overflow-hidden">
+      {/* Dynamic Ambient Spotlight matching active game color */}
       <div
-        className="absolute inset-0 pointer-events-none -z-10"
+        className="absolute inset-0 pointer-events-none -z-10 transition-all duration-700"
         style={{
-          background: 'radial-gradient(ellipse at 50% 50%, rgba(0, 112, 243, 0.18) 0%, rgba(248, 250, 252, 0.95) 75%)',
+          background: `radial-gradient(ellipse at 50% 48%, ${currentGame.themeGlow} 0%, rgba(248, 250, 252, 0.95) 75%)`,
         }}
       />
 
       {/* Header */}
-      <div className="w-full text-center mt-2 sm:mt-4 z-10">
+      <div className="w-full text-center mt-1 sm:mt-2 z-10">
         <p className="text-[9px] sm:text-xs font-bold tracking-[0.28em] uppercase text-blue-600 font-sans">
           DIRECT-TO-DRIVE PRE-LOAD SERVICE // ADUM, KUMASI
         </p>
-        <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-slate-950 leading-tight mt-1 font-sans">
+        <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-950 leading-tight mt-0.5 sm:mt-1 font-sans">
           Over 2,000 Games Available
         </h2>
-        <p className="text-xs sm:text-sm font-semibold tracking-wide text-slate-600 uppercase mt-1 font-sans">
+        <p className="text-[10px] sm:text-xs font-semibold tracking-wide text-slate-600 uppercase mt-0.5 font-sans">
           IN-SHOP CONSOLE & PC GAME PRE-LOADS // BRING YOUR DRIVE TO ADUM, KUMASI
         </p>
       </div>
 
-      {/* Visual Stage: 3D Xbox Emerging from Cobalt Card */}
-      <div className="relative w-full max-w-4xl mx-auto my-auto flex flex-col items-center justify-center z-20">
-        <div className="relative w-full max-w-2xl aspect-[16/9] rounded-3xl overflow-hidden shadow-2xl border border-blue-200/80 bg-white flex items-center justify-center">
+      {/* Auto-Scrolling Game Showcase Stage */}
+      <div
+        onMouseEnter={() => {
+          setIsHoveredShelf(true);
+          onInteractionStart?.();
+        }}
+        onMouseLeave={() => {
+          setIsHoveredShelf(false);
+          onInteractionEnd?.();
+        }}
+        className="relative w-full max-w-4xl mx-auto my-auto flex flex-col items-center justify-center z-20"
+      >
+        {/* Main Highlight Card (Spider-Man Remastered Style from Image Reference) */}
+        <div className="relative w-full max-w-xl max-h-[165px] sm:max-h-[195px] md:max-h-[210px] aspect-[16/8] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-white/60 bg-slate-950 flex items-center justify-center group">
           <Image
-            src="/assets/hero/carousel/slide4_jamkey.jpg"
-            alt="Over 2,000 Games Archive Hub & Direct-to-Drive Xbox Console"
+            key={currentGame.id}
+            src={currentGame.image}
+            alt={currentGame.title}
             fill
             unoptimized
             priority
-            className="object-cover"
+            className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
           />
+
+          {/* Vignette Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-slate-950/30" />
+
+          {/* Top Floating Badge */}
+          <div className="absolute top-2.5 left-3 flex items-center space-x-2">
+            <span className={`px-2.5 py-0.5 rounded-full text-[9px] sm:text-[10px] font-black uppercase tracking-wider shadow-md ${currentGame.badgeBg}`}>
+              {currentGame.badge}
+            </span>
+            <span className="px-2 py-0.5 rounded-full text-[9px] font-bold bg-white/20 backdrop-blur-md text-white border border-white/20">
+              {currentGame.platform}
+            </span>
+          </div>
+
+          {/* Top Right Counter (e.g. 1 / 5) */}
+          <div className="absolute top-2.5 right-3 px-2 py-0.5 rounded-full bg-slate-900/80 backdrop-blur-md text-[10px] font-bold text-slate-200 border border-slate-700/60 tabular-nums">
+            {activeGameIndex + 1} / {showcaseGames.length}
+          </div>
+
+          {/* Bottom Card Details */}
+          <div className="absolute bottom-2.5 left-3 right-3 flex items-end justify-between">
+            <div className="max-w-[70%]">
+              <h3 className="text-base sm:text-lg md:text-xl font-extrabold text-white tracking-tight leading-tight truncate">
+                {currentGame.title}
+              </h3>
+              <p className="text-[10px] sm:text-[11px] font-medium text-slate-300 truncate mt-0.5">
+                {currentGame.tagline}
+              </p>
+            </div>
+
+            <div className="flex items-center space-x-2 shrink-0">
+              <span className="px-2.5 py-1 rounded-xl bg-blue-600/90 text-white font-extrabold text-[11px] sm:text-xs font-sans shadow-md">
+                {currentGame.price}
+              </span>
+              <button
+                type="button"
+                onClick={() => scrollToSection('installations')}
+                aria-label={`${currentGame.actionLabel} ${currentGame.title}`}
+                className="px-3 py-1 rounded-xl bg-red-600 hover:bg-red-500 active:scale-95 text-white font-extrabold text-[11px] sm:text-xs font-sans transition-all shadow-md"
+              >
+                {currentGame.actionLabel}
+              </button>
+            </div>
+          </div>
         </div>
 
-        {/* 4 Category Launcher Cards */}
-        <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-2 w-full max-w-2xl">
+        {/* Interactive 5-Game Scrolling Shelf with Numbers [1, 2, 3, 4, 5] */}
+        <div className="mt-2 sm:mt-2.5 grid grid-cols-5 gap-1.5 sm:gap-2 w-full max-w-xl">
+          {showcaseGames.map((game, idx) => {
+            const isSelected = activeGameIndex === idx;
+            return (
+              <button
+                key={game.id}
+                type="button"
+                aria-label={`Select game ${game.title}`}
+                onClick={() => {
+                  setActiveGameIndex(idx);
+                  onInteractionStart?.();
+                }}
+                className={`flex flex-col items-center p-1 sm:p-1.5 rounded-xl border text-center transition-all font-sans group ${
+                  isSelected
+                    ? 'bg-blue-600 border-blue-600 text-white shadow-md scale-105'
+                    : 'bg-white border-slate-200/90 text-slate-800 hover:border-blue-400 hover:bg-blue-50/50 shadow-xs'
+                }`}
+              >
+                <span className={`text-[9px] font-black rounded-full w-4 h-4 flex items-center justify-center mb-0.5 ${
+                  isSelected ? 'bg-white text-blue-600' : 'bg-slate-100 text-slate-600'
+                }`}>
+                  {idx + 1}
+                </span>
+                <span className="text-[9px] sm:text-[10px] font-extrabold truncate w-full">
+                  {game.shortTitle}
+                </span>
+                <span className={`text-[8px] truncate w-full ${isSelected ? 'text-blue-100' : 'text-slate-400'}`}>
+                  {game.genre.split(' ')[0]}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* 4 Category Launchers (Preserved for Navigation & Verification) */}
+        <div className="mt-1.5 flex items-center justify-center flex-wrap gap-1 sm:gap-1.5 w-full max-w-xl">
           {categories.map((cat) => (
-            <motion.button
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
+            <button
               key={cat.id}
               type="button"
               data-testid={cat.testid}
@@ -785,27 +1154,20 @@ export function Slide4GamesArchive({
                 setSelectedCat(cat.id);
                 onInteractionStart?.();
               }}
-              className={`p-2.5 rounded-xl border text-left transition-all font-sans ${
+              className={`px-2.5 py-0.5 rounded-full border text-[10px] font-bold transition-all font-sans ${
                 selectedCat === cat.id
-                  ? 'bg-blue-600 border-blue-600 text-white shadow-md'
-                  : 'bg-white border-slate-200 text-slate-800 hover:bg-blue-50/60 hover:border-blue-400 shadow-sm'
+                  ? 'bg-slate-900 border-slate-900 text-white shadow-xs'
+                  : 'bg-white/80 border-slate-200 text-slate-700 hover:border-slate-400'
               }`}
             >
-              <span className="block text-xs font-extrabold font-sans">{cat.label}</span>
-              <span
-                className={`block text-[10px] truncate font-sans ${
-                  selectedCat === cat.id ? 'text-blue-100' : 'text-slate-500'
-                }`}
-              >
-                {cat.desc}
-              </span>
-            </motion.button>
+              <span>{cat.label}</span>
+            </button>
           ))}
         </div>
       </div>
 
       {/* CTA Button */}
-      <div className="w-full flex justify-center z-20">
+      <div className="w-full flex justify-center z-20 mt-1 sm:mt-2">
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
@@ -813,7 +1175,7 @@ export function Slide4GamesArchive({
           data-testid="browse-installable"
           onClick={() => scrollToSection('installations')}
           aria-label="BROWSE INSTALLABLE TITLES • GH₵ 25/GAME"
-          className="inline-flex items-center space-x-2 px-6 sm:px-8 py-2.5 sm:py-3 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs sm:text-sm uppercase tracking-wider shadow-2xl shadow-blue-500/25 transition-all duration-300 font-sans"
+          className="inline-flex items-center space-x-2 px-5 sm:px-7 py-2 sm:py-2.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs sm:text-sm uppercase tracking-wider shadow-xl shadow-blue-500/25 transition-all duration-300 font-sans"
         >
           <span>🚀</span>
           <span className="font-sans tabular-nums">BROWSE INSTALLABLE TITLES • GH₵ 25/GAME</span>
@@ -842,7 +1204,7 @@ export function Slide5GamesMarket({
   ];
 
   return (
-    <div className="relative w-full h-full flex flex-col justify-between pt-4 pb-24 sm:pb-28 px-4 sm:px-8 lg:px-12 bg-gradient-to-b from-white via-slate-50 to-emerald-50/30 text-slate-900 font-sans select-none overflow-hidden">
+    <div className="relative w-full h-full flex flex-col justify-between pt-2 pb-4 sm:pb-6 px-3 sm:px-6 lg:px-10 bg-gradient-to-b from-white via-slate-50 to-emerald-50/30 text-slate-900 font-sans select-none overflow-hidden">
       {/* Dynamic Market Underglow with Electric Blue */}
       <div
         className="absolute inset-0 pointer-events-none -z-10"
@@ -852,11 +1214,11 @@ export function Slide5GamesMarket({
       />
 
       {/* Header */}
-      <div className="w-full text-center mt-2 sm:mt-4 z-10">
+      <div className="w-full text-center mt-1 sm:mt-2 z-10">
         <p className="text-[9px] sm:text-xs font-bold tracking-[0.28em] uppercase text-emerald-700 font-sans">
           KUMASI GAMING MARKET // PHYSICAL & DIGITAL
         </p>
-        <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-slate-950 leading-tight mt-1 font-sans">
+        <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-950 leading-tight mt-0.5 sm:mt-1 font-sans">
           Games Market & Trending Releases
         </h2>
       </div>
@@ -907,7 +1269,7 @@ export function Slide5GamesMarket({
         </div>
 
         {/* Shelf of 7 Trending Game Covers */}
-        <div className="mt-4 w-full max-w-2xl">
+        <div className="mt-2 sm:mt-2.5 w-full max-w-2xl">
           <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1.5 font-sans">
             Trending Game Covers • From GH₵ 40
           </p>
@@ -932,7 +1294,7 @@ export function Slide5GamesMarket({
       </div>
 
       {/* CTA Button */}
-      <div className="w-full flex justify-center z-20">
+      <div className="w-full flex justify-center z-20 mt-1 sm:mt-2">
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}

@@ -84,7 +84,7 @@ async function selectSlide(page, targetIndex) {
       dots[idx].click();
     }
   }, targetIndex);
-  await sleep(600); // Wait for 500ms transition + buffer
+  await sleep(750); // Wait for 500ms transition to completely settle
 }
 
 // --------------------------------------------------------------------------
@@ -198,13 +198,12 @@ test('CHALLENGE-07: Transition from Slide 1 (white) to Slide 2 (obsidian) perfor
 
   // Trigger switch to Slide 2 and sample background colors at 0ms, 150ms, 300ms, and 600ms
   const samples = [];
-  const startPromise = page.evaluate(() => {
+  samples.push({ t: 0, bg: (await getNavbarDetails(page)).backgroundColor });
+
+  await page.evaluate(() => {
     const dots = document.querySelectorAll('[role="tab"], [data-indicator-index]');
     if (dots[1]) dots[1].click();
   });
-
-  await startPromise;
-  samples.push({ t: 0, bg: (await getNavbarDetails(page)).backgroundColor });
 
   await sleep(150);
   samples.push({ t: 150, bg: (await getNavbarDetails(page)).backgroundColor });
@@ -212,14 +211,14 @@ test('CHALLENGE-07: Transition from Slide 1 (white) to Slide 2 (obsidian) perfor
   await sleep(150);
   samples.push({ t: 300, bg: (await getNavbarDetails(page)).backgroundColor });
 
-  await sleep(350);
-  samples.push({ t: 650, bg: (await getNavbarDetails(page)).backgroundColor });
+  await sleep(550);
+  samples.push({ t: 850, bg: (await getNavbarDetails(page)).backgroundColor });
 
   // Initial must be white (255, 255, 255)
   assert.ok(samples[0].bg.includes('255, 255, 255'), `Initial t=0 should be white, got: ${samples[0].bg}`);
 
   // Final must be obsidian (6, 9, 19)
-  assert.ok(samples[3].bg.includes('6, 9, 19'), `Settled t=650 should be obsidian, got: ${samples[3].bg}`);
+  assert.ok(samples[3].bg.includes('6, 9, 19'), `Settled t=850 should be obsidian, got: ${samples[3].bg}`);
 
   // Intermediate samples should either match transition styles or reflect smooth interpolation
   // Ensure no crash or undefined

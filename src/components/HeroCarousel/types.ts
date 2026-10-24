@@ -13,8 +13,8 @@ export type SlideIndex = 0 | 1 | 2 | 3 | 4;
 /** Total number of slides in the carousel */
 export const TOTAL_SLIDES = 5;
 
-/** Default auto-advance interval in milliseconds (5 seconds) */
-export const DEFAULT_AUTOPLAY_INTERVAL = 5000;
+/** Default auto-advance interval in milliseconds (3 seconds as requested) */
+export const DEFAULT_AUTOPLAY_INTERVAL = 3000;
 
 /**
  * Navbar theme options for optimal visual contrast against slide backgrounds:
@@ -33,10 +33,10 @@ export type SlideTheme = 'light' | 'dark';
  */
 export const SLIDE_NAVBAR_THEMES: Record<SlideIndex, NavbarTheme> = {
   0: 'light', // Slide 1 (PS5 Master) -> Crisp White Pill Navbar
-  1: 'light', // Slide 2 (DualSense Colorways) -> Crisp White Pill Navbar
+  1: 'dark',  // Slide 2 (DualSense Colorways) -> Dark Obsidian Pill Navbar
   2: 'light', // Slide 3 (Collector Series) -> Crisp White Pill Navbar
   3: 'light', // Slide 4 (Games Archive) -> Crisp White Pill Navbar
-  4: 'light', // Slide 5 (Games Market) -> Crisp White Pill Navbar
+  4: 'dark',  // Slide 5 (Games Market) -> Dark Obsidian Pill Navbar
 };
 
 /**
@@ -99,12 +99,12 @@ export const SLIDE_METADATA: readonly SlideMetadata[] = [
   {
     index: 1,
     id: 'dualsense-colorways',
-    title: 'DualSense™ Wireless Controllers',
-    shortLabel: '02 / CONTROLLERS',
+    title: 'PlayStation®5 Consoles & Hardware',
+    shortLabel: '02 / CONSOLES',
     eyebrow: 'IN-STOCK IN KUMASI // ADUM SHOWROOM',
-    theme: 'light',
-    navbarTheme: 'light',
-    ariaLabel: 'Slide 2 of 5: DualSense Wireless Controllers Showcase',
+    theme: 'dark',
+    navbarTheme: 'dark',
+    ariaLabel: 'Slide 2 of 5: PlayStation 5 Consoles and DualSense Controllers',
   },
   {
     index: 2,
@@ -120,7 +120,7 @@ export const SLIDE_METADATA: readonly SlideMetadata[] = [
     index: 3,
     id: 'games-archive',
     title: 'Over 2,000 Games Available',
-    shortLabel: '04 / 2000+ GAMES',
+    shortLabel: '04 / GAMES',
     eyebrow: 'DIRECT-TO-DRIVE PRE-LOAD SERVICE',
     subtitle: 'IN-SHOP CONSOLE & PC GAME PRE-LOADS // BRING YOUR DRIVE TO ADUM, KUMASI',
     theme: 'light',
@@ -134,8 +134,8 @@ export const SLIDE_METADATA: readonly SlideMetadata[] = [
     shortLabel: '05 / RELEASES',
     eyebrow: 'KUMASI GAMING HUB // PHYSICAL & DIGITAL',
     subtitle: '',
-    theme: 'light',
-    navbarTheme: 'light',
+    theme: 'dark',
+    navbarTheme: 'dark',
     ariaLabel: 'Slide 5 of 5: Games Market and Trending Releases',
   },
 ] as const;

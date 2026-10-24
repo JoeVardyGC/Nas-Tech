@@ -29,7 +29,13 @@ export default function CartDrawer() {
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-hidden">
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label="Shopping Cart Drawer"
+      data-testid="cart-modal"
+      className="cart-drawer fixed inset-0 z-50 overflow-hidden font-sans"
+    >
       {/* Backdrop */}
       <div
         onClick={() => setIsCartOpen(false)}

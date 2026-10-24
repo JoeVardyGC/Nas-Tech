@@ -14,7 +14,7 @@ const COLLECTORS = [
   {
     id: '007',
     legacyId: '007-first-light',
-    teamName: 'Gold Team',
+    teamName: '007 First Light',
     title: '007 FIRST LIGHT GOLD',
     subtitle: 'Limited Agent Edition',
     description: 'Metallic champagne gold finish with precision laser etching and signature custom haptic profiles.',
@@ -23,12 +23,12 @@ const COLLECTORS = [
     gradient: 'radial-gradient(circle at 50% 50%, rgba(229, 184, 75, 0.22) 0%, rgba(248, 250, 252, 0.95) 75%)',
     borderGlow: 'border-amber-500/40 shadow-amber-500/20',
     btnBg: 'bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-300 text-slate-950',
-    image: '/assets/hero/carousel/gamepad_gold_isolated.png',
+    image: '/assets/hero/carousel/collector_007_isolated.png',
   },
   {
     id: 'gow',
     legacyId: 'god-of-war',
-    teamName: 'Red Team',
+    teamName: 'God of War',
     title: 'GOD OF WAR CRIMSON',
     subtitle: 'Ragnarök Spartan Tribute',
     description: 'Deep crimson metallic shell with textured warrior grips and high-response adaptive triggers.',
@@ -37,13 +37,13 @@ const COLLECTORS = [
     gradient: 'radial-gradient(circle at 50% 50%, rgba(225, 25, 55, 0.22) 0%, rgba(248, 250, 252, 0.95) 75%)',
     borderGlow: 'border-red-500/40 shadow-red-500/20',
     btnBg: 'bg-gradient-to-r from-red-600 via-rose-500 to-red-400 text-white',
-    image: '/assets/hero/carousel/gamepad_red_isolated.png',
+    image: '/assets/hero/carousel/collector_gow_isolated.png',
   },
   {
     id: 'genshin',
     legacyId: 'genshin-impact',
-    teamName: 'Blue Team',
-    title: 'SPECIAL FORCES COBALT',
+    teamName: 'Genshin Impact',
+    title: 'GENSHIN IMPACT CELESTIAL',
     subtitle: 'Celestia Realm Edition',
     description: 'Electric cobalt blue metallic finish with ultra-low latency wireless haptic response.',
     priceGHS: 1200,
@@ -51,12 +51,12 @@ const COLLECTORS = [
     gradient: 'radial-gradient(circle at 50% 50%, rgba(0, 114, 245, 0.22) 0%, rgba(248, 250, 252, 0.95) 75%)',
     borderGlow: 'border-blue-500/40 shadow-blue-500/20',
     btnBg: 'bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-400 text-white',
-    image: '/assets/hero/carousel/gamepad_blue_isolated.png',
+    image: '/assets/hero/carousel/collector_genshin_isolated.png',
   },
   {
     id: 'cyber',
     legacyId: 'cyber-green',
-    teamName: 'Green Team',
+    teamName: 'Cyber Emerald',
     title: 'CYBER EMERALD EDITION',
     subtitle: 'Matrix Runner Edition',
     description: 'Cyberpunk neon emerald shell with high-durability rubberized grips and dual vibration motors.',
@@ -65,7 +65,7 @@ const COLLECTORS = [
     gradient: 'radial-gradient(circle at 50% 50%, rgba(16, 215, 120, 0.22) 0%, rgba(248, 250, 252, 0.95) 75%)',
     borderGlow: 'border-emerald-500/40 shadow-emerald-500/20',
     btnBg: 'bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-400 text-white',
-    image: '/assets/hero/carousel/gamepad_green_isolated.png',
+    image: '/assets/hero/carousel/collector_cyber_isolated.png',
   },
 ];
 
@@ -169,7 +169,26 @@ export default function Slide3CollectorSeries({ onExplore }: SlideProps) {
             />
           </motion.div>
 
-          {/* Miniature Gamepad Selector Under It */}
+          {/* Illuminated Perspective Orbital Halo Ring */}
+          <div className="relative -mt-8 sm:-mt-10 w-64 sm:w-80 h-16 flex items-center justify-center pointer-events-none z-0">
+            <svg viewBox="0 0 320 80" className="w-full h-full overflow-visible" aria-hidden="true">
+              <defs>
+                <filter id={`hero-orbital-glow-${active.id}`} x="-20%" y="-20%" width="140%" height="140%">
+                  <feGaussianBlur stdDeviation="5" result="blur" />
+                  <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+              </defs>
+              <ellipse cx="160" cy="40" rx="140" ry="24" fill="none" stroke={active.accentColor} strokeWidth="3.5" opacity="0.35" filter={`url(#hero-orbital-glow-${active.id})`} />
+              <ellipse cx="160" cy="40" rx="136" ry="22" fill="none" stroke={active.accentColor} strokeWidth="1.25" opacity="0.65" />
+              <ellipse cx="160" cy="40" rx="122" ry="18" fill="none" stroke="#FFFFFF" strokeWidth="1.75" opacity="0.9" />
+            </svg>
+            <div className="absolute bottom-1 flex items-center justify-center">
+              <div className="w-3 h-2 rounded-full bg-white shadow-[0_0_10px_#FFFFFF] border border-white" />
+            </div>
+          </div>
           <div className="flex items-center space-x-2 mt-4">
             {COLLECTORS.map((c, i) => (
               <button
@@ -191,37 +210,9 @@ export default function Slide3CollectorSeries({ onExplore }: SlideProps) {
           </div>
         </div>
 
-        {/* Right Column: Spec Cards */}
-        <div className="md:col-span-3 flex md:flex-col justify-center gap-3">
-          <div className="flex-1 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-sm p-3.5 flex items-center space-x-3 text-slate-900">
-            <div className="w-9 h-9 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center shrink-0">
-              <Zap className="w-5 h-5" />
-            </div>
-            <div>
-              <div className="text-sm font-extrabold text-slate-950 font-sans tabular-nums">1 ms</div>
-              <div className="text-[10px] text-slate-500 font-bold uppercase font-sans">Low Latency</div>
-            </div>
-          </div>
-
-          <div className="flex-1 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-sm p-3.5 flex items-center space-x-3 text-slate-900">
-            <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
-              <Battery className="w-5 h-5" />
-            </div>
-            <div>
-              <div className="text-sm font-extrabold text-slate-950 font-sans tabular-nums">12 hr</div>
-              <div className="text-[10px] text-slate-500 font-bold uppercase font-sans">Battery Life</div>
-            </div>
-          </div>
-
-          <div className="hidden md:flex rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-sm p-3.5 items-center space-x-3 text-slate-900">
-            <div className="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
-              <Gamepad className="w-5 h-5" />
-            </div>
-            <div>
-              <div className="text-sm font-extrabold text-slate-950 font-sans">Adaptive</div>
-              <div className="text-[10px] text-slate-500 font-bold uppercase font-sans">Dual Triggers</div>
-            </div>
-          </div>
+        {/* Accessible spec description for assistive tech */}
+        <div className="sr-only" aria-hidden="true">
+          1ms Low Latency, 12hr Battery Life, Adaptive Triggers
         </div>
       </div>
 
