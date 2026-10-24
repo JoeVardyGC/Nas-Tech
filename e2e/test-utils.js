@@ -119,7 +119,7 @@ async function createPage(browser, viewport = { width: 1280, height: 800 }) {
 }
 
 async function waitForCarousel(page, timeout = 10000) {
-  await page.goto(BASE_URL, { waitUntil: 'networkidle2', timeout: 30000 });
+  await page.goto(BASE_URL, { waitUntil: 'domcontentloaded', timeout: 30000 });
   const selector = '[role="region"][aria-roledescription="carousel"], [data-testid="hero-carousel"], #hero-carousel, .hero-carousel';
   await page.waitForSelector(selector, { timeout });
   return selector;

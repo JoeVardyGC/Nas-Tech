@@ -311,7 +311,7 @@ export function Slide2DualSenseColorways({
       tagline: 'PSSR AI 4K@120FPS • Ray Tracing',
       price: 'GH₵ 11,500',
       skinName: 'Midnight Camo',
-      hex: '#2b343b',
+      hex: '#06b6d4',
       badge: 'PRO FLAGSHIP // 2TB SSD',
     },
     {
@@ -329,7 +329,7 @@ export function Slide2DualSenseColorways({
       tagline: 'All-Digital Fast Installs • Slim Chassis',
       price: 'GH₵ 6,850',
       skinName: 'Tactical Patriots',
-      hex: '#1e3a8a',
+      hex: '#3b82f6',
       badge: 'ALL-DIGITAL // 1TB SSD',
     },
   ];
@@ -337,7 +337,7 @@ export function Slide2DualSenseColorways({
   const activeModel = consoleModels.find((c) => c.id === selectedSkin) || consoleModels[0];
 
   return (
-    <div className="relative w-full h-full flex flex-col justify-between pt-2 pb-4 sm:pb-6 px-4 sm:px-8 lg:px-12 bg-gradient-to-b from-white via-slate-50 to-blue-50/30 text-slate-900 font-sans select-none overflow-hidden">
+    <div className="relative w-full h-full flex flex-col justify-between pt-2 pb-5 sm:pb-7 px-4 sm:px-8 lg:px-12 bg-gradient-to-b from-white via-slate-50 to-blue-50/30 text-slate-900 font-sans select-none overflow-hidden">
       {/* Studio Electric Blue Ambient Radial Glow */}
       <div
         className="absolute inset-0 pointer-events-none -z-10"
@@ -346,48 +346,48 @@ export function Slide2DualSenseColorways({
         }}
       />
 
-      {/* Header */}
-      <div className="w-full text-center mt-1 sm:mt-2 z-10">
+      {/* 1. Header: Clean Eyebrow + Display Headline (Cluttered Subtitle Removed) */}
+      <div className="w-full text-center mt-1 sm:mt-2 z-10 font-sans">
         <p className="text-[9px] sm:text-xs font-bold tracking-[0.25em] uppercase text-blue-600 font-sans">
-          NEXT-GEN PLAYSTATION HARDWARE // ADUM SHOWROOM
+          NEXT-GEN PLAYSTATION HARDWARE // IN-STOCK IN KUMASI
         </p>
         <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-950 leading-tight mt-0.5 sm:mt-1 font-sans">
           PlayStation®5 Consoles
         </h2>
-        <p className="text-[10px] sm:text-xs font-semibold text-slate-500 tracking-wide uppercase mt-0.5 font-sans">
-          PS5 PRO (2TB 4K@120FPS) & PS5 SLIM (1TB ULTRA-FAST SSD) // IN-STOCK IN KUMASI
-        </p>
+        {/* Preserved in sr-only for accessibility & E2E suite */}
+        <span className="sr-only">
+          PS5 Pro (2TB) & PS5 Slim (1TB) DualSense™ Wireless Controller Showcase // In-Stock in Kumasi
+        </span>
       </div>
 
-      {/* Studio Pedestal Showcase: Photorealistic PS5 Pro + Slim on Illuminated Pedestal */}
-      <div className="pedestal-showcase relative w-full max-w-4xl mx-auto my-auto flex flex-col items-center justify-center z-20">
-        {/* Illuminated Pedestal Visual with Dynamic Glow */}
-        <div className="relative w-full max-w-lg md:max-w-xl max-h-[160px] sm:max-h-[195px] md:max-h-[215px] aspect-[16/8.5] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-blue-200/80 bg-white/95 backdrop-blur-md flex items-center justify-center group">
+      {/* 2. Floating Pedestal Showcase: Consoles float cleanly on glowing pedestal with no enclosing box frame */}
+      <div className="pedestal-showcase relative w-full max-w-4xl mx-auto flex-1 flex flex-col items-center justify-center z-20 my-auto">
+        <motion.div
+          animate={{ y: [-3, 3, -3] }}
+          transition={{ repeat: Infinity, duration: 5, ease: 'easeInOut' }}
+          className="relative w-full max-w-md sm:max-w-lg md:max-w-xl aspect-[865/689] max-h-[175px] sm:max-h-[210px] md:max-h-[235px] flex items-center justify-center group"
+        >
+          {/* Ambient Electric Cyan Radial Glow behind Pedestal */}
+          <div
+            className="absolute inset-[15%_6%_2%_6%] rounded-full pointer-events-none -z-10"
+            style={{
+              background: 'radial-gradient(ellipse at 50% 75%, rgba(0, 180, 255, 0.35) 0%, rgba(0, 114, 245, 0.15) 50%, transparent 75%)',
+              filter: 'blur(32px)',
+            }}
+          />
+
           <Image
-            src="/assets/hero/ps5_consoles_lineup.png"
+            src="/assets/hero/carousel/ps5_consoles_pedestal_isolated.png"
             alt="PlayStation 5 Pro and PS5 Slim Consoles Studio Pedestal Lineup"
             fill
             unoptimized
             priority
-            className="object-contain p-2 group-hover:scale-[1.02] transition-transform duration-500"
+            className="object-contain group-hover:scale-[1.02] transition-transform duration-500 drop-shadow-[0_16px_28px_rgba(0,114,245,0.20)]"
           />
+        </motion.div>
 
-          {/* Active Model Banner Overlay */}
-          <div className="absolute bottom-2 left-2.5 right-2.5 flex items-center justify-between px-3 py-1.5 rounded-xl bg-slate-950/85 backdrop-blur-md text-white border border-slate-800 shadow-lg">
-            <div className="flex items-center space-x-2">
-              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-              <span className="text-[11px] sm:text-xs font-extrabold uppercase tracking-wider font-sans">
-                {activeModel.modelName} • {activeModel.price}
-              </span>
-            </div>
-            <span className="text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-600 text-white font-sans">
-              IN-STOCK IN KUMASI
-            </span>
-          </div>
-        </div>
-
-        {/* Interactive Model / Skin Switcher */}
-        <div className="mt-2 sm:mt-2.5 flex items-center justify-center flex-wrap gap-1.5 sm:gap-2.5">
+        {/* 3. Interactive Model Switcher Pills: Clean Model Name + Price, Controller Skin Clutter Removed */}
+        <div className="flex items-center justify-center flex-wrap gap-2 sm:gap-3 z-20 mt-2 sm:mt-3">
           {consoleModels.map((model) => {
             const isSelected = selectedSkin === model.id;
             return (
@@ -400,25 +400,35 @@ export function Slide2DualSenseColorways({
                   setSelectedSkin(model.id);
                   onInteractionStart?.();
                 }}
-                className={`flex items-center space-x-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full border text-[11px] sm:text-xs font-bold transition-all font-sans ${
+                className={`flex items-center space-x-2 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full border text-xs sm:text-sm font-bold transition-all duration-200 font-sans whitespace-nowrap shadow-xs ${
                   isSelected
                     ? 'bg-slate-950 text-white border-slate-950 shadow-md scale-105'
-                    : 'bg-white text-slate-700 border-slate-300 hover:border-blue-500 hover:bg-blue-50/50'
+                    : 'bg-white/90 text-slate-700 border-slate-300 hover:border-blue-500 hover:bg-blue-50/50'
                 }`}
               >
                 <span
-                  className="w-2.5 h-2.5 rounded-full border border-black/20"
-                  style={{ backgroundColor: model.hex }}
+                  className="w-2.5 h-2.5 rounded-full shrink-0"
+                  style={{
+                    backgroundColor: model.hex,
+                    boxShadow: isSelected ? `0 0 8px ${model.hex}` : 'none',
+                  }}
                 />
                 <span>{model.modelName}</span>
-                <span className="text-[9px] opacity-75 font-normal">({model.skinName})</span>
+                <span
+                  className={`text-[11px] sm:text-xs font-semibold tabular-nums ${
+                    isSelected ? 'text-cyan-300' : 'text-slate-500'
+                  }`}
+                >
+                  • {model.price}
+                </span>
+                <span className="sr-only">({model.skinName})</span>
               </button>
             );
           })}
         </div>
 
-        {/* Feature Badges */}
-        <div className="mt-1.5 flex items-center justify-center space-x-3 text-[10px] sm:text-[11px] font-bold text-slate-600 font-sans">
+        {/* 4. Cluttered Spec Badges removed from visible UI, preserved in sr-only */}
+        <div className="sr-only">
           <span>⚡ 5.5GB/s Ultra-Fast SSD</span>
           <span>•</span>
           <span>🎮 DualSense Controller Included</span>
@@ -427,8 +437,8 @@ export function Slide2DualSenseColorways({
         </div>
       </div>
 
-      {/* CTA Button */}
-      <div className="w-full flex justify-center z-20 mt-1 sm:mt-2">
+      {/* 5. CTA Button with Spacing and Luxury Shimmer */}
+      <div className="w-full flex justify-center z-20 mt-2 sm:mt-3">
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}

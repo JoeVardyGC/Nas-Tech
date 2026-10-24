@@ -190,10 +190,10 @@ test('T1.R1.3.02: Progress bar starts at 0% following slide transition', async (
   }
 });
 
-test('T1.R1.3.03: Progress bar advances toward 100% over 5s interval', async (t) => {
+test('T1.R1.3.03: Progress bar advances toward 100% over 3s interval', async (t) => {
   if (!checkMounted(t)) return;
   await page.mouse.move(0, 0);
-  await sleep(2500);
+  await sleep(1500);
   const midScale = await page.evaluate(() => {
     const bar = document.querySelector('[data-testid="carousel-progress-bar"], [role="progressbar"], .carousel-progress-bar');
     if (!bar) return 0.5;

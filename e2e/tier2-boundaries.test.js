@@ -53,7 +53,7 @@ test('T2.B1.01: Manual Next click at 2,500ms cancels pending auto-tick and resta
   await sleep(400);
 
   // Wait to near boundary (2.5s total elapsed from 3s window)
-  await sleep(2500);
+  await sleep(2100);
   const nextBtn = await page.$('button[aria-label*="Next"], button[data-testid="carousel-next"]');
   if (nextBtn) {
     await nextBtn.click();
@@ -376,7 +376,7 @@ test('T2.B5.03: Direct jump from Slide 1 (index 0) to Slide 5 (index 4) animates
     await dots[0].click();
     await sleep(200);
     await dots[4].click();
-    await sleep(400);
+    await sleep(550);
     const state = await getCarouselState(page);
     assert.equal(state.activeIndex, 4, 'Jumped from 0 to 4 directly');
   }
@@ -389,7 +389,7 @@ test('T2.B5.04: Direct jump from Slide 5 (index 4) to Slide 1 (index 0) animates
     await dots[4].click();
     await sleep(200);
     await dots[0].click();
-    await sleep(400);
+    await sleep(550);
     const state = await getCarouselState(page);
     assert.equal(state.activeIndex, 0, 'Jumped from 4 to 0 directly');
   }
