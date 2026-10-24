@@ -392,14 +392,6 @@ export function Slide2DualSenseColorways({
       }}
       className="relative flex flex-col items-center group cursor-pointer transition-transform duration-300 select-none"
     >
-      {/* Floating Badge */}
-      <span
-        className="mb-1 px-2.5 py-0.5 rounded-full text-[8px] sm:text-[9px] font-black text-white tracking-wider shadow-sm font-sans uppercase"
-        style={{ backgroundColor: item.accentHex }}
-      >
-        {item.badge}
-      </span>
-
       {/* Large Floating Isolated Console */}
       <div className="relative w-28 sm:w-36 md:w-44 lg:w-48 xl:w-52 aspect-[1200/896] drop-shadow-[0_16px_28px_rgba(0,0,0,0.20)] group-hover:scale-108 transition-transform duration-500">
         <Image
@@ -411,11 +403,11 @@ export function Slide2DualSenseColorways({
         />
       </div>
 
-      {/* Floating Name and Price Info (No Card) */}
-      <div className="flex flex-col items-center text-center mt-1 sm:mt-1.5">
+      {/* Floating Name and Price (Clean Typography, No Tags or Pills) */}
+      <div className="flex flex-col items-center text-center mt-1 sm:mt-1.5 select-none">
         <div className="flex items-center space-x-1.5">
           <span
-            className="w-2 h-2 rounded-full shadow-xs shrink-0"
+            className="w-1.5 h-1.5 rounded-full shadow-xs shrink-0"
             style={{ backgroundColor: item.accentHex }}
           />
           <span className="text-xs sm:text-sm font-extrabold text-slate-900 font-sans tracking-tight">
@@ -423,11 +415,7 @@ export function Slide2DualSenseColorways({
           </span>
         </div>
 
-        <span className="text-[10px] sm:text-[11px] font-semibold text-slate-500 font-sans truncate max-w-full">
-          {item.subtitle}
-        </span>
-
-        <span className="mt-0.5 px-2.5 py-0.5 rounded-full bg-slate-900/5 text-blue-600 font-black text-xs sm:text-sm font-sans tabular-nums border border-slate-200/60 shadow-2xs">
+        <span className="text-xs sm:text-sm font-black text-blue-600 font-sans tabular-nums mt-0.5">
           {item.price}
         </span>
       </div>
@@ -491,15 +479,15 @@ export function Slide2DualSenseColorways({
             />
           </motion.div>
 
-          {/* Floating Center PS5 Name and Price */}
+          {/* Floating Center PS5 Name and Price (Clean Typography, No Tags or Pills) */}
           <div className="flex flex-col items-center text-center mt-1 sm:mt-1.5 select-none">
             <div className="flex items-center space-x-1.5">
-              <span className="w-2 h-2 rounded-full bg-blue-600 shadow-xs shrink-0" />
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-600 shadow-xs shrink-0" />
               <span className="text-xs sm:text-sm font-extrabold text-slate-950 font-sans tracking-tight">
                 PlayStation®5 Pro & Slim
               </span>
             </div>
-            <span className="mt-0.5 px-3 py-0.5 rounded-full bg-blue-50 text-blue-700 font-black text-xs sm:text-sm font-sans tabular-nums border border-blue-200/80 shadow-2xs">
+            <span className="text-xs sm:text-sm font-black text-blue-600 font-sans tabular-nums mt-0.5">
               From GH₵ 6,850
             </span>
           </div>
