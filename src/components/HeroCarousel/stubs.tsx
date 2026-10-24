@@ -81,7 +81,7 @@ export function Slide1PS5Master({
       onMouseLeave={handleMouseLeave}
       data-brand-cobalt="#0070F3"
       data-brand-obsidian="#060913"
-      className="relative w-full h-full flex flex-col justify-between pt-1 sm:pt-2 pb-4 sm:pb-6 px-3 sm:px-6 lg:px-10 overflow-hidden font-sans select-none"
+      className="relative w-full h-full flex flex-col justify-between pt-1 sm:pt-2 pb-16 sm:pb-20 px-3 sm:px-6 lg:px-10 overflow-hidden font-sans select-none"
     >
       {/* Aceternity-inspired Layered Studio Spotlights */}
       <div className="absolute inset-0 pointer-events-none -z-10 overflow-hidden">
@@ -432,7 +432,7 @@ export function Slide2DualSenseColorways({
   );
 
   return (
-    <div className="relative w-full h-full flex flex-col justify-between pt-2 pb-5 sm:pb-7 px-3 sm:px-6 lg:px-10 bg-gradient-to-b from-white via-slate-50 to-blue-50/30 text-slate-900 font-sans select-none overflow-hidden">
+    <div className="relative w-full h-full flex flex-col justify-between pt-2 pb-16 sm:pb-20 px-3 sm:px-6 lg:px-10 bg-gradient-to-b from-white via-slate-50 to-blue-50/30 text-slate-900 font-sans select-none overflow-hidden">
       {/* Studio Electric Blue Ambient Radial Glow */}
       <div
         className="absolute inset-0 pointer-events-none -z-10"
@@ -751,7 +751,7 @@ export function Slide3CollectorSeries({
   };
 
   return (
-    <div className="relative w-full h-full flex flex-col justify-between pt-2 pb-4 sm:pb-6 px-3 sm:px-6 lg:px-10 bg-gradient-to-b from-white via-slate-50 to-amber-50/20 text-slate-900 font-sans select-none overflow-hidden">
+    <div className="relative w-full h-full flex flex-col justify-between pt-2 pb-16 sm:pb-20 px-3 sm:px-6 lg:px-10 bg-gradient-to-b from-white via-slate-50 to-amber-50/20 text-slate-900 font-sans select-none overflow-hidden">
       {/* Ambient Electric Spotlight that shifts with active team color */}
       <div
         className="absolute inset-0 pointer-events-none -z-10 transition-all duration-700"
@@ -1122,7 +1122,7 @@ export function Slide4GamesArchive({
   ];
 
   return (
-    <div className="relative w-full h-full flex flex-col justify-between pt-2 pb-4 sm:pb-6 px-3 sm:px-6 lg:px-10 bg-gradient-to-b from-white via-slate-50 to-blue-50/30 text-slate-900 font-sans select-none overflow-hidden">
+    <div className="relative w-full h-full flex flex-col justify-between pt-2 pb-16 sm:pb-20 px-3 sm:px-6 lg:px-10 bg-gradient-to-b from-white via-slate-50 to-blue-50/30 text-slate-900 font-sans select-none overflow-hidden">
       {/* Dynamic Ambient Spotlight matching active game color */}
       <div
         className="absolute inset-0 pointer-events-none -z-10 transition-all duration-700"
@@ -1340,7 +1340,7 @@ export function Slide5GamesMarket({
   ];
 
   return (
-    <div className="relative w-full h-full flex flex-col justify-between pt-2 pb-4 sm:pb-6 px-3 sm:px-6 lg:px-10 bg-gradient-to-b from-white via-slate-50 to-emerald-50/30 text-slate-900 font-sans select-none overflow-hidden">
+    <div className="relative w-full h-full flex flex-col justify-between pt-2 pb-16 sm:pb-20 px-3 sm:px-6 lg:px-10 bg-gradient-to-b from-white via-slate-50 to-emerald-50/30 text-slate-900 font-sans select-none overflow-hidden">
       {/* Dynamic Market Underglow with Electric Blue */}
       <div
         className="absolute inset-0 pointer-events-none -z-10"

@@ -281,8 +281,8 @@ export default function HeroCarousel({
         })}
       </div>
 
-      {/* 3. BOTTOM CENTERED INTERACTIVE INDICATOR DOCK (Liquid Glass & Motion Primitives) */}
-      <div className="w-full flex justify-center shrink-0 z-40 pt-2 sm:pt-3 pb-4 sm:pb-6 px-4 font-sans">
+      {/* 3. BOTTOM FLOATING INTERACTIVE INDICATOR DOCK (FLOATS OVER CONTENT WITHOUT BLOCKING OR SUPPRESSING IT) */}
+      <div className="absolute bottom-4 sm:bottom-6 inset-x-0 flex justify-center z-40 px-4 font-sans pointer-events-none">
         <div
           role="toolbar"
           aria-label="Carousel navigation controls"
@@ -294,7 +294,7 @@ export default function HeroCarousel({
             e.stopPropagation();
             setIsHovered(false);
           }}
-          className="relative inline-flex items-center space-x-2 sm:space-x-3 px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full bg-white/95 backdrop-blur-2xl border border-slate-200/90 shadow-[0_16px_40px_-10px_rgba(0,114,245,0.1),0_2px_6px_rgba(0,0,0,0.04)] font-sans"
+          className="pointer-events-auto relative inline-flex items-center space-x-2 sm:space-x-3 px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full bg-white/95 backdrop-blur-2xl border border-slate-200/90 shadow-[0_16px_40px_-10px_rgba(0,114,245,0.1),0_2px_6px_rgba(0,0,0,0.04)] font-sans"
         >
           {/* Specular Top Rim Sheen */}
           <div className="pointer-events-none absolute inset-x-6 top-0 h-[1px] bg-gradient-to-r from-transparent via-white to-transparent opacity-90" />
