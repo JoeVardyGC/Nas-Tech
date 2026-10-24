@@ -380,51 +380,57 @@ export function Slide2DualSenseColorways({
   const leftConsoles = flankingConsoles.filter((c) => c.side === 'left');
   const rightConsoles = flankingConsoles.filter((c) => c.side === 'right');
 
-  const renderConsoleCard = (item: (typeof flankingConsoles)[0]) => (
+  const renderFloatingConsole = (item: (typeof flankingConsoles)[0], index: number) => (
     <motion.div
       key={item.id}
-      whileHover={{ y: -3, scale: 1.04 }}
-      className="relative flex flex-col items-center p-2.5 sm:p-3 rounded-2xl sm:rounded-3xl border border-slate-200/90 bg-white/85 backdrop-blur-md shadow-md hover:shadow-xl hover:border-slate-400 hover:bg-white transition-all duration-300 font-sans group w-32 sm:w-36 lg:w-44"
+      animate={{ y: [-5, 5, -5] }}
+      transition={{
+        repeat: Infinity,
+        duration: item.side === 'left' ? 4.8 + index * 0.4 : 5.1 + index * 0.4,
+        ease: 'easeInOut',
+        delay: index * 0.5,
+      }}
+      className="relative flex flex-col items-center group cursor-pointer transition-transform duration-300 select-none"
     >
       {/* Floating Badge */}
       <span
-        className="absolute -top-2 px-2 py-0.5 rounded-full text-[8px] sm:text-[9px] font-extrabold text-white tracking-wider shadow-sm font-sans uppercase"
+        className="mb-1 px-2.5 py-0.5 rounded-full text-[8px] sm:text-[9px] font-black text-white tracking-wider shadow-sm font-sans uppercase"
         style={{ backgroundColor: item.accentHex }}
       >
         {item.badge}
       </span>
 
-      {/* Thumbnail Console */}
-      <div className="relative w-16 sm:w-20 lg:w-24 aspect-[16/11] my-1">
+      {/* Large Floating Isolated Console */}
+      <div className="relative w-28 sm:w-36 md:w-44 lg:w-48 xl:w-52 aspect-[1200/896] drop-shadow-[0_16px_28px_rgba(0,0,0,0.20)] group-hover:scale-108 transition-transform duration-500">
         <Image
           src={item.image}
           alt={item.name}
           fill
           unoptimized
-          className="object-contain group-hover:scale-108 transition-transform duration-300 drop-shadow-sm"
+          className="object-contain"
         />
       </div>
 
-      {/* Console Name */}
-      <div className="flex items-center space-x-1.5 mt-1">
-        <span
-          className="w-2 h-2 rounded-full shadow-xs shrink-0"
-          style={{ backgroundColor: item.accentHex }}
-        />
-        <span className="text-[11px] sm:text-xs font-extrabold text-slate-900 font-sans truncate">
-          {item.name}
+      {/* Floating Name and Price Info (No Card) */}
+      <div className="flex flex-col items-center text-center mt-1 sm:mt-1.5">
+        <div className="flex items-center space-x-1.5">
+          <span
+            className="w-2 h-2 rounded-full shadow-xs shrink-0"
+            style={{ backgroundColor: item.accentHex }}
+          />
+          <span className="text-xs sm:text-sm font-extrabold text-slate-900 font-sans tracking-tight">
+            {item.name}
+          </span>
+        </div>
+
+        <span className="text-[10px] sm:text-[11px] font-semibold text-slate-500 font-sans truncate max-w-full">
+          {item.subtitle}
+        </span>
+
+        <span className="mt-0.5 px-2.5 py-0.5 rounded-full bg-slate-900/5 text-blue-600 font-black text-xs sm:text-sm font-sans tabular-nums border border-slate-200/60 shadow-2xs">
+          {item.price}
         </span>
       </div>
-
-      {/* Subtitle / Storage */}
-      <span className="text-[9px] sm:text-[10px] font-semibold text-slate-500 font-sans truncate max-w-full">
-        {item.subtitle}
-      </span>
-
-      {/* Price */}
-      <span className="text-[10px] sm:text-[11px] font-extrabold text-blue-600 font-sans mt-0.5 tabular-nums">
-        {item.price}
-      </span>
     </motion.div>
   );
 
@@ -452,11 +458,11 @@ export function Slide2DualSenseColorways({
         </span>
       </div>
 
-      {/* 2. Symmetrical Flanking Stage: 2 Left Consoles (PS4 & PS3) | Center PS5 Pedestal | 2 Right Consoles (Xbox One & Xbox 360) */}
+      {/* 2. Symmetrical Flanking Stage: 2 Left Floating Consoles (PS4 & PS3) | Center PS5 Pedestal | 2 Right Floating Consoles (Xbox One & Xbox 360) */}
       <div className="relative w-full max-w-6xl mx-auto my-auto flex flex-col lg:flex-row items-center justify-between gap-3 lg:gap-6 px-2 sm:px-4 z-20">
-        {/* LEFT FLANKING COLUMN: 2 Floating PlayStation Consoles (PS4 & PS3) */}
-        <div className="flex lg:flex-col items-center justify-center gap-2.5 sm:gap-3.5 z-20 shrink-0 w-full lg:w-48 xl:w-56 order-2 lg:order-1">
-          {leftConsoles.map(renderConsoleCard)}
+        {/* LEFT FLANKING COLUMN: 2 Big Floating PlayStation Consoles (PS4 & PS3) */}
+        <div className="flex lg:flex-col items-center justify-center gap-3 sm:gap-5 z-20 shrink-0 w-full lg:w-52 xl:w-56 order-2 lg:order-1">
+          {leftConsoles.map((item, idx) => renderFloatingConsole(item, idx))}
         </div>
 
         {/* CENTER HERO STAGE: Floating PS5 Pro + Slim on Illuminated Pedestal */}
@@ -464,7 +470,7 @@ export function Slide2DualSenseColorways({
           <motion.div
             animate={{ y: [-4, 4, -4] }}
             transition={{ repeat: Infinity, duration: 5, ease: 'easeInOut' }}
-            className="relative w-full max-w-md sm:max-w-lg md:max-w-xl aspect-[865/689] max-h-[200px] sm:max-h-[230px] md:max-h-[250px] flex items-center justify-center group"
+            className="relative w-full max-w-md sm:max-w-lg md:max-w-xl aspect-[865/689] max-h-[195px] sm:max-h-[225px] md:max-h-[245px] flex items-center justify-center group"
           >
             {/* Ambient Electric Cyan Radial Glow behind Pedestal */}
             <div
@@ -484,11 +490,24 @@ export function Slide2DualSenseColorways({
               className="object-contain group-hover:scale-102 transition-transform duration-500 drop-shadow-[0_20px_35px_rgba(0,114,245,0.22)]"
             />
           </motion.div>
+
+          {/* Floating Center PS5 Name and Price */}
+          <div className="flex flex-col items-center text-center mt-1 sm:mt-1.5 select-none">
+            <div className="flex items-center space-x-1.5">
+              <span className="w-2 h-2 rounded-full bg-blue-600 shadow-xs shrink-0" />
+              <span className="text-xs sm:text-sm font-extrabold text-slate-950 font-sans tracking-tight">
+                PlayStation®5 Pro & Slim
+              </span>
+            </div>
+            <span className="mt-0.5 px-3 py-0.5 rounded-full bg-blue-50 text-blue-700 font-black text-xs sm:text-sm font-sans tabular-nums border border-blue-200/80 shadow-2xs">
+              From GH₵ 6,850
+            </span>
+          </div>
         </div>
 
-        {/* RIGHT FLANKING COLUMN: 2 Floating Xbox Consoles (Xbox One & Xbox 360) */}
-        <div className="flex lg:flex-col items-center justify-center gap-2.5 sm:gap-3.5 z-20 shrink-0 w-full lg:w-48 xl:w-56 order-3">
-          {rightConsoles.map(renderConsoleCard)}
+        {/* RIGHT FLANKING COLUMN: 2 Big Floating Xbox Consoles (Xbox One & Xbox 360) */}
+        <div className="flex lg:flex-col items-center justify-center gap-3 sm:gap-5 z-20 shrink-0 w-full lg:w-52 xl:w-56 order-3">
+          {rightConsoles.map((item, idx) => renderFloatingConsole(item, idx))}
         </div>
       </div>
 
