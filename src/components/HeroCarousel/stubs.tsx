@@ -124,7 +124,7 @@ export function Slide1PS5Master({
       </div>
 
       {/* 2. FLANKING KEYWORDS: CONTROL & THE FUTURE */}
-      <div className="w-full max-w-4xl mx-auto px-4 sm:px-8 flex items-center justify-between -mt-1 sm:mt-0 z-10 text-[9px] sm:text-[11px] font-bold tracking-[0.28em] text-slate-600 uppercase font-sans">
+      <div className="w-full max-w-5xl lg:max-w-6xl mx-auto px-4 sm:px-8 flex items-center justify-between -mt-1 sm:mt-0 z-10 text-[9px] sm:text-[11px] font-bold tracking-[0.28em] text-slate-600 uppercase font-sans">
         <span className="flex items-center gap-1.5">
           <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
           CONTROL
@@ -136,12 +136,12 @@ export function Slide1PS5Master({
       </div>
 
       {/* 3. DOCK STAGE: [LEFT GTA VI CARD] <--- [DUALSENSE] ---> [RIGHT FC 27 CARD] */}
-      <div className="relative w-full max-w-4xl mx-auto flex items-center justify-between gap-2 sm:gap-4 md:gap-6 mt-1 z-20 font-sans">
+      <div className="relative w-full max-w-6xl mx-auto flex items-center justify-between gap-2 sm:gap-4 md:gap-6 mt-1 z-20 font-sans">
         {/* LEFT CARD: GRAND THEFT AUTO VI */}
         <motion.div
           whileHover={{ y: -4, scale: 1.02 }}
           transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-          className="relative w-32 sm:w-40 md:w-48 lg:w-52 shrink-0"
+          className="relative w-28 sm:w-36 md:w-44 lg:w-48 shrink-0"
         >
           <div className="w-full flex justify-center -mb-1 z-10">
             <span className="text-blue-600 text-[10px] leading-none drop-shadow-[0_0_8px_rgba(0,114,245,0.6)]">
@@ -185,10 +185,10 @@ export function Slide1PS5Master({
           </div>
         </motion.div>
 
-        {/* CENTER: UPRIGHT DUALSENSE CONTROLLER WITH SPRING TILT & FLOATING EASE */}
+        {/* CENTER: UPRIGHT DUALSENSE CONTROLLER (SCALE MATCHING SLIDE 3 COLLECTOR GAMEPAD) */}
         <div
           data-testid="ps5-dualsense-stage"
-          className="dualsense-stage flex-1 flex flex-col items-center justify-center relative -my-4 sm:-my-6"
+          className="dualsense-stage flex-1 flex flex-col items-center justify-center relative z-20"
         >
           <motion.div
             style={{
@@ -197,15 +197,24 @@ export function Slide1PS5Master({
               transformStyle: 'preserve-3d',
             }}
             animate={{
-              y: [-3, 3, -3],
+              y: [-4, 4, -4],
             }}
             transition={{
               repeat: Infinity,
-              duration: 5,
+              duration: 4.8,
               ease: 'easeInOut',
             }}
-            className="relative w-36 sm:w-48 md:w-60 lg:w-[280px] aspect-[16/11] flex items-center justify-center cursor-grab active:cursor-grabbing"
+            className="relative w-64 sm:w-80 md:w-96 lg:w-[400px] xl:w-[440px] aspect-[16/11] flex items-center justify-center cursor-grab active:cursor-grabbing z-10"
           >
+            {/* Dynamic Core Radial Glow */}
+            <div
+              className="absolute inset-0 rounded-full pointer-events-none transition-all duration-500"
+              style={{
+                background: 'rgba(0, 114, 245, 0.35)',
+                filter: 'blur(42px)',
+                transform: 'scale(1.15)',
+              }}
+            />
             <div className="relative w-full h-full drop-shadow-[0_22px_38px_rgba(0,114,245,0.32)]">
               <Image
                 src="/assets/hero/dualsense_hero_perfect_transparent.png"
@@ -216,7 +225,7 @@ export function Slide1PS5Master({
                 className="object-contain"
                 style={{
                   filter:
-                    'drop-shadow(0 20px 30px rgba(0, 0, 0, 0.22)) drop-shadow(0 0 24px rgba(0, 114, 245, 0.38))',
+                    'drop-shadow(0 20px 30px rgba(0, 0, 0, 0.22)) drop-shadow(0 0 28px rgba(0, 114, 245, 0.45))',
                 }}
               />
             </div>
@@ -245,7 +254,7 @@ export function Slide1PS5Master({
         <motion.div
           whileHover={{ y: -4, scale: 1.02 }}
           transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-          className="relative w-32 sm:w-40 md:w-48 lg:w-52 shrink-0"
+          className="relative w-28 sm:w-36 md:w-44 lg:w-48 shrink-0"
         >
           <div className="w-full flex justify-center -mb-1 z-10">
             <span className="text-blue-600 text-[10px] leading-none drop-shadow-[0_0_8px_rgba(0,114,245,0.6)]">
