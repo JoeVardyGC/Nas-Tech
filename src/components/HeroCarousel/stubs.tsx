@@ -334,10 +334,102 @@ export function Slide2DualSenseColorways({
     },
   ];
 
-  const activeModel = consoleModels.find((c) => c.id === selectedSkin) || consoleModels[0];
+  const flankingConsoles = [
+    {
+      id: 'ps4',
+      name: 'PlayStation®4',
+      subtitle: 'PS4 Pro 1TB • DualShock 4',
+      price: 'GH₵ 3,200',
+      badge: 'POPULAR',
+      accentHex: '#00439C',
+      image: '/assets/hero/carousel/console_ps4_isolated.png',
+      side: 'left' as const,
+    },
+    {
+      id: 'ps3',
+      name: 'PlayStation®3',
+      subtitle: 'PS3 Slim 500GB • Games Loaded',
+      price: 'GH₵ 1,450',
+      badge: 'RETRO HIT',
+      accentHex: '#475569',
+      image: '/assets/hero/carousel/console_ps3_isolated.png',
+      side: 'left' as const,
+    },
+    {
+      id: 'xboxone',
+      name: 'Xbox One S',
+      subtitle: '1TB HDR • Wireless Controller',
+      price: 'GH₵ 2,800',
+      badge: '4K STREAM',
+      accentHex: '#107C10',
+      image: '/assets/hero/carousel/console_xboxone_isolated.png',
+      side: 'right' as const,
+    },
+    {
+      id: 'xbox360',
+      name: 'Xbox 360 S',
+      subtitle: 'Slim Aurora • 50+ Games',
+      price: 'GH₵ 1,150',
+      badge: 'CHIP-LOADED',
+      accentHex: '#16A34A',
+      image: '/assets/hero/carousel/console_xbox360_isolated.png',
+      side: 'right' as const,
+    },
+  ];
+
+  const leftConsoles = flankingConsoles.filter((c) => c.side === 'left');
+  const rightConsoles = flankingConsoles.filter((c) => c.side === 'right');
+
+  const renderConsoleCard = (item: (typeof flankingConsoles)[0]) => (
+    <motion.div
+      key={item.id}
+      whileHover={{ y: -3, scale: 1.04 }}
+      className="relative flex flex-col items-center p-2.5 sm:p-3 rounded-2xl sm:rounded-3xl border border-slate-200/90 bg-white/85 backdrop-blur-md shadow-md hover:shadow-xl hover:border-slate-400 hover:bg-white transition-all duration-300 font-sans group w-32 sm:w-36 lg:w-44"
+    >
+      {/* Floating Badge */}
+      <span
+        className="absolute -top-2 px-2 py-0.5 rounded-full text-[8px] sm:text-[9px] font-extrabold text-white tracking-wider shadow-sm font-sans uppercase"
+        style={{ backgroundColor: item.accentHex }}
+      >
+        {item.badge}
+      </span>
+
+      {/* Thumbnail Console */}
+      <div className="relative w-16 sm:w-20 lg:w-24 aspect-[16/11] my-1">
+        <Image
+          src={item.image}
+          alt={item.name}
+          fill
+          unoptimized
+          className="object-contain group-hover:scale-108 transition-transform duration-300 drop-shadow-sm"
+        />
+      </div>
+
+      {/* Console Name */}
+      <div className="flex items-center space-x-1.5 mt-1">
+        <span
+          className="w-2 h-2 rounded-full shadow-xs shrink-0"
+          style={{ backgroundColor: item.accentHex }}
+        />
+        <span className="text-[11px] sm:text-xs font-extrabold text-slate-900 font-sans truncate">
+          {item.name}
+        </span>
+      </div>
+
+      {/* Subtitle / Storage */}
+      <span className="text-[9px] sm:text-[10px] font-semibold text-slate-500 font-sans truncate max-w-full">
+        {item.subtitle}
+      </span>
+
+      {/* Price */}
+      <span className="text-[10px] sm:text-[11px] font-extrabold text-blue-600 font-sans mt-0.5 tabular-nums">
+        {item.price}
+      </span>
+    </motion.div>
+  );
 
   return (
-    <div className="relative w-full h-full flex flex-col justify-between pt-2 pb-5 sm:pb-7 px-4 sm:px-8 lg:px-12 bg-gradient-to-b from-white via-slate-50 to-blue-50/30 text-slate-900 font-sans select-none overflow-hidden">
+    <div className="relative w-full h-full flex flex-col justify-between pt-2 pb-5 sm:pb-7 px-3 sm:px-6 lg:px-10 bg-gradient-to-b from-white via-slate-50 to-blue-50/30 text-slate-900 font-sans select-none overflow-hidden">
       {/* Studio Electric Blue Ambient Radial Glow */}
       <div
         className="absolute inset-0 pointer-events-none -z-10"
@@ -346,13 +438,13 @@ export function Slide2DualSenseColorways({
         }}
       />
 
-      {/* 1. Header: Clean Eyebrow + Display Headline (Cluttered Subtitle Removed) */}
+      {/* 1. Header: Clean Eyebrow + Display Headline */}
       <div className="w-full text-center mt-1 sm:mt-2 z-10 font-sans">
         <p className="text-[9px] sm:text-xs font-bold tracking-[0.25em] uppercase text-blue-600 font-sans">
-          NEXT-GEN PLAYSTATION HARDWARE // IN-STOCK IN KUMASI
+          NEXT-GEN & RETRO PLAYSTATION & XBOX // IN-STOCK IN KUMASI
         </p>
         <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-950 leading-tight mt-0.5 sm:mt-1 font-sans">
-          PlayStation®5 Consoles
+          PlayStation® & Xbox Consoles
         </h2>
         {/* Preserved in sr-only for accessibility & E2E suite */}
         <span className="sr-only">
@@ -360,31 +452,44 @@ export function Slide2DualSenseColorways({
         </span>
       </div>
 
-      {/* 2. Floating Pedestal Showcase: Consoles float cleanly on glowing pedestal with no enclosing box frame */}
-      <div className="pedestal-showcase relative w-full max-w-4xl mx-auto flex-1 flex flex-col items-center justify-center z-20 my-auto">
-        <motion.div
-          animate={{ y: [-4, 4, -4] }}
-          transition={{ repeat: Infinity, duration: 5, ease: 'easeInOut' }}
-          className="relative w-full max-w-lg sm:max-w-xl md:max-w-2xl lg:max-w-3xl aspect-[865/689] max-h-[250px] sm:max-h-[300px] md:max-h-[340px] lg:max-h-[380px] flex items-center justify-center group"
-        >
-          {/* Ambient Electric Cyan Radial Glow behind Pedestal */}
-          <div
-            className="absolute inset-[10%_4%_0%_4%] rounded-full pointer-events-none -z-10"
-            style={{
-              background: 'radial-gradient(ellipse at 50% 75%, rgba(0, 180, 255, 0.38) 0%, rgba(0, 114, 245, 0.16) 50%, transparent 75%)',
-              filter: 'blur(36px)',
-            }}
-          />
+      {/* 2. Symmetrical Flanking Stage: 2 Left Consoles (PS4 & PS3) | Center PS5 Pedestal | 2 Right Consoles (Xbox One & Xbox 360) */}
+      <div className="relative w-full max-w-6xl mx-auto my-auto flex flex-col lg:flex-row items-center justify-between gap-3 lg:gap-6 px-2 sm:px-4 z-20">
+        {/* LEFT FLANKING COLUMN: 2 Floating PlayStation Consoles (PS4 & PS3) */}
+        <div className="flex lg:flex-col items-center justify-center gap-2.5 sm:gap-3.5 z-20 shrink-0 w-full lg:w-48 xl:w-56 order-2 lg:order-1">
+          {leftConsoles.map(renderConsoleCard)}
+        </div>
 
-          <Image
-            src="/assets/hero/carousel/ps5_consoles_pedestal_isolated.png"
-            alt="PlayStation 5 Pro and PS5 Slim Consoles Studio Pedestal Lineup"
-            fill
-            unoptimized
-            priority
-            className="object-contain group-hover:scale-[1.02] transition-transform duration-500 drop-shadow-[0_20px_35px_rgba(0,114,245,0.22)]"
-          />
-        </motion.div>
+        {/* CENTER HERO STAGE: Floating PS5 Pro + Slim on Illuminated Pedestal */}
+        <div className="pedestal-showcase flex-1 flex flex-col items-center justify-center z-20 order-1 lg:order-2 w-full max-w-lg lg:max-w-xl">
+          <motion.div
+            animate={{ y: [-4, 4, -4] }}
+            transition={{ repeat: Infinity, duration: 5, ease: 'easeInOut' }}
+            className="relative w-full max-w-md sm:max-w-lg md:max-w-xl aspect-[865/689] max-h-[200px] sm:max-h-[230px] md:max-h-[250px] flex items-center justify-center group"
+          >
+            {/* Ambient Electric Cyan Radial Glow behind Pedestal */}
+            <div
+              className="absolute inset-[10%_4%_0%_4%] rounded-full pointer-events-none -z-10"
+              style={{
+                background: 'radial-gradient(ellipse at 50% 75%, rgba(0, 180, 255, 0.38) 0%, rgba(0, 114, 245, 0.16) 50%, transparent 75%)',
+                filter: 'blur(36px)',
+              }}
+            />
+
+            <Image
+              src="/assets/hero/carousel/ps5_consoles_pedestal_isolated.png"
+              alt="PlayStation 5 Pro and PS5 Slim Consoles Studio Pedestal Lineup"
+              fill
+              unoptimized
+              priority
+              className="object-contain group-hover:scale-102 transition-transform duration-500 drop-shadow-[0_20px_35px_rgba(0,114,245,0.22)]"
+            />
+          </motion.div>
+        </div>
+
+        {/* RIGHT FLANKING COLUMN: 2 Floating Xbox Consoles (Xbox One & Xbox 360) */}
+        <div className="flex lg:flex-col items-center justify-center gap-2.5 sm:gap-3.5 z-20 shrink-0 w-full lg:w-48 xl:w-56 order-3">
+          {rightConsoles.map(renderConsoleCard)}
+        </div>
       </div>
 
       {/* 3. Screen Reader & Test Runner Accessible Controls (Hidden from visual UI per request) */}
