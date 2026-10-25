@@ -4,7 +4,7 @@ import path from 'path';
 
 const CHROME_PATH = process.env.CHROME_BIN || '/usr/bin/google-chrome';
 const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
-const ARTIFACT_DIR = process.env.ARTIFACT_DIR || '/home/thejoevardy/.gemini/antigravity/brain/06fafef6-3f38-48fa-abcc-bfeb9c63d8b6';
+const ARTIFACT_DIR = process.env.ARTIFACT_DIR || '/home/thejoevardy/.gemini/antigravity/brain/2ec82e21-9b1d-40d3-b5d8-87025970677e';
 
 async function main() {
   console.log('Launching browser with Chrome:', CHROME_PATH);
@@ -24,8 +24,9 @@ async function main() {
   await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 2 });
 
   console.log('Navigating to', BASE_URL);
-  await page.goto(BASE_URL, { waitUntil: 'domcontentloaded', timeout: 15000 });
-  await new Promise((r) => setTimeout(r, 1000));
+  await page.goto(BASE_URL, { waitUntil: 'networkidle2', timeout: 20000 });
+  await page.evaluateHandle('document.fonts.ready');
+  await new Promise((r) => setTimeout(r, 1200));
 
   // Wait for hero carousel to be visible
   await page.waitForSelector('[data-testid="hero-carousel"]', { timeout: 10000 });
@@ -39,6 +40,13 @@ async function main() {
     { index: 4, name: 'white_hero_slide5_games_market.png', label: 'Slide 5 (Games Market)' },
   ];
 
+  const heroEl = await page.$('[data-testid="hero-carousel"]');
+  if (heroEl) {
+    // Hover over carousel immediately to freeze autoplay during captures
+    await heroEl.hover();
+    await new Promise((r) => setTimeout(r, 300));
+  }
+
   for (const s of slides) {
     console.log(`Navigating to ${s.label}...`);
     // Click indicator or evaluate switch
@@ -49,21 +57,45 @@ async function main() {
       }
     }, s.index);
 
-    // Give 600ms for transition animation to settle
-    await new Promise((r) => setTimeout(r, 650));
+    // Give 700ms for transition animation to settle
+    await new Promise((r) => setTimeout(r, 700));
 
-    // Finish any running CSS transitions to ensure 100% opacity rendering
-    await page.evaluate(() => {
-      document.querySelectorAll('[data-slide-index]').forEach((el) => {
-        el.getAnimations().forEach((a) => a.finish());
-      });
-    });
-
-    const heroEl = await page.$('[data-testid="hero-carousel"]');
     if (heroEl) {
       const outPath = path.join(ARTIFACT_DIR, s.name);
       await heroEl.screenshot({ path: outPath });
       console.log(`Saved screenshot to ${outPath}`);
+    }
+
+    // If Slide 2, also capture PS4 and Xbox One console interactions!
+    if (s.index === 1 && heroEl) {
+      const consoleVariations = [
+        { id: 'ps4', name: 'white_hero_slide2_ps4.png' },
+        { id: 'xbox-one', name: 'white_hero_slide2_xboxone.png' },
+      ];
+
+      for (const cv of consoleVariations) {
+        console.log(`Clicking ${cv.id} console card on Slide 2...`);
+        await page.evaluate(() => {
+          const tab = document.querySelector('[data-indicator-index="1"]');
+          if (tab) tab.click();
+        });
+        await new Promise((r) => setTimeout(r, 300));
+        await page.evaluate((cid) => {
+          const btn = document.querySelector(`button[data-console-choice="${cid}"], button[data-console="${cid}"]`);
+          if (btn) btn.click();
+        }, cv.id);
+        await new Promise((r) => setTimeout(r, 500));
+        const cPath = path.join(ARTIFACT_DIR, cv.name);
+        await heroEl.screenshot({ path: cPath });
+        console.log(`Saved ${cv.id} console screenshot to ${cPath}`);
+      }
+
+      // Restore PS5 Pro & Slim
+      await page.evaluate(() => {
+        const btn = document.querySelector('button[data-console-choice="ps4"]');
+        if (btn) btn.click();
+      });
+      await new Promise((r) => setTimeout(r, 400));
     }
 
     // If Slide 3, also capture Red, Blue, and Green team interactions!

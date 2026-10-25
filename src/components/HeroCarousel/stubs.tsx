@@ -302,12 +302,149 @@ export function Slide1PS5Master({
 // ============================================================================
 // SLIDE 2: DUALSENSE™ WIRELESS CONTROLLERS SHOWCASE
 // ============================================================================
+type ConsoleId = 'ps5-lineup' | 'ps4' | 'ps3' | 'xbox-one' | 'xbox-360';
+
+interface ConsoleItem {
+  id: ConsoleId;
+  name: string;
+  heroTitle: string;
+  heroTagline: string;
+  price: string;
+  badge: string;
+  accentHex: string;
+  ringBrightHex: string;
+  glowRgba: string;
+  glowRgbaBright: string;
+  backdropRadial: string;
+  btnGradient: string;
+  btnTextColor: string;
+  activeBorder: string;
+  image: string;
+  side?: 'left' | 'right';
+}
+
+const ALL_CONSOLES: ConsoleItem[] = [
+  {
+    id: 'ps5-lineup',
+    name: 'PS5 Pro & Slim',
+    heroTitle: 'PlayStation®5 Pro & Slim',
+    heroTagline: 'PSSR AI 4K@120FPS • 2TB & 1TB SSD • Ray Tracing',
+    price: 'From GH₵ 6,850',
+    badge: 'PRO & SLIM // NEXT-GEN FLAGSHIP',
+    accentHex: '#0072F5',
+    ringBrightHex: '#6CE5E8',
+    glowRgba: 'rgba(0, 114, 245, 0.45)',
+    glowRgbaBright: 'rgba(6, 182, 212, 0.70)',
+    backdropRadial:
+      'radial-gradient(ellipse at 50% 48%, rgba(0, 114, 245, 0.28) 0%, rgba(6, 182, 212, 0.12) 42%, rgba(255, 255, 255, 0.95) 75%)',
+    btnGradient: 'from-blue-600 via-blue-500 to-cyan-400 hover:from-blue-500 hover:to-cyan-300',
+    btnTextColor: 'text-white',
+    activeBorder: 'border-blue-500 ring-2 ring-blue-400/40 shadow-blue-500/25',
+    image: '/assets/hero/carousel/ps5_consoles_pedestal_isolated.png',
+  },
+  {
+    id: 'ps4',
+    name: 'PlayStation®4',
+    heroTitle: 'PlayStation®4 Pro',
+    heroTagline: 'PS4 Pro 1TB • DualShock®4 Included • 4K HDR',
+    price: 'GH₵ 3,200',
+    badge: 'PS4 PRO // BESTSELLER',
+    accentHex: '#00439C',
+    ringBrightHex: '#60A5FA',
+    glowRgba: 'rgba(0, 67, 156, 0.45)',
+    glowRgbaBright: 'rgba(96, 165, 250, 0.70)',
+    backdropRadial:
+      'radial-gradient(ellipse at 50% 48%, rgba(0, 67, 156, 0.26) 0%, rgba(59, 130, 246, 0.12) 42%, rgba(255, 255, 255, 0.95) 75%)',
+    btnGradient: 'from-blue-700 via-blue-600 to-indigo-500 hover:from-blue-600 hover:to-indigo-400',
+    btnTextColor: 'text-white',
+    activeBorder: 'border-blue-600 ring-2 ring-blue-500/40 shadow-blue-600/25',
+    image: '/assets/hero/carousel/console_ps4_isolated.png',
+    side: 'left',
+  },
+  {
+    id: 'ps3',
+    name: 'PlayStation®3',
+    heroTitle: 'PlayStation®3 Slim',
+    heroTagline: 'PS3 Slim 500GB • Games Loaded • Retro Hits',
+    price: 'GH₵ 1,450',
+    badge: 'RETRO HIT // GAMES LOADED',
+    accentHex: '#475569',
+    ringBrightHex: '#94A3B8',
+    glowRgba: 'rgba(71, 85, 105, 0.45)',
+    glowRgbaBright: 'rgba(148, 163, 184, 0.70)',
+    backdropRadial:
+      'radial-gradient(ellipse at 50% 48%, rgba(71, 85, 105, 0.25) 0%, rgba(100, 116, 139, 0.12) 42%, rgba(255, 255, 255, 0.95) 75%)',
+    btnGradient: 'from-slate-700 via-slate-600 to-slate-500 hover:from-slate-600 hover:to-slate-400',
+    btnTextColor: 'text-white',
+    activeBorder: 'border-slate-500 ring-2 ring-slate-400/40 shadow-slate-500/25',
+    image: '/assets/hero/carousel/console_ps3_isolated.png',
+    side: 'left',
+  },
+  {
+    id: 'xbox-one',
+    name: 'Xbox One S',
+    heroTitle: 'Xbox One S 1TB',
+    heroTagline: '1TB HDR • 4K Video Streaming • Wireless Controller',
+    price: 'GH₵ 2,800',
+    badge: '4K STREAM // HDR GAMING',
+    accentHex: '#107C10',
+    ringBrightHex: '#86EFAC',
+    glowRgba: 'rgba(16, 124, 16, 0.45)',
+    glowRgbaBright: 'rgba(134, 239, 172, 0.70)',
+    backdropRadial:
+      'radial-gradient(ellipse at 50% 48%, rgba(16, 124, 16, 0.26) 0%, rgba(34, 197, 94, 0.12) 42%, rgba(255, 255, 255, 0.95) 75%)',
+    btnGradient: 'from-emerald-700 via-green-600 to-lime-500 hover:from-emerald-600 hover:to-green-500',
+    btnTextColor: 'text-white',
+    activeBorder: 'border-green-600 ring-2 ring-green-500/40 shadow-green-600/25',
+    image: '/assets/hero/carousel/console_xboxone_isolated.png',
+    side: 'right',
+  },
+  {
+    id: 'xbox-360',
+    name: 'Xbox 360 S',
+    heroTitle: 'Xbox 360 Slim Aurora',
+    heroTagline: 'Slim Aurora Chassis • 50+ Games Installed',
+    price: 'GH₵ 1,150',
+    badge: 'CHIP-LOADED // 50+ GAMES',
+    accentHex: '#16A34A',
+    ringBrightHex: '#A7F3D0',
+    glowRgba: 'rgba(22, 163, 74, 0.45)',
+    glowRgbaBright: 'rgba(167, 243, 208, 0.70)',
+    backdropRadial:
+      'radial-gradient(ellipse at 50% 48%, rgba(22, 163, 74, 0.26) 0%, rgba(74, 222, 128, 0.12) 42%, rgba(255, 255, 255, 0.95) 75%)',
+    btnGradient: 'from-green-600 via-emerald-500 to-teal-400 hover:from-green-500 hover:to-emerald-400',
+    btnTextColor: 'text-white',
+    activeBorder: 'border-emerald-600 ring-2 ring-emerald-500/40 shadow-emerald-600/25',
+    image: '/assets/hero/carousel/console_xbox360_isolated.png',
+    side: 'right',
+  },
+];
+
 export function Slide2DualSenseColorways({
   isActive,
   onInteractionStart,
   onInteractionEnd,
 }: SlideProps) {
+  const [selectedConsole, setSelectedConsole] = useState<ConsoleId>('ps5-lineup');
   const [selectedSkin, setSelectedSkin] = useState<'midnight-camo' | 'cyber-green' | 'tactical-patriots'>('midnight-camo');
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Physics-based spring tilt matching Slide 3 Collector Series
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const springConfig = { damping: 26, stiffness: 220 };
+  const tiltX = useSpring(useTransform(mouseY, [-0.5, 0.5], [6, -6]), springConfig);
+  const tiltY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-8, 8]), springConfig);
+
+  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    mouseX.set(x);
+    mouseY.set(y);
+  };
 
   const consoleModels = [
     {
@@ -339,107 +476,117 @@ export function Slide2DualSenseColorways({
     },
   ];
 
-  const flankingConsoles = [
-    {
-      id: 'ps4',
-      name: 'PlayStation®4',
-      subtitle: 'PS4 Pro 1TB • DualShock 4',
-      price: 'GH₵ 3,200',
-      badge: 'POPULAR',
-      accentHex: '#00439C',
-      image: '/assets/hero/carousel/console_ps4_isolated.png',
-      side: 'left' as const,
-    },
-    {
-      id: 'ps3',
-      name: 'PlayStation®3',
-      subtitle: 'PS3 Slim 500GB • Games Loaded',
-      price: 'GH₵ 1,450',
-      badge: 'RETRO HIT',
-      accentHex: '#475569',
-      image: '/assets/hero/carousel/console_ps3_isolated.png',
-      side: 'left' as const,
-    },
-    {
-      id: 'xboxone',
-      name: 'Xbox One S',
-      subtitle: '1TB HDR • Wireless Controller',
-      price: 'GH₵ 2,800',
-      badge: '4K STREAM',
-      accentHex: '#107C10',
-      image: '/assets/hero/carousel/console_xboxone_isolated.png',
-      side: 'right' as const,
-    },
-    {
-      id: 'xbox360',
-      name: 'Xbox 360 S',
-      subtitle: 'Slim Aurora • 50+ Games',
-      price: 'GH₵ 1,150',
-      badge: 'CHIP-LOADED',
-      accentHex: '#16A34A',
-      image: '/assets/hero/carousel/console_xbox360_isolated.png',
-      side: 'right' as const,
-    },
-  ];
+  const leftConsoles = ALL_CONSOLES.filter((c) => c.side === 'left');
+  const rightConsoles = ALL_CONSOLES.filter((c) => c.side === 'right');
+  const activeConsole = ALL_CONSOLES.find((c) => c.id === selectedConsole) || ALL_CONSOLES[0];
 
-  const leftConsoles = flankingConsoles.filter((c) => c.side === 'left');
-  const rightConsoles = flankingConsoles.filter((c) => c.side === 'right');
+  const handlePrevConsole = () => {
+    const currIdx = ALL_CONSOLES.findIndex((c) => c.id === selectedConsole);
+    const prevIdx = (currIdx - 1 + ALL_CONSOLES.length) % ALL_CONSOLES.length;
+    setSelectedConsole(ALL_CONSOLES[prevIdx].id);
+    onInteractionStart?.();
+  };
 
-  const renderFloatingConsole = (item: (typeof flankingConsoles)[0], index: number) => (
-    <motion.div
-      key={item.id}
-      animate={{ y: [-5, 5, -5] }}
-      transition={{
-        repeat: Infinity,
-        duration: item.side === 'left' ? 4.8 + index * 0.4 : 5.1 + index * 0.4,
-        ease: 'easeInOut',
-        delay: index * 0.5,
-      }}
-      className="relative flex flex-col items-center group cursor-pointer transition-transform duration-300 select-none"
-    >
-      {/* Large Floating Isolated Console */}
-      <div className="relative w-28 sm:w-36 md:w-44 lg:w-48 xl:w-52 aspect-[1200/896] drop-shadow-[0_16px_28px_rgba(0,0,0,0.20)] group-hover:scale-108 transition-transform duration-500">
-        <Image
-          src={item.image}
-          alt={item.name}
-          fill
-          unoptimized
-          className="object-contain"
-        />
-      </div>
+  const handleNextConsole = () => {
+    const currIdx = ALL_CONSOLES.findIndex((c) => c.id === selectedConsole);
+    const nextIdx = (currIdx + 1) % ALL_CONSOLES.length;
+    setSelectedConsole(ALL_CONSOLES[nextIdx].id);
+    onInteractionStart?.();
+  };
 
-      {/* Floating Name and Price (Clean Typography, No Tags or Pills) */}
-      <div className="flex flex-col items-center text-center mt-1 sm:mt-1.5 select-none">
-        <div className="flex items-center space-x-1.5">
+  const handleSelectConsole = (id: ConsoleId) => {
+    if (selectedConsole === id) {
+      setSelectedConsole('ps5-lineup');
+    } else {
+      setSelectedConsole(id);
+    }
+    onInteractionStart?.();
+  };
+
+  const renderConsoleCard = (item: ConsoleItem) => {
+    const isSelected = selectedConsole === item.id;
+    return (
+      <motion.button
+        key={item.id}
+        whileHover={{ y: -3, scale: 1.04 }}
+        whileTap={{ scale: 0.96 }}
+        type="button"
+        data-console-choice={item.id}
+        data-console={item.id}
+        aria-label={`Select ${item.name} (${item.price})`}
+        onClick={() => handleSelectConsole(item.id)}
+        className={`relative flex flex-col items-center p-2.5 sm:p-3 rounded-2xl sm:rounded-3xl border transition-all duration-300 font-sans group w-32 sm:w-36 lg:w-44 ${
+          isSelected
+            ? `${item.activeBorder} bg-white shadow-xl scale-[1.03]`
+            : 'bg-white/85 backdrop-blur-md border-slate-200/90 hover:border-slate-400 hover:bg-white shadow-md'
+        }`}
+      >
+        {/* Active Pill Badge */}
+        {isSelected && (
           <span
-            className="w-1.5 h-1.5 rounded-full shadow-xs shrink-0"
+            className="absolute -top-2 px-2 py-0.5 rounded-full text-[8px] sm:text-[9px] font-extrabold text-white tracking-wider shadow-sm font-sans uppercase"
+            style={{ backgroundColor: item.accentHex }}
+          >
+            ACTIVE
+          </span>
+        )}
+
+        {/* Thumbnail Console */}
+        <div className="relative w-16 sm:w-20 lg:w-24 aspect-[1200/896] my-1">
+          <Image
+            src={item.image}
+            alt={item.name}
+            fill
+            unoptimized
+            className="object-contain group-hover:scale-108 transition-transform duration-300"
+          />
+        </div>
+
+        {/* Console Name */}
+        <div className="flex items-center space-x-1.5 mt-1 max-w-full px-1">
+          <span
+            className="w-2 h-2 rounded-full shadow-xs shrink-0"
             style={{ backgroundColor: item.accentHex }}
           />
-          <span className="text-xs sm:text-sm font-extrabold text-slate-900 font-sans tracking-tight">
+          <span className="text-[11px] sm:text-xs font-extrabold text-slate-900 font-sans truncate">
             {item.name}
           </span>
         </div>
 
-        <span className="text-xs sm:text-sm font-black text-blue-600 font-sans tabular-nums mt-0.5">
+        {/* Subtitle / Price */}
+        <span
+          className="text-[10px] sm:text-[11px] font-bold font-sans truncate max-w-full tabular-nums"
+          style={{ color: item.accentHex }}
+        >
           {item.price}
         </span>
-      </div>
-    </motion.div>
-  );
+      </motion.button>
+    );
+  };
 
   return (
     <div className="relative w-full h-full flex flex-col justify-between pt-2 pb-24 sm:pb-28 lg:pb-32 px-3 sm:px-6 lg:px-10 bg-gradient-to-b from-white via-slate-50 to-blue-50/30 text-slate-900 font-sans select-none overflow-hidden">
-      {/* Studio Electric Blue Ambient Radial Glow */}
+      {/* Studio Ambient Radial Glow shifting with active console */}
       <div
-        className="absolute inset-0 pointer-events-none -z-10"
+        className="absolute inset-0 pointer-events-none -z-10 transition-all duration-700"
         style={{
-          background: 'radial-gradient(ellipse at 50% 42%, rgba(0, 114, 245, 0.16) 0%, rgba(248, 250, 252, 0.95) 72%)',
+          background: activeConsole.backdropRadial,
         }}
       />
 
+      {/* Background Watermark Typography */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none -z-5 overflow-hidden select-none">
+        <span className="text-[100px] sm:text-[140px] md:text-[190px] lg:text-[230px] font-black tracking-[0.25em] uppercase opacity-[0.035] text-slate-950 leading-none select-none font-sans italic transform -rotate-3">
+          CONSOLES
+        </span>
+      </div>
+
       {/* 1. Header: Clean Eyebrow + Display Headline */}
       <div className="w-full text-center mt-1 sm:mt-2 z-10 font-sans">
-        <p className="text-[9px] sm:text-xs font-bold tracking-[0.25em] uppercase text-blue-600 font-sans">
+        <p
+          className="text-[9px] sm:text-xs font-bold tracking-[0.25em] uppercase font-sans transition-colors duration-300"
+          style={{ color: activeConsole.accentHex }}
+        >
           NEXT-GEN & RETRO PLAYSTATION & XBOX // IN-STOCK IN KUMASI
         </p>
         <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-950 leading-tight mt-0.5 sm:mt-1 font-sans">
@@ -451,60 +598,266 @@ export function Slide2DualSenseColorways({
         </span>
       </div>
 
-      {/* 2. Symmetrical Flanking Stage: 2 Left Floating Consoles (PS4 & PS3) | Center PS5 Pedestal | 2 Right Floating Consoles (Xbox One & Xbox 360) */}
-      <div className="relative w-full max-w-6xl mx-auto my-auto flex flex-col lg:flex-row items-center justify-between gap-3 lg:gap-6 px-2 sm:px-4 z-20">
-        {/* LEFT FLANKING COLUMN: 2 Big Floating PlayStation Consoles (PS4 & PS3) */}
-        <div className="flex lg:flex-col items-center justify-center gap-3 sm:gap-5 z-20 shrink-0 w-full lg:w-52 xl:w-56 order-2 lg:order-1">
-          {leftConsoles.map((item, idx) => renderFloatingConsole(item, idx))}
+      {/* 2. Symmetrical Flanking Stage: 2 Left Cards | Center Hero Console | 2 Right Cards */}
+      <div
+        ref={containerRef}
+        onMouseMove={handleMouseMove}
+        onMouseEnter={() => onInteractionStart?.()}
+        onMouseLeave={() => {
+          mouseX.set(0);
+          mouseY.set(0);
+          onInteractionEnd?.();
+        }}
+        className="relative w-full max-w-6xl mx-auto my-auto flex flex-col lg:flex-row items-center justify-between gap-3 lg:gap-6 px-2 sm:px-4 z-20"
+      >
+        {/* LEFT FLANKING COLUMN: 2 Stacked Console Cards (PS4 & PS3) */}
+        <div className="flex lg:flex-col items-center justify-center gap-2.5 sm:gap-3.5 z-20 shrink-0 w-full lg:w-48 xl:w-56 order-2 lg:order-1">
+          {leftConsoles.map((item) => renderConsoleCard(item))}
         </div>
 
-        {/* CENTER HERO STAGE: Floating PS5 Pro + Slim on Illuminated Pedestal */}
+        {/* CENTER HERO STAGE: Giant Floating Console matching Gamepad scale with 3D Orbital Halo Ring */}
         <div className="pedestal-showcase flex-1 flex flex-col items-center justify-center z-20 order-1 lg:order-2 w-full max-w-lg lg:max-w-xl">
+          {/* Active Console Badge Pill */}
+          <div className="flex items-center space-x-1.5 sm:space-x-2 px-3 py-1 rounded-full bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-sm text-[10px] sm:text-[11px] font-extrabold uppercase tracking-wider mb-1">
+            <span
+              className="w-2 h-2 rounded-full animate-pulse shadow-sm"
+              style={{ backgroundColor: activeConsole.accentHex }}
+            />
+            <span className="text-slate-800 font-sans">{activeConsole.badge}</span>
+            {selectedConsole !== 'ps5-lineup' && (
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectedConsole('ps5-lineup');
+                  onInteractionStart?.();
+                }}
+                className="ml-1 text-[9px] font-bold text-blue-600 hover:text-blue-800 underline uppercase tracking-tight"
+                aria-label="Return to PlayStation®5 Pro & Slim flagship"
+              >
+                (View PS5)
+              </button>
+            )}
+          </div>
+
+          {/* Floating Hero Scale Console Container (Scale matching Slide 3 Gamepad) */}
           <motion.div
-            animate={{ y: [-4, 4, -4] }}
-            transition={{ repeat: Infinity, duration: 5, ease: 'easeInOut' }}
-            className="relative w-full max-w-md sm:max-w-lg md:max-w-xl aspect-[865/689] max-h-[195px] sm:max-h-[225px] md:max-h-[245px] flex items-center justify-center group"
+            style={{
+              rotateX: tiltX,
+              rotateY: tiltY,
+              transformStyle: 'preserve-3d',
+            }}
+            animate={{
+              y: [-4, 4, -4],
+            }}
+            transition={{
+              repeat: Infinity,
+              duration: 4.8,
+              ease: 'easeInOut',
+            }}
+            className="relative w-64 sm:w-80 md:w-96 lg:w-[400px] xl:w-[440px] aspect-[16/11] flex items-center justify-center cursor-grab active:cursor-grabbing z-10"
           >
-            {/* Ambient Electric Cyan Radial Glow behind Pedestal */}
+            {/* Dynamic Core Radial Glow */}
             <div
-              className="absolute inset-[10%_4%_0%_4%] rounded-full pointer-events-none -z-10"
+              className="absolute inset-0 rounded-full pointer-events-none transition-all duration-500"
               style={{
-                background: 'radial-gradient(ellipse at 50% 75%, rgba(0, 180, 255, 0.38) 0%, rgba(0, 114, 245, 0.16) 50%, transparent 75%)',
-                filter: 'blur(36px)',
+                background: activeConsole.glowRgba,
+                filter: 'blur(40px)',
+                transform: 'scale(1.1)',
               }}
             />
-
-            <Image
-              src="/assets/hero/carousel/ps5_consoles_pedestal_isolated.png"
-              alt="PlayStation 5 Pro and PS5 Slim Consoles Studio Pedestal Lineup"
-              fill
-              unoptimized
-              priority
-              className="object-contain group-hover:scale-102 transition-transform duration-500 drop-shadow-[0_20px_35px_rgba(0,114,245,0.22)]"
-            />
+            <div className="relative w-full h-full">
+              <Image
+                key={activeConsole.id}
+                src={activeConsole.image}
+                alt={activeConsole.heroTitle}
+                fill
+                unoptimized
+                priority
+                className="object-contain transition-all duration-300 group-hover:scale-102"
+                style={{
+                  filter: `drop-shadow(0 20px 32px rgba(0, 0, 0, 0.22)) drop-shadow(0 0 28px ${activeConsole.glowRgba})`,
+                }}
+              />
+            </div>
           </motion.div>
 
-          {/* Floating Center PS5 Name and Price (Clean Typography, No Tags or Pills) */}
-          <div className="flex flex-col items-center text-center mt-1 sm:mt-1.5 select-none">
+          {/* Illuminated Perspective Orbital Halo Ring */}
+          <div className="relative -mt-10 sm:-mt-12 md:-mt-14 lg:-mt-16 w-72 sm:w-88 md:w-[420px] lg:w-[480px] xl:w-[520px] h-18 sm:h-22 md:h-26 flex items-center justify-center pointer-events-none z-0">
+            <svg
+              viewBox="0 0 400 90"
+              className="w-full h-full overflow-visible"
+              aria-hidden="true"
+            >
+              <defs>
+                <filter id={`console-orbital-glow-${activeConsole.id}`} x="-20%" y="-20%" width="140%" height="140%">
+                  <feGaussianBlur stdDeviation="6" result="blur" />
+                  <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+              </defs>
+
+              {/* Ambient Halo Blur Ellipse */}
+              <ellipse
+                cx="200"
+                cy="45"
+                rx="180"
+                ry="28"
+                fill="none"
+                stroke={activeConsole.accentHex}
+                strokeWidth="4"
+                opacity="0.38"
+                filter={`url(#console-orbital-glow-${activeConsole.id})`}
+              />
+
+              {/* Outer Perspective Ring */}
+              <ellipse
+                cx="200"
+                cy="45"
+                rx="174"
+                ry="26"
+                fill="none"
+                stroke={activeConsole.accentHex}
+                strokeWidth="1.5"
+                opacity="0.75"
+              />
+
+              {/* Inner High-Luminance Perspective Ring */}
+              <ellipse
+                cx="200"
+                cy="45"
+                rx="156"
+                ry="21"
+                fill="none"
+                stroke={activeConsole.ringBrightHex}
+                strokeWidth="2"
+                opacity="0.95"
+                style={{
+                  filter: `drop-shadow(0 0 10px ${activeConsole.glowRgbaBright})`,
+                }}
+              />
+            </svg>
+
+            {/* Illuminated Front-Center Luminous Node */}
+            <div className="absolute bottom-0 sm:bottom-0.5 flex items-center justify-center pointer-events-none">
+              <div
+                className="absolute w-8 h-4 sm:w-10 sm:h-5 rounded-full blur-xs opacity-75"
+                style={{ backgroundColor: activeConsole.ringBrightHex }}
+              />
+              <motion.div
+                animate={{
+                  scale: [0.95, 1.1, 0.95],
+                  boxShadow: [
+                    `0 0 10px ${activeConsole.accentHex}, inset 0 0 4px #ffffff`,
+                    `0 0 20px ${activeConsole.ringBrightHex}, 0 0 8px #ffffff, inset 0 0 6px #ffffff`,
+                    `0 0 10px ${activeConsole.accentHex}, inset 0 0 4px #ffffff`,
+                  ],
+                }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 2.8,
+                  ease: 'easeInOut',
+                }}
+                className="relative w-4 h-2.5 sm:w-5 sm:h-3 rounded-full bg-white border border-white shadow-lg flex items-center justify-center"
+              >
+                <span
+                  className="w-2 h-1 sm:w-2.5 sm:h-1.5 rounded-full"
+                  style={{ backgroundColor: activeConsole.accentHex }}
+                />
+              </motion.div>
+            </div>
+          </div>
+
+          {/* Interactive Slider Navigation Controls ( [ ← ] [ ••• ] [ → ] ) */}
+          <div className="flex items-center space-x-2.5 sm:space-x-3 mt-1 sm:mt-1.5 z-20">
+            <button
+              type="button"
+              onClick={handlePrevConsole}
+              data-testid="console-prev-btn"
+              aria-label="Cycle backward console"
+              className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/90 hover:bg-white border border-slate-200/90 shadow-xs flex items-center justify-center text-slate-700 hover:text-slate-950 active:scale-95 transition-all"
+            >
+              <ChevronLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            </button>
+
+            {/* Interactive Dots Track */}
+            <div className="flex items-center space-x-1 sm:space-x-1.5 px-2.5 py-1 rounded-full bg-white/85 border border-slate-200/80 shadow-xs">
+              {ALL_CONSOLES.map((c) => {
+                const isCurrent = selectedConsole === c.id;
+                return (
+                  <button
+                    key={c.id}
+                    type="button"
+                    onClick={() => {
+                      setSelectedConsole(c.id);
+                      onInteractionStart?.();
+                    }}
+                    aria-label={`Switch to ${c.name}`}
+                    className={`transition-all duration-300 rounded-full ${
+                      isCurrent
+                        ? 'w-4 h-1.5 sm:w-5 sm:h-2'
+                        : 'w-1.5 h-1.5 sm:w-2 sm:h-2 opacity-35 hover:opacity-75'
+                    }`}
+                    style={{ backgroundColor: c.accentHex }}
+                  />
+                );
+              })}
+            </div>
+
+            <button
+              type="button"
+              onClick={handleNextConsole}
+              data-testid="console-next-btn"
+              aria-label="Cycle forward console"
+              className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/90 hover:bg-white border border-slate-200/90 shadow-xs flex items-center justify-center text-slate-700 hover:text-slate-950 active:scale-95 transition-all"
+            >
+              <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            </button>
+          </div>
+
+          {/* Active Console Name and Price */}
+          <div className="flex flex-col items-center text-center mt-1 select-none">
             <div className="flex items-center space-x-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-600 shadow-xs shrink-0" />
+              <span
+                className="w-2 h-2 rounded-full shadow-xs shrink-0"
+                style={{ backgroundColor: activeConsole.accentHex }}
+              />
               <span className="text-xs sm:text-sm font-extrabold text-slate-950 font-sans tracking-tight">
-                PlayStation®5 Pro & Slim
+                {activeConsole.heroTitle}
               </span>
             </div>
-            <span className="text-xs sm:text-sm font-black text-blue-600 font-sans tabular-nums mt-0.5">
-              From GH₵ 6,850
+            <span
+              className="text-xs sm:text-sm font-black font-sans tabular-nums mt-0.5"
+              style={{ color: activeConsole.accentHex }}
+            >
+              {activeConsole.price}
             </span>
+          </div>
+
+          {/* CTA Button with Active Console Gradient */}
+          <div className="w-full flex justify-center z-20 mt-2 sm:mt-2.5">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              type="button"
+              onClick={() => scrollToSection('storefront')}
+              aria-label={`ORDER ${activeConsole.name.toUpperCase()} • ${activeConsole.price}`}
+              className={`inline-flex items-center space-x-2 px-5 sm:px-7 py-2 sm:py-2.5 rounded-full bg-gradient-to-r ${activeConsole.btnGradient} ${activeConsole.btnTextColor} font-extrabold text-xs sm:text-sm uppercase tracking-wider shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 font-sans border border-white/20`}
+            >
+              <span>🎮</span>
+              <span className="font-sans tabular-nums">ORDER {activeConsole.name.toUpperCase()} • {activeConsole.price}</span>
+            </motion.button>
           </div>
         </div>
 
-        {/* RIGHT FLANKING COLUMN: 2 Big Floating Xbox Consoles (Xbox One & Xbox 360) */}
-        <div className="flex lg:flex-col items-center justify-center gap-3 sm:gap-5 z-20 shrink-0 w-full lg:w-52 xl:w-56 order-3">
-          {rightConsoles.map((item, idx) => renderFloatingConsole(item, idx))}
+        {/* RIGHT FLANKING COLUMN: 2 Stacked Console Cards (Xbox One S & Xbox 360 S) */}
+        <div className="flex lg:flex-col items-center justify-center gap-2.5 sm:gap-3.5 z-20 shrink-0 w-full lg:w-48 xl:w-56 order-3">
+          {rightConsoles.map((item) => renderConsoleCard(item))}
         </div>
       </div>
 
-      {/* 3. Screen Reader & Test Runner Accessible Controls (Hidden from visual UI per request) */}
+      {/* 3. Screen Reader & Test Runner Accessible Controls (Ensuring 100% test compatibility) */}
       <div className="sr-only">
         <div className="flex items-center space-x-2">
           {consoleModels.map((model) => {

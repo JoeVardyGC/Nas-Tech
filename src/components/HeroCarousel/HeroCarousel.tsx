@@ -105,7 +105,8 @@ export default function HeroCarousel({
     lastTimeRef.current = performance.now();
 
     const tick = (currentTime: number) => {
-      const delta = currentTime - lastTimeRef.current;
+      const rawDelta = currentTime - lastTimeRef.current;
+      const delta = Math.min(Math.max(rawDelta, 0), 100);
       lastTimeRef.current = currentTime;
 
       if (!isPausedRef.current) {

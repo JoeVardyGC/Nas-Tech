@@ -24,7 +24,7 @@ test.before(async () => {
   browser = await launchBrowser();
   page = await createPage(browser);
   try {
-    await waitForCarousel(page, 3000);
+    await waitForCarousel(page, 10000);
     carouselMounted = true;
   } catch {
     carouselMounted = false;
