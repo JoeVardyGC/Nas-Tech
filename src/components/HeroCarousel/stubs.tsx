@@ -1165,18 +1165,7 @@ export function Slide4GamesArchive({
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/45 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-r from-slate-950/80 via-transparent to-slate-950/40" />
 
-          {/* Top Floating Badges */}
-          <div className="absolute top-3 sm:top-5 left-3 sm:left-6 flex items-center flex-wrap gap-2 z-10">
-            <span className={`px-3 py-1 rounded-full text-[10px] sm:text-xs font-black uppercase tracking-wider shadow-lg ${currentGame.badgeBg}`}>
-              {currentGame.badge}
-            </span>
-            <span className="px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold bg-white/20 backdrop-blur-md text-white border border-white/30 shadow-md">
-              {currentGame.genre}
-            </span>
-            <span className="px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-bold bg-slate-900/80 backdrop-blur-md text-emerald-400 border border-emerald-500/30">
-              🎮 PS5 • Xbox Series X • PC
-            </span>
-          </div>
+          {/* Top Floating Badges removed per user request */}
 
           {/* Top Right Quick Navigation Chevrons & Dots */}
           <div className="absolute top-3 sm:top-5 right-3 sm:right-6 flex items-center space-x-2 z-10">
@@ -1277,6 +1266,7 @@ export function Slide4GamesArchive({
                 <span>{idx + 1}</span>
                 <span>{game.shortTitle}</span>
                 <span>{game.genre}</span>
+                <span>{game.badge}</span>
               </button>
             ))}
           </div>
