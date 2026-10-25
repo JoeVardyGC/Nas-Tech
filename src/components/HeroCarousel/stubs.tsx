@@ -307,6 +307,7 @@ type ConsoleId = 'ps5-lineup' | 'ps4' | 'ps3' | 'xbox-one' | 'xbox-360';
 interface ConsoleItem {
   id: ConsoleId;
   name: string;
+  subLabel: string;
   heroTitle: string;
   heroTagline: string;
   price: string;
@@ -323,10 +324,19 @@ interface ConsoleItem {
   side?: 'left' | 'right';
 }
 
+const CLOCKWISE_CONSOLE_IDS: ConsoleId[] = [
+  'ps5-lineup',
+  'xbox-one',
+  'xbox-360',
+  'ps3',
+  'ps4',
+];
+
 const ALL_CONSOLES: ConsoleItem[] = [
   {
     id: 'ps5-lineup',
     name: 'PS5 Pro & Slim',
+    subLabel: 'Next-Gen Flagship',
     heroTitle: 'PlayStation®5 Pro & Slim',
     heroTagline: 'PSSR AI 4K@120FPS • 2TB & 1TB SSD • Ray Tracing',
     price: 'From GH₵ 6,850',
@@ -345,6 +355,7 @@ const ALL_CONSOLES: ConsoleItem[] = [
   {
     id: 'ps4',
     name: 'PlayStation®4',
+    subLabel: '1TB HDR Gaming',
     heroTitle: 'PlayStation®4 Pro',
     heroTagline: 'PS4 Pro 1TB • DualShock®4 Included • 4K HDR',
     price: 'GH₵ 3,200',
@@ -364,6 +375,7 @@ const ALL_CONSOLES: ConsoleItem[] = [
   {
     id: 'ps3',
     name: 'PlayStation®3',
+    subLabel: 'Retro Hits Loaded',
     heroTitle: 'PlayStation®3 Slim',
     heroTagline: 'PS3 Slim 500GB • Games Loaded • Retro Hits',
     price: 'GH₵ 1,450',
@@ -383,6 +395,7 @@ const ALL_CONSOLES: ConsoleItem[] = [
   {
     id: 'xbox-one',
     name: 'Xbox One S',
+    subLabel: '4K Stream & HDR',
     heroTitle: 'Xbox One S 1TB',
     heroTagline: '1TB HDR • 4K Video Streaming • Wireless Controller',
     price: 'GH₵ 2,800',
@@ -402,6 +415,7 @@ const ALL_CONSOLES: ConsoleItem[] = [
   {
     id: 'xbox-360',
     name: 'Xbox 360 S',
+    subLabel: 'Aurora 50+ Games',
     heroTitle: 'Xbox 360 Slim Aurora',
     heroTagline: 'Slim Aurora Chassis • 50+ Games Installed',
     price: 'GH₵ 1,150',
@@ -427,6 +441,7 @@ export function Slide2DualSenseColorways({
 }: SlideProps) {
   const [selectedConsole, setSelectedConsole] = useState<ConsoleId>('ps5-lineup');
   const [selectedSkin, setSelectedSkin] = useState<'midnight-camo' | 'cyber-green' | 'tactical-patriots'>('midnight-camo');
+  const [isHoveredConsole, setIsHoveredConsole] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Physics-based spring tilt matching Slide 3 Collector Series
@@ -445,6 +460,19 @@ export function Slide2DualSenseColorways({
     mouseX.set(x);
     mouseY.set(y);
   };
+
+  // Clockwise 3-second auto-interchange around the consoles
+  useEffect(() => {
+    if (!isActive || isHoveredConsole) return;
+    const timer = setInterval(() => {
+      setSelectedConsole((prev) => {
+        const currIdx = CLOCKWISE_CONSOLE_IDS.indexOf(prev);
+        const nextIdx = (currIdx + 1) % CLOCKWISE_CONSOLE_IDS.length;
+        return CLOCKWISE_CONSOLE_IDS[nextIdx];
+      });
+    }, 3000);
+    return () => clearInterval(timer);
+  }, [isActive, isHoveredConsole]);
 
   const consoleModels = [
     {
@@ -481,16 +509,20 @@ export function Slide2DualSenseColorways({
   const activeConsole = ALL_CONSOLES.find((c) => c.id === selectedConsole) || ALL_CONSOLES[0];
 
   const handlePrevConsole = () => {
-    const currIdx = ALL_CONSOLES.findIndex((c) => c.id === selectedConsole);
-    const prevIdx = (currIdx - 1 + ALL_CONSOLES.length) % ALL_CONSOLES.length;
-    setSelectedConsole(ALL_CONSOLES[prevIdx].id);
+    setSelectedConsole((prev) => {
+      const currIdx = CLOCKWISE_CONSOLE_IDS.indexOf(prev);
+      const prevIdx = (currIdx - 1 + CLOCKWISE_CONSOLE_IDS.length) % CLOCKWISE_CONSOLE_IDS.length;
+      return CLOCKWISE_CONSOLE_IDS[prevIdx];
+    });
     onInteractionStart?.();
   };
 
   const handleNextConsole = () => {
-    const currIdx = ALL_CONSOLES.findIndex((c) => c.id === selectedConsole);
-    const nextIdx = (currIdx + 1) % ALL_CONSOLES.length;
-    setSelectedConsole(ALL_CONSOLES[nextIdx].id);
+    setSelectedConsole((prev) => {
+      const currIdx = CLOCKWISE_CONSOLE_IDS.indexOf(prev);
+      const nextIdx = (currIdx + 1) % CLOCKWISE_CONSOLE_IDS.length;
+      return CLOCKWISE_CONSOLE_IDS[nextIdx];
+    });
     onInteractionStart?.();
   };
 
@@ -513,7 +545,7 @@ export function Slide2DualSenseColorways({
         type="button"
         data-console-choice={item.id}
         data-console={item.id}
-        aria-label={`Select ${item.name} (${item.price})`}
+        aria-label={`Select ${item.name} (${item.subLabel})`}
         onClick={() => handleSelectConsole(item.id)}
         className={`relative flex flex-col items-center p-2.5 sm:p-3 rounded-2xl sm:rounded-3xl border transition-all duration-300 font-sans group w-32 sm:w-36 lg:w-44 ${
           isSelected
@@ -553,13 +585,11 @@ export function Slide2DualSenseColorways({
           </span>
         </div>
 
-        {/* Subtitle / Price */}
-        <span
-          className="text-[10px] sm:text-[11px] font-bold font-sans truncate max-w-full tabular-nums"
-          style={{ color: item.accentHex }}
-        >
-          {item.price}
+        {/* Subtitle (Edition / Feature, no visible price) */}
+        <span className="text-[9px] sm:text-[10px] font-semibold text-slate-500 font-sans truncate max-w-full">
+          {item.subLabel}
         </span>
+        <span className="sr-only">{item.price}</span>
       </motion.button>
     );
   };
@@ -602,8 +632,12 @@ export function Slide2DualSenseColorways({
       <div
         ref={containerRef}
         onMouseMove={handleMouseMove}
-        onMouseEnter={() => onInteractionStart?.()}
+        onMouseEnter={() => {
+          setIsHoveredConsole(true);
+          onInteractionStart?.();
+        }}
         onMouseLeave={() => {
+          setIsHoveredConsole(false);
           mouseX.set(0);
           mouseY.set(0);
           onInteractionEnd?.();
@@ -781,9 +815,10 @@ export function Slide2DualSenseColorways({
               <ChevronLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </button>
 
-            {/* Interactive Dots Track */}
+            {/* Interactive Dots Track (Clockwise Order) */}
             <div className="flex items-center space-x-1 sm:space-x-1.5 px-2.5 py-1 rounded-full bg-white/85 border border-slate-200/80 shadow-xs">
-              {ALL_CONSOLES.map((c) => {
+              {CLOCKWISE_CONSOLE_IDS.map((cId) => {
+                const c = ALL_CONSOLES.find((item) => item.id === cId) || ALL_CONSOLES[0];
                 const isCurrent = selectedConsole === c.id;
                 return (
                   <button
@@ -816,7 +851,7 @@ export function Slide2DualSenseColorways({
             </button>
           </div>
 
-          {/* Active Console Name and Price */}
+          {/* Active Console Name and Tagline (No visible price) */}
           <div className="flex flex-col items-center text-center mt-1 select-none">
             <div className="flex items-center space-x-1.5">
               <span
@@ -827,26 +862,25 @@ export function Slide2DualSenseColorways({
                 {activeConsole.heroTitle}
               </span>
             </div>
-            <span
-              className="text-xs sm:text-sm font-black font-sans tabular-nums mt-0.5"
-              style={{ color: activeConsole.accentHex }}
-            >
-              {activeConsole.price}
+            <span className="text-[10px] sm:text-xs font-semibold text-slate-500 font-sans mt-0.5 max-w-sm truncate">
+              {activeConsole.heroTagline}
             </span>
+            <span className="sr-only">{activeConsole.price}</span>
           </div>
 
-          {/* CTA Button with Active Console Gradient */}
+          {/* CTA Button with Active Console Gradient (No visible price) */}
           <div className="w-full flex justify-center z-20 mt-2 sm:mt-2.5">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               type="button"
               onClick={() => scrollToSection('storefront')}
-              aria-label={`ORDER ${activeConsole.name.toUpperCase()} • ${activeConsole.price}`}
+              aria-label={`ORDER ${activeConsole.name.toUpperCase()}`}
               className={`inline-flex items-center space-x-2 px-5 sm:px-7 py-2 sm:py-2.5 rounded-full bg-gradient-to-r ${activeConsole.btnGradient} ${activeConsole.btnTextColor} font-extrabold text-xs sm:text-sm uppercase tracking-wider shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 font-sans border border-white/20`}
             >
               <span>🎮</span>
-              <span className="font-sans tabular-nums">ORDER {activeConsole.name.toUpperCase()} • {activeConsole.price}</span>
+              <span className="font-sans">ORDER {activeConsole.name.toUpperCase()}</span>
+              <span className="sr-only">• {activeConsole.price}</span>
             </motion.button>
           </div>
         </div>
