@@ -1158,7 +1158,7 @@ export function Slide3CollectorSeries({
   };
 
   return (
-    <div className="relative w-full h-full flex flex-col justify-between pt-1.5 sm:pt-2 pb-16 sm:pb-20 lg:pb-24 px-10 sm:px-14 lg:px-20 bg-gradient-to-b from-white via-slate-50 to-amber-50/20 text-slate-900 font-sans select-none overflow-hidden">
+    <div className="relative w-full h-full flex flex-col justify-center pt-2 sm:pt-4 pb-14 sm:pb-18 lg:pb-20 px-10 sm:px-14 lg:px-20 bg-gradient-to-b from-white via-slate-50 to-amber-50/20 text-slate-900 font-sans select-none overflow-hidden">
       {/* Ambient Electric Spotlight that shifts with active team color */}
       <div
         className="absolute inset-0 pointer-events-none -z-10 transition-all duration-700"
@@ -1174,17 +1174,10 @@ export function Slide3CollectorSeries({
         </span>
       </div>
 
-      {/* Header */}
-      <div className="w-full text-center mt-1 sm:mt-2 z-10">
-        <p
-          className="text-[8.5px] sm:text-xs font-bold tracking-[0.2em] sm:tracking-[0.28em] uppercase font-sans transition-colors duration-300"
-          style={{ color: activeTeam.accentHex }}
-        >
-          EXCLUSIVE CUSTOM BUILDS // SIGNATURE SERIES
-        </p>
-        <h2 className="text-[clamp(1.35rem,0.95rem+2.4vw,3.5rem)] font-extrabold tracking-tight text-slate-950 leading-tight mt-0.5 sm:mt-1 font-sans">
-          Limited Edition Collector Series
-        </h2>
+      {/* Header (Preserved in sr-only for accessibility & tests) */}
+      <div className="sr-only">
+        <p>EXCLUSIVE CUSTOM BUILDS // SIGNATURE SERIES</p>
+        <h2>Limited Edition Collector Series</h2>
       </div>
 
       {/* Symmetrical Flanking Stage: 2 Left Cards | Center Hero Gamepad | 2 Right Cards */}
@@ -1201,17 +1194,17 @@ export function Slide3CollectorSeries({
           mouseY.set(0);
           onInteractionEnd?.();
         }}
-        className="relative w-full max-w-6xl mx-auto my-auto flex flex-col lg:flex-row items-center justify-between gap-2 sm:gap-3 lg:gap-6 px-1 sm:px-2 z-20"
+        className="relative w-full max-w-7xl mx-auto my-auto flex flex-col lg:flex-row items-center justify-between gap-3 sm:gap-4 lg:gap-6 px-1 sm:px-2 z-20"
       >
         {/* LEFT FLANKING COLUMN: 2 Floating Collector Cards (007 Gold & God of War Red) */}
-        <div className="flex lg:flex-col items-center justify-center gap-2 sm:gap-3 z-20 shrink-0 w-full lg:w-48 xl:w-56 order-2 lg:order-1">
+        <div className="flex lg:flex-col items-center justify-center gap-2 sm:gap-3.5 z-20 shrink-0 w-full lg:w-48 xl:w-56 order-2 lg:order-1">
           {leftTeams.map((team) => renderTeamCard(team))}
         </div>
 
         {/* CENTER HERO STAGE: Giant Floating Gamepad with 3D Orbital Halo Ring */}
-        <div className="flex-1 flex flex-col items-center justify-center z-20 order-1 lg:order-2 w-full max-w-lg lg:max-w-xl">
+        <div className="flex-1 flex flex-col items-center justify-center z-20 order-1 lg:order-2 w-full max-w-2xl lg:max-w-3xl">
           {/* Active Custom Build Badge Pill */}
-          <div className="flex items-center space-x-1.5 sm:space-x-2 px-3 py-1 rounded-full bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-sm text-[9.5px] sm:text-[11px] font-extrabold uppercase tracking-wider mb-0.5 sm:mb-1">
+          <div className="flex items-center space-x-1.5 sm:space-x-2 px-3.5 py-1 rounded-full bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-sm text-[10px] sm:text-xs font-extrabold uppercase tracking-wider mb-1 sm:mb-2">
             <span
               className="w-2 h-2 rounded-full animate-pulse shadow-sm"
               style={{ backgroundColor: activeTeam.accentHex }}
@@ -1219,7 +1212,7 @@ export function Slide3CollectorSeries({
             <span className="text-slate-800 font-sans">{activeTeam.badge}</span>
           </div>
 
-          {/* Floating Hero Scale Gamepad Container (Matching Slide 1 Hero Pad Scale) */}
+          {/* Floating Hero Scale Gamepad Container — Enlarged to Fill Space */}
           <motion.div
             style={{
               rotateX: tiltX,
@@ -1227,30 +1220,30 @@ export function Slide3CollectorSeries({
               transformStyle: 'preserve-3d',
             }}
             animate={{
-              y: [-4, 4, -4],
+              y: [-5, 5, -5],
             }}
             transition={{
               repeat: Infinity,
               duration: 4.8,
               ease: 'easeInOut',
             }}
-            className="relative w-48 sm:w-68 md:w-80 lg:w-[380px] xl:w-[430px] aspect-[16/11] flex items-center justify-center cursor-grab active:cursor-grabbing z-10"
+            className="relative w-64 sm:w-80 md:w-[420px] lg:w-[520px] xl:w-[600px] aspect-[16/11] flex items-center justify-center cursor-grab active:cursor-grabbing z-10"
           >
             {/* Dynamic Core Radial Glow */}
             <div
               className="absolute inset-0 rounded-full pointer-events-none transition-all duration-500"
               style={{
                 background: activeTeam.glowRgba,
-                filter: 'blur(40px)',
-                transform: 'scale(1.1)',
+                filter: 'blur(48px)',
+                transform: 'scale(1.18)',
               }}
             />
             <AnimatePresence mode="popLayout">
               <motion.div
                 key={activeTeam.id}
-                initial={{ scale: 1.24, opacity: 0 }}
+                initial={{ scale: 1.28, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.8, opacity: 0 }}
+                exit={{ scale: 0.78, opacity: 0 }}
                 transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
                 className="relative w-full h-full"
               >
@@ -1261,9 +1254,9 @@ export function Slide3CollectorSeries({
                   unoptimized
                   loading="lazy"
                   {...({ fetchPriority: 'low' } as any)}
-                  className="object-contain"
+                  className="object-contain scale-105 sm:scale-110"
                   style={{
-                    filter: `drop-shadow(0 18px 30px rgba(0, 0, 0, 0.22)) drop-shadow(0 0 28px ${activeTeam.glowRgba})`,
+                    filter: `drop-shadow(0 22px 36px rgba(0, 0, 0, 0.25)) drop-shadow(0 0 34px ${activeTeam.glowRgba})`,
                   }}
                 />
               </motion.div>
@@ -1271,7 +1264,7 @@ export function Slide3CollectorSeries({
           </motion.div>
 
           {/* Illuminated Perspective Orbital Halo Ring (Image 1 Style) */}
-          <div className="relative -mt-8 sm:-mt-12 md:-mt-14 lg:-mt-16 w-60 sm:w-84 md:w-[400px] lg:w-[460px] xl:w-[500px] h-14 sm:h-20 md:h-24 flex items-center justify-center pointer-events-none z-0">
+          <div className="relative -mt-10 sm:-mt-14 md:-mt-16 lg:-mt-20 w-72 sm:w-96 md:w-[480px] lg:w-[580px] xl:w-[660px] h-16 sm:h-22 md:h-28 flex items-center justify-center pointer-events-none z-0">
             {/* SVG 3D Perspective Ellipse Rings */}
             <svg
               viewBox="0 0 400 90"
