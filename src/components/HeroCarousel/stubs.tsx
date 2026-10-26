@@ -1632,11 +1632,6 @@ export function Slide4GamesArchive({
           {/* Bottom Card Showcase Details */}
           <div className="absolute bottom-3 sm:bottom-5 left-3 sm:left-6 right-3 sm:right-6 flex flex-col md:flex-row md:items-end md:justify-between gap-3 z-10 p-3 sm:p-4 rounded-2xl bg-slate-950/75 backdrop-blur-md border border-white/10 shadow-2xl">
             <div className="max-w-2xl">
-              <div className="flex items-center space-x-2 text-[10px] sm:text-xs font-bold uppercase tracking-wider text-blue-400 mb-1">
-                <span>⭐ Top Rated In Kumasi</span>
-                <span>•</span>
-                <span>⚡ 100% Virus-Free SSD Install</span>
-              </div>
               <h3 className="text-lg sm:text-2xl md:text-3xl lg:text-4xl font-black text-white tracking-tight leading-tight">
                 {currentGame.title}
               </h3>
