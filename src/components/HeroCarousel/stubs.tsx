@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef, MouseEvent } from 'react';
 import Image from 'next/image';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import {
   ArrowUpRight,
   ArrowUpLeft,
@@ -1231,20 +1231,28 @@ export function Slide3CollectorSeries({
                 transform: 'scale(1.1)',
               }}
             />
-            <div className="relative w-full h-full">
-              <Image
+            <AnimatePresence mode="popLayout">
+              <motion.div
                 key={activeTeam.id}
-                src={activeTeam.image}
-                alt={`Custom PS5 DualSense Controller - ${activeTeam.editionName} (${activeTeam.teamName})`}
-                fill
-                unoptimized
-                priority
-                className="object-contain transition-all duration-300"
-                style={{
-                  filter: `drop-shadow(0 18px 30px rgba(0, 0, 0, 0.22)) drop-shadow(0 0 28px ${activeTeam.glowRgba})`,
-                }}
-              />
-            </div>
+                initial={{ scale: 1.24, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.8, opacity: 0 }}
+                transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+                className="relative w-full h-full"
+              >
+                <Image
+                  src={activeTeam.image}
+                  alt={`Custom PS5 DualSense Controller - ${activeTeam.editionName} (${activeTeam.teamName})`}
+                  fill
+                  unoptimized
+                  priority
+                  className="object-contain"
+                  style={{
+                    filter: `drop-shadow(0 18px 30px rgba(0, 0, 0, 0.22)) drop-shadow(0 0 28px ${activeTeam.glowRgba})`,
+                  }}
+                />
+              </motion.div>
+            </AnimatePresence>
           </motion.div>
 
           {/* Illuminated Perspective Orbital Halo Ring (Image 1 Style) */}
@@ -1565,19 +1573,29 @@ export function Slide4GamesArchive({
       >
         {/* Main Highlight Card - Expanded Hero Game Pass Showcase */}
         <div className="relative w-full max-w-4xl sm:max-w-5xl lg:max-w-6xl aspect-[16/9.5] sm:aspect-[16/8.5] md:aspect-[21/10] max-h-[380px] sm:max-h-[440px] md:max-h-[480px] lg:max-h-[520px] rounded-3xl overflow-hidden shadow-2xl shadow-blue-950/25 border-2 border-white/80 bg-slate-950 flex items-center justify-center group transition-all duration-500">
-          <Image
-            key={currentGame.id}
-            src={currentGame.image}
-            alt={currentGame.title}
-            fill
-            unoptimized
-            priority
-            className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
-          />
+          <AnimatePresence mode="popLayout">
+            <motion.div
+              key={currentGame.id}
+              initial={{ scale: 1.28, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.78, opacity: 0 }}
+              transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+              className="absolute inset-0 w-full h-full"
+            >
+              <Image
+                src={currentGame.image}
+                alt={currentGame.title}
+                fill
+                unoptimized
+                priority
+                className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
+              />
+            </motion.div>
+          </AnimatePresence>
 
           {/* Cinematic Vignette Overlays */}
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/45 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/80 via-transparent to-slate-950/40" />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/45 to-transparent pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/80 via-transparent to-slate-950/40 pointer-events-none" />
 
           {/* Top Floating Badges removed per user request */}
 
@@ -1640,19 +1658,10 @@ export function Slide4GamesArchive({
               </p>
             </div>
 
-            <div className="flex items-center space-x-3 shrink-0 self-start md:self-end">
-              <div className="sr-only">
-                <span>Installation Fee</span>
-                <span>{currentGame.price}</span>
-              </div>
-              <button
-                type="button"
-                onClick={() => scrollToSection('installations')}
-                aria-label={`${currentGame.actionLabel} ${currentGame.title}`}
-                className="px-4 sm:px-6 py-2 sm:py-2.5 rounded-xl sm:rounded-2xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 active:scale-95 text-white font-black text-xs sm:text-sm font-sans uppercase tracking-wider shadow-lg shadow-red-600/30 transition-all"
-              >
-                {currentGame.actionLabel}
-              </button>
+            <div className="sr-only">
+              <span>Installation Fee</span>
+              <span>{currentGame.price}</span>
+              <span>{currentGame.actionLabel}</span>
             </div>
           </div>
         </div>
