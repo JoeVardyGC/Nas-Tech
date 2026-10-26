@@ -594,7 +594,7 @@ export function Slide2DualSenseColorways({
   };
 
   return (
-    <div className="relative w-full h-full flex flex-col justify-between pt-1.5 sm:pt-2 pb-16 sm:pb-20 lg:pb-24 px-10 sm:px-14 lg:px-20 bg-gradient-to-b from-white via-slate-50 to-blue-50/30 text-slate-900 font-sans select-none overflow-hidden">
+    <div className="relative w-full h-full flex flex-col justify-center pt-2 sm:pt-4 pb-14 sm:pb-18 lg:pb-20 px-10 sm:px-14 lg:px-20 bg-gradient-to-b from-white via-slate-50 to-blue-50/30 text-slate-900 font-sans select-none overflow-hidden">
       {/* Studio Ambient Radial Glow shifting with active console */}
       <div
         className="absolute inset-0 pointer-events-none -z-10 transition-all duration-700"
@@ -610,19 +610,11 @@ export function Slide2DualSenseColorways({
         </span>
       </div>
 
-      {/* 1. Header: Clean Eyebrow + Display Headline */}
-      <div className="w-full text-center mt-1 sm:mt-2 z-10 font-sans">
-        <p
-          className="text-[8.5px] sm:text-xs font-bold tracking-[0.18em] sm:tracking-[0.25em] uppercase font-sans transition-colors duration-300"
-          style={{ color: activeConsole.accentHex }}
-        >
-          NEXT-GEN & RETRO PLAYSTATION & XBOX // IN-STOCK IN KUMASI
-        </p>
-        <h2 className="text-[clamp(1.35rem,0.95rem+2.4vw,3.5rem)] font-extrabold tracking-tight text-slate-950 leading-tight mt-0.5 sm:mt-1 font-sans">
-          PlayStation® & Xbox Consoles
-        </h2>
-        {/* Preserved in sr-only for accessibility & E2E suite */}
-        <span className="sr-only">
+      {/* 1. Header (Preserved in sr-only for accessibility & E2E suite) */}
+      <div className="sr-only">
+        <p>NEXT-GEN & RETRO PLAYSTATION & XBOX // IN-STOCK IN KUMASI</p>
+        <h2>PlayStation® & Xbox Consoles</h2>
+        <span>
           PS5 Pro (2TB) & PS5 Slim (1TB) DualSense™ Wireless Controller Showcase // In-Stock in Kumasi
         </span>
       </div>
@@ -641,22 +633,18 @@ export function Slide2DualSenseColorways({
           mouseY.set(0);
           onInteractionEnd?.();
         }}
-        className="relative w-full max-w-6xl mx-auto my-auto flex flex-col lg:flex-row items-center justify-between gap-2 sm:gap-3 lg:gap-6 px-1 sm:px-2 z-20"
+        className="relative w-full max-w-[1440px] mx-auto my-auto flex flex-col lg:flex-row items-center justify-between gap-2 sm:gap-3 lg:gap-4 px-1 sm:px-2 z-20"
       >
         {/* LEFT FLANKING COLUMN: 2 Stacked Console Cards (PS4 & PS3) */}
-        <div className="flex lg:flex-col items-center justify-center gap-2 sm:gap-3 z-20 shrink-0 w-full lg:w-48 xl:w-56 order-2 lg:order-1">
+        <div className="flex lg:flex-col items-center justify-center gap-2 sm:gap-3.5 z-20 shrink-0 w-full lg:w-44 xl:w-52 order-2 lg:order-1">
           {leftConsoles.map((item) => renderConsoleCard(item))}
         </div>
 
         {/* CENTER HERO STAGE: Giant Floating Console matching Gamepad scale with 3D Orbital Halo Ring */}
-        <div className="pedestal-showcase flex-1 flex flex-col items-center justify-center z-20 order-1 lg:order-2 w-full max-w-lg lg:max-w-xl">
-          {/* Active Console Badge Pill */}
-          <div className="flex items-center space-x-1.5 sm:space-x-2 px-3 py-1 rounded-full bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-sm text-[9.5px] sm:text-[11px] font-extrabold uppercase tracking-wider mb-0.5 sm:mb-1">
-            <span
-              className="w-2 h-2 rounded-full animate-pulse shadow-sm"
-              style={{ backgroundColor: activeConsole.accentHex }}
-            />
-            <span className="text-slate-800 font-sans">{activeConsole.badge}</span>
+        <div className="pedestal-showcase flex-1 flex flex-col items-center justify-center z-20 order-1 lg:order-2 w-full max-w-none">
+          {/* Active Console Badge Pill (Preserved in sr-only to maximize console space) */}
+          <div className="sr-only">
+            <span>{activeConsole.badge}</span>
             {selectedConsole !== 'ps5-lineup' && (
               <button
                 type="button"
@@ -664,7 +652,6 @@ export function Slide2DualSenseColorways({
                   setSelectedConsole('ps5-lineup');
                   onInteractionStart?.();
                 }}
-                className="ml-1 text-[9px] font-bold text-blue-600 hover:text-blue-800 underline uppercase tracking-tight"
                 aria-label="Return to PlayStation®5 Pro & Slim flagship"
               >
                 (View PS5)
@@ -672,7 +659,7 @@ export function Slide2DualSenseColorways({
             )}
           </div>
 
-          {/* Floating Hero Scale Console Container (Scale matching Slide 3 Gamepad) */}
+          {/* Floating Hero Scale Console Container (Exact scale matching Gamepads) */}
           <motion.div
             style={{
               rotateX: tiltX,
@@ -680,30 +667,30 @@ export function Slide2DualSenseColorways({
               transformStyle: 'preserve-3d',
             }}
             animate={{
-              y: [-4, 4, -4],
+              y: [-5, 5, -5],
             }}
             transition={{
               repeat: Infinity,
               duration: 4.8,
               ease: 'easeInOut',
             }}
-            className="relative w-48 sm:w-68 md:w-80 lg:w-[380px] xl:w-[430px] aspect-[16/11] flex items-center justify-center cursor-grab active:cursor-grabbing z-10"
+            className="relative w-[76vw] max-w-[310px] sm:max-w-[390px] md:max-w-[460px] lg:max-w-none lg:w-[490px] xl:w-[550px] 2xl:w-[600px] aspect-[16/11] flex items-center justify-center cursor-grab active:cursor-grabbing z-10"
           >
             {/* Dynamic Core Radial Glow */}
             <div
               className="absolute inset-0 rounded-full pointer-events-none transition-all duration-500"
               style={{
                 background: activeConsole.glowRgba,
-                filter: 'blur(40px)',
-                transform: 'scale(1.1)',
+                filter: 'blur(44px)',
+                transform: 'scale(1.14)',
               }}
             />
             <AnimatePresence mode="popLayout">
               <motion.div
                 key={activeConsole.id}
-                initial={{ scale: 1.24, opacity: 0 }}
+                initial={{ scale: 1.28, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.8, opacity: 0 }}
+                exit={{ scale: 0.78, opacity: 0 }}
                 transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
                 className="relative w-full h-full"
               >
@@ -714,9 +701,9 @@ export function Slide2DualSenseColorways({
                   unoptimized
                   loading="lazy"
                   {...({ fetchPriority: 'low' } as any)}
-                  className="object-contain transition-all duration-300 group-hover:scale-102"
+                  className="object-contain scale-[1.1] sm:scale-[1.14] lg:scale-[1.18] transition-all duration-300"
                   style={{
-                    filter: `drop-shadow(0 20px 32px rgba(0, 0, 0, 0.22)) drop-shadow(0 0 28px ${activeConsole.glowRgba})`,
+                    filter: `drop-shadow(0 22px 34px rgba(0, 0, 0, 0.24)) drop-shadow(0 0 32px ${activeConsole.glowRgba})`,
                   }}
                 />
               </motion.div>
@@ -724,7 +711,7 @@ export function Slide2DualSenseColorways({
           </motion.div>
 
           {/* Illuminated Perspective Orbital Halo Ring */}
-          <div className="relative -mt-8 sm:-mt-12 md:-mt-14 lg:-mt-16 w-60 sm:w-84 md:w-[400px] lg:w-[460px] xl:w-[500px] h-14 sm:h-20 md:h-24 flex items-center justify-center pointer-events-none z-0">
+          <div className="relative -mt-8 sm:-mt-12 md:-mt-14 lg:-mt-16 w-[80vw] max-w-[340px] sm:max-w-[430px] md:max-w-[500px] lg:max-w-none lg:w-[540px] xl:w-[600px] 2xl:w-[650px] h-14 sm:h-20 md:h-24 lg:h-26 flex items-center justify-center pointer-events-none z-0">
             <svg
               viewBox="0 0 400 90"
               className="w-full h-full overflow-visible"
@@ -891,7 +878,7 @@ export function Slide2DualSenseColorways({
         </div>
 
         {/* RIGHT FLANKING COLUMN: 2 Stacked Console Cards (Xbox One S & Xbox 360 S) */}
-        <div className="flex lg:flex-col items-center justify-center gap-2 sm:gap-3 z-20 shrink-0 w-full lg:w-48 xl:w-56 order-3">
+        <div className="flex lg:flex-col items-center justify-center gap-2 sm:gap-3.5 z-20 shrink-0 w-full lg:w-44 xl:w-52 order-3">
           {rightConsoles.map((item) => renderConsoleCard(item))}
         </div>
       </div>
