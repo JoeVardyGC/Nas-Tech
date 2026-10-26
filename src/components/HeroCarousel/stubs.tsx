@@ -610,7 +610,22 @@ export function Slide2DualSenseColorways({
         </span>
       </div>
 
-      {/* 1. Header (Preserved in sr-only for accessibility & E2E suite) */}
+      {/* 1. Light Wide-Spaced Capitalized Statement (Matching Slide 1 Style) */}
+      <div className="w-full text-center mt-1 sm:mt-2 z-10 font-sans">
+        <p
+          className="text-[8px] sm:text-xs font-semibold tracking-[0.22em] sm:tracking-[0.42em] uppercase font-sans whitespace-pre flex items-center justify-center gap-1 transition-colors duration-300 opacity-85"
+          style={{ color: activeConsole.accentHex }}
+          aria-label="POWER EVERY GENERATION OF PLAY"
+        >
+          <span>P O W E R</span>
+          <span>E V E R Y</span>
+          <span>G E N E R A T I O N</span>
+          <span>O F</span>
+          <span>P L A Y</span>
+        </p>
+      </div>
+
+      {/* Preserved in sr-only for accessibility & E2E suite */}
       <div className="sr-only">
         <p>NEXT-GEN & RETRO PLAYSTATION & XBOX // IN-STOCK IN KUMASI</p>
         <h2>PlayStation® & Xbox Consoles</h2>
@@ -1161,6 +1176,21 @@ export function Slide3CollectorSeries({
         </span>
       </div>
 
+      {/* Light Wide-Spaced Capitalized Statement (Matching Slide 1 Style) */}
+      <div className="w-full text-center mt-1 sm:mt-2 z-10 font-sans">
+        <p
+          className="text-[8px] sm:text-xs font-semibold tracking-[0.22em] sm:tracking-[0.42em] uppercase font-sans whitespace-pre flex items-center justify-center gap-1 transition-colors duration-300 opacity-85"
+          style={{ color: activeTeam.accentHex }}
+          aria-label="CRAFTED FOR CHAMPIONS OF PLAY"
+        >
+          <span>C R A F T E D</span>
+          <span>F O R</span>
+          <span>C H A M P I O N S</span>
+          <span>O F</span>
+          <span>P L A Y</span>
+        </p>
+      </div>
+
       {/* Header (Preserved in sr-only for accessibility & tests) */}
       <div className="sr-only">
         <p>EXCLUSIVE CUSTOM BUILDS // SIGNATURE SERIES</p>
@@ -1546,6 +1576,20 @@ export function Slide4GamesArchive({
           background: `radial-gradient(ellipse at 50% 48%, ${currentGame.themeGlow} 0%, rgba(248, 250, 252, 0.95) 75%)`,
         }}
       />
+
+      {/* Light Wide-Spaced Capitalized Statement (Matching Slide 1 Style) */}
+      <div className="w-full text-center mt-1 sm:mt-2 z-10 font-sans">
+        <p
+          className="text-[8px] sm:text-xs font-semibold tracking-[0.22em] sm:tracking-[0.42em] uppercase text-blue-600/85 font-sans whitespace-pre flex items-center justify-center gap-1"
+          aria-label="EXPLORE ENDLESS WORLDS OF PLAY"
+        >
+          <span>E X P L O R E</span>
+          <span>E N D L E S S</span>
+          <span>W O R L D S</span>
+          <span>O F</span>
+          <span>P L A Y</span>
+        </p>
+      </div>
 
       {/* Screen-reader heading & metadata (visible heading removed per user request) */}
       <div className="sr-only">
