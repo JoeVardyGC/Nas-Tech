@@ -1223,15 +1223,15 @@ export function Slide3CollectorSeries({
               duration: 4.8,
               ease: 'easeInOut',
             }}
-            className="relative w-[84vw] max-w-[360px] sm:max-w-[460px] md:max-w-[540px] lg:max-w-none lg:w-[580px] xl:w-[660px] 2xl:w-[720px] aspect-[16/11] flex items-center justify-center cursor-grab active:cursor-grabbing z-10"
+            className="relative w-[76vw] max-w-[310px] sm:max-w-[390px] md:max-w-[460px] lg:max-w-none lg:w-[490px] xl:w-[550px] 2xl:w-[600px] aspect-[16/11] flex items-center justify-center cursor-grab active:cursor-grabbing z-10"
           >
             {/* Dynamic Core Radial Glow */}
             <div
               className="absolute inset-0 rounded-full pointer-events-none transition-all duration-500"
               style={{
                 background: activeTeam.glowRgba,
-                filter: 'blur(50px)',
-                transform: 'scale(1.2)',
+                filter: 'blur(44px)',
+                transform: 'scale(1.14)',
               }}
             />
             <AnimatePresence mode="popLayout">
@@ -1250,9 +1250,9 @@ export function Slide3CollectorSeries({
                   unoptimized
                   loading="lazy"
                   {...({ fetchPriority: 'low' } as any)}
-                  className="object-contain scale-[1.08] sm:scale-[1.12] lg:scale-[1.15]"
+                  className="object-contain scale-100 sm:scale-[1.04] lg:scale-[1.06]"
                   style={{
-                    filter: `drop-shadow(0 24px 38px rgba(0, 0, 0, 0.26)) drop-shadow(0 0 36px ${activeTeam.glowRgba})`,
+                    filter: `drop-shadow(0 22px 34px rgba(0, 0, 0, 0.24)) drop-shadow(0 0 32px ${activeTeam.glowRgba})`,
                   }}
                 />
               </motion.div>
@@ -1260,7 +1260,7 @@ export function Slide3CollectorSeries({
           </motion.div>
 
           {/* Illuminated Perspective Orbital Halo Ring (Image 1 Style) */}
-          <div className="relative -mt-10 sm:-mt-14 md:-mt-16 lg:-mt-20 w-[88vw] max-w-[390px] sm:max-w-[500px] md:max-w-[580px] lg:max-w-none lg:w-[640px] xl:w-[720px] 2xl:w-[780px] h-16 sm:h-22 md:h-26 lg:h-28 flex items-center justify-center pointer-events-none z-0">
+          <div className="relative -mt-8 sm:-mt-12 md:-mt-14 lg:-mt-16 w-[80vw] max-w-[340px] sm:max-w-[430px] md:max-w-[500px] lg:max-w-none lg:w-[540px] xl:w-[600px] 2xl:w-[650px] h-14 sm:h-20 md:h-24 lg:h-26 flex items-center justify-center pointer-events-none z-0">
             {/* SVG 3D Perspective Ellipse Rings */}
             <svg
               viewBox="0 0 400 90"
