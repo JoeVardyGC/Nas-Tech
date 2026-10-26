@@ -1463,6 +1463,7 @@ export function Slide4GamesArchive({
       price: 'GH₵ 60',
       actionLabel: 'Book Now',
       image: '/assets/hero/spiderman_card_art.jpg',
+      objectPosition: '50% 34%',
       themeGlow: 'rgba(239, 68, 68, 0.40)',
     },
     {
@@ -1477,6 +1478,7 @@ export function Slide4GamesArchive({
       price: 'GH₵ 850',
       actionLabel: 'Pre-Order',
       image: '/assets/hero/gtavi_art_hd.jpg',
+      objectPosition: '50% 28%',
       themeGlow: 'rgba(192, 38, 211, 0.40)',
     },
     {
@@ -1491,6 +1493,7 @@ export function Slide4GamesArchive({
       price: 'GH₵ 750',
       actionLabel: 'Pre-Order',
       image: '/assets/hero/fc27_art_hd.jpg',
+      objectPosition: '52% 28%',
       themeGlow: 'rgba(16, 185, 129, 0.40)',
     },
     {
@@ -1505,6 +1508,7 @@ export function Slide4GamesArchive({
       price: 'GH₵ 550',
       actionLabel: 'Quick Install',
       image: '/assets/hero/ghost_tsushima_card_art.jpg',
+      objectPosition: '50% 26%',
       themeGlow: 'rgba(244, 63, 94, 0.40)',
     },
     {
@@ -1519,6 +1523,7 @@ export function Slide4GamesArchive({
       price: 'GH₵ 180',
       actionLabel: 'Play Now',
       image: '/assets/hero/leos_fortune_card_art.jpg',
+      objectPosition: '48% 74%',
       themeGlow: 'rgba(20, 184, 166, 0.40)',
     },
   ];
@@ -1571,8 +1576,8 @@ export function Slide4GamesArchive({
         }}
         className="relative w-full max-w-5xl lg:max-w-6xl mx-auto flex-1 flex flex-col items-center justify-center z-20 my-auto px-2 sm:px-4"
       >
-        {/* Main Highlight Card - Expanded Hero Game Pass Showcase */}
-        <div className="relative w-full max-w-4xl sm:max-w-5xl lg:max-w-6xl aspect-[16/9.5] sm:aspect-[16/8.5] md:aspect-[21/10] max-h-[380px] sm:max-h-[440px] md:max-h-[480px] lg:max-h-[520px] rounded-3xl overflow-hidden shadow-2xl shadow-blue-950/25 border-2 border-white/80 bg-slate-950 flex items-center justify-center group transition-all duration-500">
+        {/* Main Highlight Card - Responsive 16:10 / 16:9 Frame Tuned to Keep Character Faces Centered */}
+        <div className="relative w-full max-w-4xl sm:max-w-5xl aspect-[4/3] sm:aspect-[16/10] md:aspect-[16/9] max-h-[380px] sm:max-h-[450px] md:max-h-[500px] lg:max-h-[530px] rounded-3xl overflow-hidden shadow-2xl shadow-blue-950/25 border-2 border-white/80 bg-slate-950 flex items-center justify-center group transition-all duration-500">
           <AnimatePresence mode="popLayout">
             <motion.div
               key={currentGame.id}
@@ -1588,16 +1593,16 @@ export function Slide4GamesArchive({
                 fill
                 unoptimized
                 priority
-                className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                className="object-cover group-hover:scale-105 transition-transform duration-700"
+                style={{
+                  objectPosition: currentGame.objectPosition,
+                }}
               />
             </motion.div>
           </AnimatePresence>
 
-          {/* Cinematic Vignette Overlays */}
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/45 to-transparent pointer-events-none" />
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/80 via-transparent to-slate-950/40 pointer-events-none" />
-
-          {/* Top Floating Badges removed per user request */}
+          {/* Subtle Lower Vignette Only (keeps upper 70% crystal-clear for character faces) */}
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/15 to-transparent pointer-events-none" />
 
           {/* Top Right Quick Navigation Chevrons & Dots */}
           <div className="absolute top-3 sm:top-5 right-3 sm:right-6 flex items-center space-x-2 z-10">
@@ -1647,13 +1652,13 @@ export function Slide4GamesArchive({
             </button>
           </div>
 
-          {/* Bottom Card Showcase Details */}
-          <div className="absolute bottom-3 sm:bottom-5 left-3 sm:left-6 right-3 sm:right-6 flex flex-col md:flex-row md:items-end md:justify-between gap-3 z-10 p-3 sm:p-4 rounded-2xl bg-slate-950/75 backdrop-blur-md border border-white/10 shadow-2xl">
+          {/* Bottom Card Showcase Details - Sleek low-profile bar so faces remain unobstructed */}
+          <div className="absolute bottom-2.5 sm:bottom-4 left-3 sm:left-5 right-3 sm:right-5 flex flex-col md:flex-row md:items-end md:justify-between gap-2 z-10 px-3.5 py-2.5 sm:px-5 sm:py-3 rounded-2xl bg-slate-950/70 backdrop-blur-md border border-white/10 shadow-2xl">
             <div className="max-w-2xl">
-              <h3 className="text-lg sm:text-2xl md:text-3xl lg:text-4xl font-black text-white tracking-tight leading-tight">
+              <h3 className="text-base sm:text-xl md:text-2xl lg:text-3xl font-black text-white tracking-tight leading-tight">
                 {currentGame.title}
               </h3>
-              <p className="text-xs sm:text-sm font-medium text-slate-200 mt-0.5 sm:mt-1 max-w-xl line-clamp-1 sm:line-clamp-2">
+              <p className="text-[11px] sm:text-xs md:text-sm font-medium text-slate-200 mt-0.5 max-w-xl line-clamp-1">
                 {currentGame.tagline}
               </p>
             </div>
