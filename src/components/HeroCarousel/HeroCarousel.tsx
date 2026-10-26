@@ -229,14 +229,14 @@ export default function HeroCarousel({
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
       onTouchCancel={handleTouchCancel}
-      className={`hero-carousel relative w-full min-h-[640px] sm:min-h-[calc(100vh-80px)] flex flex-col justify-between overflow-hidden select-none bg-gradient-to-b from-white via-slate-50 to-blue-50/20 text-slate-900 font-sans focus:outline-none transform-gpu will-change-transform duration-500 ${className}`}
+      className={`hero-carousel relative w-full min-h-[680px] sm:min-h-[660px] lg:min-h-[calc(100vh-80px)] lg:min-h-[calc(100dvh-80px)] flex flex-col justify-between overflow-hidden select-none bg-gradient-to-b from-white via-slate-50 to-blue-50/20 text-slate-900 font-sans focus:outline-none transform-gpu will-change-transform duration-500 ${className}`}
     >
       {/* Screen Reader Live Announcements */}
       <div className="sr-only" aria-atomic="true">
         Showing slide {activeSlide + 1} of {TOTAL_SLIDES}: {currentMeta.title}
       </div>
 
-      {/* 2. 5-SLIDE VIEWPORT WITH HARDWARE-ACCELERATED TRANSITIONS */}
+      {/* 2. 4-SLIDE VIEWPORT WITH HARDWARE-ACCELERATED TRANSITIONS */}
       <div className="relative w-full flex-1 flex items-center justify-center overflow-hidden" aria-live="polite">
         {slideComponents.map((SlideComponent, index) => {
           const isCurrent = activeSlide === index;
@@ -272,9 +272,9 @@ export default function HeroCarousel({
         })}
       </div>
 
-      {/* 3. SPLIT FLANKING CONTROLS (EDGE CHEVRONS + BOTTOM-RIGHT COMPACT SLIDE INDEX PILL) */}
+      {/* 3. SPLIT FLANKING CONTROLS (EDGE CHEVRONS + BOTTOM SLIDE INDEX PILL) */}
       {/* 3A. FLOATING LEFT CHEVRON (SCREEN EDGE FLANKING CONTROL) */}
-      <div className="absolute left-3 sm:left-6 lg:left-8 top-1/2 -translate-y-1/2 z-40 pointer-events-none">
+      <div className="absolute left-1.5 sm:left-3 lg:left-5 top-1/2 -translate-y-1/2 z-40 pointer-events-none">
         <motion.button
           whileHover={{ scale: 1.12, x: -2 }}
           whileTap={{ scale: 0.92 }}
@@ -283,15 +283,15 @@ export default function HeroCarousel({
           onClick={prevSlide}
           aria-label="Previous"
           aria-controls="nas-tech-hero-carousel"
-          className="pointer-events-auto relative w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/90 hover:bg-white backdrop-blur-2xl border border-slate-200/90 shadow-[0_12px_30px_-6px_rgba(0,114,245,0.12),0_2px_6px_rgba(0,0,0,0.04)] text-slate-700 hover:text-blue-600 flex items-center justify-center transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 group"
+          className="pointer-events-auto relative w-9 h-9 sm:w-11 sm:h-11 lg:w-12 lg:h-12 rounded-full bg-white/90 hover:bg-white backdrop-blur-2xl border border-slate-200/90 shadow-[0_12px_30px_-6px_rgba(0,114,245,0.12),0_2px_6px_rgba(0,0,0,0.04)] text-slate-700 hover:text-blue-600 flex items-center justify-center transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 group"
         >
           <div className="pointer-events-none absolute inset-x-3 top-0 h-[1px] bg-gradient-to-r from-transparent via-white to-transparent opacity-90" />
-          <ChevronLeft className="w-5 h-5 stroke-[2.5] group-hover:-translate-x-0.5 transition-transform" aria-hidden="true" />
+          <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.5] group-hover:-translate-x-0.5 transition-transform" aria-hidden="true" />
         </motion.button>
       </div>
 
       {/* 3B. FLOATING RIGHT CHEVRON (SCREEN EDGE FLANKING CONTROL) */}
-      <div className="absolute right-3 sm:right-6 lg:right-8 top-1/2 -translate-y-1/2 z-40 pointer-events-none">
+      <div className="absolute right-1.5 sm:right-3 lg:right-5 top-1/2 -translate-y-1/2 z-40 pointer-events-none">
         <motion.button
           whileHover={{ scale: 1.12, x: 2 }}
           whileTap={{ scale: 0.92 }}
@@ -300,15 +300,15 @@ export default function HeroCarousel({
           onClick={nextSlide}
           aria-label="Next"
           aria-controls="nas-tech-hero-carousel"
-          className="pointer-events-auto relative w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/90 hover:bg-white backdrop-blur-2xl border border-slate-200/90 shadow-[0_12px_30px_-6px_rgba(0,114,245,0.12),0_2px_6px_rgba(0,0,0,0.04)] text-slate-700 hover:text-blue-600 flex items-center justify-center transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 group"
+          className="pointer-events-auto relative w-9 h-9 sm:w-11 sm:h-11 lg:w-12 lg:h-12 rounded-full bg-white/90 hover:bg-white backdrop-blur-2xl border border-slate-200/90 shadow-[0_12px_30px_-6px_rgba(0,114,245,0.12),0_2px_6px_rgba(0,0,0,0.04)] text-slate-700 hover:text-blue-600 flex items-center justify-center transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 group"
         >
           <div className="pointer-events-none absolute inset-x-3 top-0 h-[1px] bg-gradient-to-r from-transparent via-white to-transparent opacity-90" />
-          <ChevronRight className="w-5 h-5 stroke-[2.5] group-hover:translate-x-0.5 transition-transform" aria-hidden="true" />
+          <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.5] group-hover:translate-x-0.5 transition-transform" aria-hidden="true" />
         </motion.button>
       </div>
 
-      {/* 3C. COMPACT SLIDE INDEX PILL (BOTTOM-RIGHT CORNER DOCK) */}
-      <div className="absolute bottom-4 sm:bottom-6 right-4 sm:right-8 lg:right-10 z-40 flex items-center font-sans pointer-events-none">
+      {/* 3C. COMPACT SLIDE INDEX PILL (CENTERED ON MOBILE, BOTTOM-RIGHT ON TABLET/DESKTOP) */}
+      <div className="absolute bottom-3 sm:bottom-5 left-1/2 -translate-x-1/2 sm:left-auto sm:translate-x-0 sm:right-6 lg:right-10 z-40 flex items-center font-sans pointer-events-none">
         <div
           role="toolbar"
           aria-label="Carousel navigation controls"

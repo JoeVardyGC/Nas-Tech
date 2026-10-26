@@ -32,10 +32,11 @@ export default function ProductCard({ product, onOpenDetails }: ProductCardProps
       className="group relative flex flex-col rounded-2xl bg-white border border-slate-200/90 hover:border-slate-300 hover:shadow-lg transition-all duration-300 overflow-hidden cursor-pointer min-w-0 w-full"
     >
       {/* Product Image Area */}
-      <div className="relative w-full h-52 bg-slate-50 overflow-hidden">
+      <div className="relative w-full aspect-[4/3] bg-slate-50 overflow-hidden">
         <img
           src={product.image}
           alt={product.name}
+          loading="lazy"
           className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
         />
 

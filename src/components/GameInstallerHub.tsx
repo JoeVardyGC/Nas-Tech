@@ -147,11 +147,11 @@ export default function GameInstallerHub() {
       </div>
 
       {/* Step 2: Storage Meter */}
-      <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
-        <div className="flex items-center justify-between text-xs">
-          <div className="flex items-center space-x-2">
+      <div className="p-4 sm:p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+        <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
             <span className="font-bold text-slate-800">{selectedDrive.name}</span>
-            <span className="text-slate-300">|</span>
+            <span className="text-slate-300 hidden sm:inline">|</span>
             <span className="text-slate-600">
               Selected: <strong className="text-blue-700 font-sans">{usedGB} GB</strong>
             </span>

@@ -81,7 +81,7 @@ export function Slide1PS5Master({
       onMouseLeave={handleMouseLeave}
       data-brand-cobalt="#0070F3"
       data-brand-obsidian="#060913"
-      className="relative w-full h-full flex flex-col justify-between pt-1 sm:pt-2 pb-24 sm:pb-28 lg:pb-32 px-3 sm:px-6 lg:px-10 overflow-hidden font-sans select-none"
+      className="relative w-full h-full flex flex-col justify-between pt-2 sm:pt-3 pb-16 sm:pb-20 lg:pb-24 px-10 sm:px-14 lg:px-20 overflow-hidden font-sans select-none"
     >
       {/* Aceternity-inspired Layered Studio Spotlights */}
       <div className="absolute inset-0 pointer-events-none -z-10 overflow-hidden">
@@ -104,9 +104,9 @@ export function Slide1PS5Master({
       </div>
 
       {/* 1. EYEBROW & MASSIVE DISPLAY HEADLINE */}
-      <div className="w-full text-center mt-1 sm:mt-3 z-10 font-sans">
+      <div className="w-full text-center mt-1 sm:mt-2 z-10 font-sans">
         <p
-          className="text-[9px] sm:text-xs font-bold tracking-[0.42em] uppercase text-blue-600 font-sans whitespace-pre flex items-center justify-center gap-1"
+          className="text-[8px] sm:text-xs font-bold tracking-[0.22em] sm:tracking-[0.42em] uppercase text-blue-600 font-sans whitespace-pre flex items-center justify-center gap-1"
           aria-label="THE NEXT GENERATION OF PLAY"
         >
           <span>T H E</span>
@@ -117,14 +117,14 @@ export function Slide1PS5Master({
           <span className="sr-only">NEXT GENERATION</span>
         </p>
         <div className="py-0.5">
-          <h1 className="text-[34px] sm:text-[54px] md:text-[70px] lg:text-[88px] font-extrabold tracking-[-0.04em] text-slate-950 leading-none whitespace-nowrap drop-shadow-[0_12px_24px_rgba(0,114,245,0.12)] font-sans">
+          <h1 className="text-[clamp(2rem,1.25rem+4.5vw,5.5rem)] font-extrabold tracking-[-0.04em] text-slate-950 leading-none whitespace-nowrap drop-shadow-[0_12px_24px_rgba(0,114,245,0.12)] font-sans">
             Feel the Game
           </h1>
         </div>
       </div>
 
       {/* 2. FLANKING KEYWORDS: CONTROL & THE FUTURE */}
-      <div className="w-full max-w-5xl lg:max-w-6xl mx-auto px-4 sm:px-8 flex items-center justify-between -mt-1 sm:mt-0 z-10 text-[9px] sm:text-[11px] font-bold tracking-[0.28em] text-slate-600 uppercase font-sans">
+      <div className="w-full max-w-5xl lg:max-w-6xl mx-auto px-2 sm:px-6 flex items-center justify-between -mt-1 sm:mt-0 z-10 text-[8.5px] sm:text-[11px] font-bold tracking-[0.2em] sm:tracking-[0.28em] text-slate-600 uppercase font-sans">
         <span className="flex items-center gap-1.5">
           <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
           CONTROL
@@ -135,13 +135,13 @@ export function Slide1PS5Master({
         </span>
       </div>
 
-      {/* 3. DOCK STAGE: [LEFT GTA VI CARD] <--- [DUALSENSE] ---> [RIGHT FC 27 CARD] */}
-      <div className="relative w-full max-w-6xl mx-auto flex items-center justify-between gap-2 sm:gap-4 md:gap-6 mt-1 z-20 font-sans">
+      {/* 3. DOCK STAGE: Responsive Wrap on Mobile, 3-Column Flanking on Tablet/Desktop */}
+      <div className="relative w-full max-w-6xl mx-auto my-auto flex flex-wrap md:flex-nowrap items-center justify-center md:justify-between gap-2.5 sm:gap-4 md:gap-6 z-20 font-sans">
         {/* LEFT CARD: GRAND THEFT AUTO VI */}
         <motion.div
           whileHover={{ y: -4, scale: 1.02 }}
           transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-          className="relative w-28 sm:w-36 md:w-44 lg:w-48 shrink-0"
+          className="relative order-2 md:order-1 w-[calc(50%-0.375rem)] max-w-[168px] sm:w-40 md:w-44 lg:w-48 shrink-0"
         >
           <div className="w-full flex justify-center -mb-1 z-10">
             <span className="text-blue-600 text-[10px] leading-none drop-shadow-[0_0_8px_rgba(0,114,245,0.6)]">
@@ -151,10 +151,10 @@ export function Slide1PS5Master({
           <div className="rounded-2xl bg-white/95 backdrop-blur-xl border border-blue-200/90 p-2 sm:p-2.5 shadow-[0_12px_32px_-8px_rgba(0,114,245,0.12),0_2px_6px_rgba(0,0,0,0.03)] hover:border-blue-500/60 hover:shadow-blue-500/15 transition-all duration-300 group">
             {/* Top Micro-Badge */}
             <div className="flex items-center justify-between mb-1.5 px-0.5">
-              <span className="text-[8px] sm:text-[9px] font-extrabold text-blue-600 uppercase tracking-wider font-sans">
+              <span className="text-[8px] sm:text-[9px] font-extrabold text-blue-600 uppercase tracking-wider font-sans truncate">
                 PRE-ORDER // 2025
               </span>
-              <span className="text-[8px] font-bold px-1.5 py-0.2 rounded-full bg-blue-50 text-blue-600 font-sans">
+              <span className="hidden sm:inline text-[8px] font-bold px-1.5 py-0.2 rounded-full bg-blue-50 text-blue-600 font-sans">
                 4K HDR
               </span>
             </div>
@@ -165,14 +165,14 @@ export function Slide1PS5Master({
                 alt="Grand Theft Auto VI GTA VI"
                 fill
                 unoptimized
-                priority
                 className="object-cover group-hover:scale-105 transition-transform duration-500"
+                style={{ objectPosition: '50% 28%' }}
               />
             </div>
             <button
               type="button"
               onClick={() => scrollToSection('installations')}
-              className="mt-2 w-full flex items-center space-x-2 text-left transition-all group/btn"
+              className="mt-1.5 sm:mt-2 w-full flex items-center space-x-1.5 sm:space-x-2 text-left transition-all group/btn"
               aria-label="GTA VI Place a pre-order"
             >
               <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-slate-950 text-white flex items-center justify-center shrink-0 shadow-md group-hover/btn:scale-110 group-hover/btn:bg-blue-600 transition-all">
@@ -185,10 +185,10 @@ export function Slide1PS5Master({
           </div>
         </motion.div>
 
-        {/* CENTER: UPRIGHT DUALSENSE CONTROLLER (SCALE MATCHING SLIDE 3 COLLECTOR GAMEPAD) */}
+        {/* CENTER: UPRIGHT DUALSENSE CONTROLLER (LCP CANDIDATE IMAGE) */}
         <div
           data-testid="ps5-dualsense-stage"
-          className="dualsense-stage flex-1 flex flex-col items-center justify-center relative z-20"
+          className="dualsense-stage order-1 md:order-2 w-full md:w-auto md:flex-1 flex flex-col items-center justify-center relative z-20"
         >
           <motion.div
             style={{
@@ -204,7 +204,7 @@ export function Slide1PS5Master({
               duration: 4.8,
               ease: 'easeInOut',
             }}
-            className="relative w-60 sm:w-72 md:w-80 lg:w-[360px] xl:w-[400px] aspect-[16/11] flex items-center justify-center cursor-grab active:cursor-grabbing z-10"
+            className="relative w-52 sm:w-68 md:w-80 lg:w-[360px] xl:w-[400px] aspect-[16/11] flex items-center justify-center cursor-grab active:cursor-grabbing z-10"
           >
             {/* Dynamic Core Radial Glow */}
             <div
@@ -222,6 +222,7 @@ export function Slide1PS5Master({
                 fill
                 unoptimized
                 priority
+                {...({ fetchPriority: 'high' } as any)}
                 className="object-contain"
                 style={{
                   filter:
@@ -231,7 +232,7 @@ export function Slide1PS5Master({
             </div>
           </motion.div>
 
-          {/* EXPLORE CONSOLES ACTION BUTTON WITH SHIMMER (Magic UI inspired) */}
+          {/* EXPLORE CONSOLES ACTION BUTTON WITH SHIMMER */}
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -239,7 +240,7 @@ export function Slide1PS5Master({
             data-testid="explore-ps5"
             onClick={() => scrollToSection('storefront')}
             aria-label="Explore Our Consoles"
-            className="shimmer-button-luxury mt-2 sm:mt-3 mb-1 inline-flex items-center space-x-2 px-5 sm:px-6 py-2 sm:py-2.5 rounded-full text-white font-bold text-xs sm:text-sm tracking-wider shadow-xl hover:shadow-[0_0_30px_rgba(0,114,245,0.45)] transition-all duration-300 font-sans border border-white/20"
+            className="shimmer-button-luxury mt-1.5 sm:mt-3 mb-1 inline-flex items-center space-x-2 px-5 sm:px-6 py-2 sm:py-2.5 rounded-full text-white font-bold text-xs sm:text-sm tracking-wider shadow-xl hover:shadow-[0_0_30px_rgba(0,114,245,0.45)] transition-all duration-300 font-sans border border-white/20"
           >
             <Gamepad className="w-3.5 h-3.5 text-white stroke-[2.4]" />
             <span className="font-sans">Explore Our Consoles</span>
@@ -250,7 +251,7 @@ export function Slide1PS5Master({
         <motion.div
           whileHover={{ y: -4, scale: 1.02 }}
           transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-          className="relative w-28 sm:w-36 md:w-44 lg:w-48 shrink-0"
+          className="relative order-3 w-[calc(50%-0.375rem)] max-w-[168px] sm:w-40 md:w-44 lg:w-48 shrink-0"
         >
           <div className="w-full flex justify-center -mb-1 z-10">
             <span className="text-blue-600 text-[10px] leading-none drop-shadow-[0_0_8px_rgba(0,114,245,0.6)]">
@@ -260,10 +261,10 @@ export function Slide1PS5Master({
           <div className="rounded-2xl bg-white/95 backdrop-blur-xl border border-blue-200/90 p-2 sm:p-2.5 shadow-[0_12px_32px_-8px_rgba(0,114,245,0.12),0_2px_6px_rgba(0,0,0,0.03)] hover:border-blue-500/60 hover:shadow-blue-500/15 transition-all duration-300 group">
             {/* Top Micro-Badge */}
             <div className="flex items-center justify-between mb-1.5 px-0.5">
-              <span className="text-[8px] sm:text-[9px] font-extrabold text-blue-600 uppercase tracking-wider font-sans">
+              <span className="text-[8px] sm:text-[9px] font-extrabold text-blue-600 uppercase tracking-wider font-sans truncate">
                 PRE-ORDER // 2026
               </span>
-              <span className="text-[8px] font-bold px-1.5 py-0.2 rounded-full bg-blue-50 text-blue-600 font-sans">
+              <span className="hidden sm:inline text-[8px] font-bold px-1.5 py-0.2 rounded-full bg-blue-50 text-blue-600 font-sans">
                 HYPERMOTION
               </span>
             </div>
@@ -274,14 +275,14 @@ export function Slide1PS5Master({
                 alt="EA Sports FC 27"
                 fill
                 unoptimized
-                priority
                 className="object-cover group-hover:scale-105 transition-transform duration-500"
+                style={{ objectPosition: '52% 28%' }}
               />
             </div>
             <button
               type="button"
               onClick={() => scrollToSection('installations')}
-              className="mt-2 w-full flex items-center justify-between text-left transition-all group/btn"
+              className="mt-1.5 sm:mt-2 w-full flex items-center justify-between text-left transition-all group/btn"
               aria-label="FC 27 Place a pre-order"
             >
               <span className="text-[10px] sm:text-[11px] font-bold text-slate-900 group-hover/btn:text-blue-600 truncate font-sans">
@@ -547,7 +548,7 @@ export function Slide2DualSenseColorways({
         data-console={item.id}
         aria-label={`Select ${item.name} (${item.subLabel})`}
         onClick={() => handleSelectConsole(item.id)}
-        className={`relative flex flex-col items-center p-2.5 sm:p-3 rounded-2xl sm:rounded-3xl border transition-all duration-300 font-sans group w-32 sm:w-36 lg:w-44 ${
+        className={`relative flex flex-col items-center p-2 sm:p-3 rounded-2xl sm:rounded-3xl border transition-all duration-300 font-sans group w-32 sm:w-36 lg:w-44 ${
           isSelected
             ? `${item.activeBorder} bg-white shadow-xl scale-[1.03]`
             : 'bg-white/85 backdrop-blur-md border-slate-200/90 hover:border-slate-400 hover:bg-white shadow-md'
@@ -564,12 +565,14 @@ export function Slide2DualSenseColorways({
         )}
 
         {/* Thumbnail Console */}
-        <div className="relative w-16 sm:w-20 lg:w-24 aspect-[1200/896] my-1">
+        <div className="relative w-14 sm:w-20 lg:w-24 aspect-[1200/896] my-0.5 sm:my-1">
           <Image
             src={item.image}
             alt={item.name}
             fill
             unoptimized
+            loading="lazy"
+            {...({ fetchPriority: 'low' } as any)}
             className="object-contain group-hover:scale-108 transition-transform duration-300"
           />
         </div>
@@ -591,7 +594,7 @@ export function Slide2DualSenseColorways({
   };
 
   return (
-    <div className="relative w-full h-full flex flex-col justify-between pt-2 pb-24 sm:pb-28 lg:pb-32 px-3 sm:px-6 lg:px-10 bg-gradient-to-b from-white via-slate-50 to-blue-50/30 text-slate-900 font-sans select-none overflow-hidden">
+    <div className="relative w-full h-full flex flex-col justify-between pt-1.5 sm:pt-2 pb-16 sm:pb-20 lg:pb-24 px-10 sm:px-14 lg:px-20 bg-gradient-to-b from-white via-slate-50 to-blue-50/30 text-slate-900 font-sans select-none overflow-hidden">
       {/* Studio Ambient Radial Glow shifting with active console */}
       <div
         className="absolute inset-0 pointer-events-none -z-10 transition-all duration-700"
@@ -602,7 +605,7 @@ export function Slide2DualSenseColorways({
 
       {/* Background Watermark Typography */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none -z-5 overflow-hidden select-none">
-        <span className="text-[100px] sm:text-[140px] md:text-[190px] lg:text-[230px] font-black tracking-[0.25em] uppercase opacity-[0.035] text-slate-950 leading-none select-none font-sans italic transform -rotate-3">
+        <span className="text-[80px] sm:text-[130px] md:text-[180px] lg:text-[230px] font-black tracking-[0.25em] uppercase opacity-[0.035] text-slate-950 leading-none select-none font-sans italic transform -rotate-3">
           CONSOLES
         </span>
       </div>
@@ -610,12 +613,12 @@ export function Slide2DualSenseColorways({
       {/* 1. Header: Clean Eyebrow + Display Headline */}
       <div className="w-full text-center mt-1 sm:mt-2 z-10 font-sans">
         <p
-          className="text-[9px] sm:text-xs font-bold tracking-[0.25em] uppercase font-sans transition-colors duration-300"
+          className="text-[8.5px] sm:text-xs font-bold tracking-[0.18em] sm:tracking-[0.25em] uppercase font-sans transition-colors duration-300"
           style={{ color: activeConsole.accentHex }}
         >
           NEXT-GEN & RETRO PLAYSTATION & XBOX // IN-STOCK IN KUMASI
         </p>
-        <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-950 leading-tight mt-0.5 sm:mt-1 font-sans">
+        <h2 className="text-[clamp(1.35rem,0.95rem+2.4vw,3.5rem)] font-extrabold tracking-tight text-slate-950 leading-tight mt-0.5 sm:mt-1 font-sans">
           PlayStation® & Xbox Consoles
         </h2>
         {/* Preserved in sr-only for accessibility & E2E suite */}
@@ -638,17 +641,17 @@ export function Slide2DualSenseColorways({
           mouseY.set(0);
           onInteractionEnd?.();
         }}
-        className="relative w-full max-w-6xl mx-auto my-auto flex flex-col lg:flex-row items-center justify-between gap-3 lg:gap-6 px-2 sm:px-4 z-20"
+        className="relative w-full max-w-6xl mx-auto my-auto flex flex-col lg:flex-row items-center justify-between gap-2 sm:gap-3 lg:gap-6 px-1 sm:px-2 z-20"
       >
         {/* LEFT FLANKING COLUMN: 2 Stacked Console Cards (PS4 & PS3) */}
-        <div className="flex lg:flex-col items-center justify-center gap-2.5 sm:gap-3.5 z-20 shrink-0 w-full lg:w-48 xl:w-56 order-2 lg:order-1">
+        <div className="flex lg:flex-col items-center justify-center gap-2 sm:gap-3 z-20 shrink-0 w-full lg:w-48 xl:w-56 order-2 lg:order-1">
           {leftConsoles.map((item) => renderConsoleCard(item))}
         </div>
 
         {/* CENTER HERO STAGE: Giant Floating Console matching Gamepad scale with 3D Orbital Halo Ring */}
         <div className="pedestal-showcase flex-1 flex flex-col items-center justify-center z-20 order-1 lg:order-2 w-full max-w-lg lg:max-w-xl">
           {/* Active Console Badge Pill */}
-          <div className="flex items-center space-x-1.5 sm:space-x-2 px-3 py-1 rounded-full bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-sm text-[10px] sm:text-[11px] font-extrabold uppercase tracking-wider mb-1">
+          <div className="flex items-center space-x-1.5 sm:space-x-2 px-3 py-1 rounded-full bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-sm text-[9.5px] sm:text-[11px] font-extrabold uppercase tracking-wider mb-0.5 sm:mb-1">
             <span
               className="w-2 h-2 rounded-full animate-pulse shadow-sm"
               style={{ backgroundColor: activeConsole.accentHex }}
@@ -684,7 +687,7 @@ export function Slide2DualSenseColorways({
               duration: 4.8,
               ease: 'easeInOut',
             }}
-            className="relative w-64 sm:w-80 md:w-96 lg:w-[400px] xl:w-[440px] aspect-[16/11] flex items-center justify-center cursor-grab active:cursor-grabbing z-10"
+            className="relative w-48 sm:w-68 md:w-80 lg:w-[380px] xl:w-[430px] aspect-[16/11] flex items-center justify-center cursor-grab active:cursor-grabbing z-10"
           >
             {/* Dynamic Core Radial Glow */}
             <div
@@ -695,24 +698,33 @@ export function Slide2DualSenseColorways({
                 transform: 'scale(1.1)',
               }}
             />
-            <div className="relative w-full h-full">
-              <Image
+            <AnimatePresence mode="popLayout">
+              <motion.div
                 key={activeConsole.id}
-                src={activeConsole.image}
-                alt={activeConsole.heroTitle}
-                fill
-                unoptimized
-                priority
-                className="object-contain transition-all duration-300 group-hover:scale-102"
-                style={{
-                  filter: `drop-shadow(0 20px 32px rgba(0, 0, 0, 0.22)) drop-shadow(0 0 28px ${activeConsole.glowRgba})`,
-                }}
-              />
-            </div>
+                initial={{ scale: 1.24, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.8, opacity: 0 }}
+                transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+                className="relative w-full h-full"
+              >
+                <Image
+                  src={activeConsole.image}
+                  alt={activeConsole.heroTitle}
+                  fill
+                  unoptimized
+                  loading="lazy"
+                  {...({ fetchPriority: 'low' } as any)}
+                  className="object-contain transition-all duration-300 group-hover:scale-102"
+                  style={{
+                    filter: `drop-shadow(0 20px 32px rgba(0, 0, 0, 0.22)) drop-shadow(0 0 28px ${activeConsole.glowRgba})`,
+                  }}
+                />
+              </motion.div>
+            </AnimatePresence>
           </motion.div>
 
           {/* Illuminated Perspective Orbital Halo Ring */}
-          <div className="relative -mt-10 sm:-mt-12 md:-mt-14 lg:-mt-16 w-72 sm:w-88 md:w-[420px] lg:w-[480px] xl:w-[520px] h-18 sm:h-22 md:h-26 flex items-center justify-center pointer-events-none z-0">
+          <div className="relative -mt-8 sm:-mt-12 md:-mt-14 lg:-mt-16 w-60 sm:w-84 md:w-[400px] lg:w-[460px] xl:w-[500px] h-14 sm:h-20 md:h-24 flex items-center justify-center pointer-events-none z-0">
             <svg
               viewBox="0 0 400 90"
               className="w-full h-full overflow-visible"
@@ -800,7 +812,7 @@ export function Slide2DualSenseColorways({
           </div>
 
           {/* Interactive Slider Navigation Controls ( [ ← ] [ ••• ] [ → ] ) */}
-          <div className="flex items-center space-x-2.5 sm:space-x-3 mt-1 sm:mt-1.5 z-20">
+          <div className="flex items-center space-x-2 sm:space-x-3 mt-0.5 sm:mt-1.5 z-20">
             <button
               type="button"
               onClick={handlePrevConsole}
@@ -848,7 +860,7 @@ export function Slide2DualSenseColorways({
           </div>
 
           {/* Active Console Name (No visible price or replacement text) */}
-          <div className="flex flex-col items-center text-center mt-1 select-none">
+          <div className="flex flex-col items-center text-center mt-0.5 sm:mt-1 select-none">
             <div className="flex items-center space-x-1.5">
               <span
                 className="w-2 h-2 rounded-full shadow-xs shrink-0"
@@ -862,7 +874,7 @@ export function Slide2DualSenseColorways({
           </div>
 
           {/* CTA Button with Active Console Gradient (No visible price) */}
-          <div className="w-full flex justify-center z-20 mt-2 sm:mt-2.5">
+          <div className="w-full flex justify-center z-20 mt-1.5 sm:mt-2.5">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -879,7 +891,7 @@ export function Slide2DualSenseColorways({
         </div>
 
         {/* RIGHT FLANKING COLUMN: 2 Stacked Console Cards (Xbox One S & Xbox 360 S) */}
-        <div className="flex lg:flex-col items-center justify-center gap-2.5 sm:gap-3.5 z-20 shrink-0 w-full lg:w-48 xl:w-56 order-3">
+        <div className="flex lg:flex-col items-center justify-center gap-2 sm:gap-3 z-20 shrink-0 w-full lg:w-48 xl:w-56 order-3">
           {rightConsoles.map((item) => renderConsoleCard(item))}
         </div>
       </div>
@@ -1100,7 +1112,7 @@ export function Slide3CollectorSeries({
           setSelectedTeam(team.id);
           onInteractionStart?.();
         }}
-        className={`relative flex flex-col items-center p-2.5 sm:p-3 rounded-2xl sm:rounded-3xl border transition-all duration-300 font-sans group w-32 sm:w-36 lg:w-44 ${
+        className={`relative flex flex-col items-center p-2 sm:p-3 rounded-2xl sm:rounded-3xl border transition-all duration-300 font-sans group w-32 sm:w-36 lg:w-44 ${
           isSelected
             ? `${team.activeBorder} bg-white shadow-xl scale-[1.03]`
             : 'bg-white/85 backdrop-blur-md border-slate-200/90 hover:border-slate-400 hover:bg-white shadow-md'
@@ -1117,12 +1129,14 @@ export function Slide3CollectorSeries({
         )}
 
         {/* Thumbnail Gamepad */}
-        <div className="relative w-14 sm:w-16 lg:w-20 aspect-[16/11] my-1">
+        <div className="relative w-14 sm:w-16 lg:w-20 aspect-[16/11] my-0.5 sm:my-1">
           <Image
             src={team.image}
             alt={team.editionName}
             fill
             unoptimized
+            loading="lazy"
+            {...({ fetchPriority: 'low' } as any)}
             className="object-contain group-hover:scale-108 transition-transform duration-300"
           />
         </div>
@@ -1144,7 +1158,7 @@ export function Slide3CollectorSeries({
   };
 
   return (
-    <div className="relative w-full h-full flex flex-col justify-between pt-2 pb-24 sm:pb-28 lg:pb-32 px-3 sm:px-6 lg:px-10 bg-gradient-to-b from-white via-slate-50 to-amber-50/20 text-slate-900 font-sans select-none overflow-hidden">
+    <div className="relative w-full h-full flex flex-col justify-between pt-1.5 sm:pt-2 pb-16 sm:pb-20 lg:pb-24 px-10 sm:px-14 lg:px-20 bg-gradient-to-b from-white via-slate-50 to-amber-50/20 text-slate-900 font-sans select-none overflow-hidden">
       {/* Ambient Electric Spotlight that shifts with active team color */}
       <div
         className="absolute inset-0 pointer-events-none -z-10 transition-all duration-700"
@@ -1155,7 +1169,7 @@ export function Slide3CollectorSeries({
 
       {/* Background Watermark Typography (from Image 1 Reference) */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none -z-5 overflow-hidden select-none">
-        <span className="text-[100px] sm:text-[140px] md:text-[190px] lg:text-[230px] font-black tracking-[0.25em] uppercase opacity-[0.035] text-slate-950 leading-none select-none font-sans italic transform -rotate-3">
+        <span className="text-[80px] sm:text-[130px] md:text-[180px] lg:text-[230px] font-black tracking-[0.25em] uppercase opacity-[0.035] text-slate-950 leading-none select-none font-sans italic transform -rotate-3">
           GAMING
         </span>
       </div>
@@ -1163,12 +1177,12 @@ export function Slide3CollectorSeries({
       {/* Header */}
       <div className="w-full text-center mt-1 sm:mt-2 z-10">
         <p
-          className="text-[9px] sm:text-xs font-bold tracking-[0.28em] uppercase font-sans transition-colors duration-300"
+          className="text-[8.5px] sm:text-xs font-bold tracking-[0.2em] sm:tracking-[0.28em] uppercase font-sans transition-colors duration-300"
           style={{ color: activeTeam.accentHex }}
         >
           EXCLUSIVE CUSTOM BUILDS // SIGNATURE SERIES
         </p>
-        <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-950 leading-tight mt-0.5 sm:mt-1 font-sans">
+        <h2 className="text-[clamp(1.35rem,0.95rem+2.4vw,3.5rem)] font-extrabold tracking-tight text-slate-950 leading-tight mt-0.5 sm:mt-1 font-sans">
           Limited Edition Collector Series
         </h2>
       </div>
@@ -1187,17 +1201,17 @@ export function Slide3CollectorSeries({
           mouseY.set(0);
           onInteractionEnd?.();
         }}
-        className="relative w-full max-w-6xl mx-auto my-auto flex flex-col lg:flex-row items-center justify-between gap-3 lg:gap-6 px-2 sm:px-4 z-20"
+        className="relative w-full max-w-6xl mx-auto my-auto flex flex-col lg:flex-row items-center justify-between gap-2 sm:gap-3 lg:gap-6 px-1 sm:px-2 z-20"
       >
         {/* LEFT FLANKING COLUMN: 2 Floating Collector Cards (007 Gold & God of War Red) */}
-        <div className="flex lg:flex-col items-center justify-center gap-2.5 sm:gap-3.5 z-20 shrink-0 w-full lg:w-48 xl:w-56 order-2 lg:order-1">
+        <div className="flex lg:flex-col items-center justify-center gap-2 sm:gap-3 z-20 shrink-0 w-full lg:w-48 xl:w-56 order-2 lg:order-1">
           {leftTeams.map((team) => renderTeamCard(team))}
         </div>
 
         {/* CENTER HERO STAGE: Giant Floating Gamepad with 3D Orbital Halo Ring */}
         <div className="flex-1 flex flex-col items-center justify-center z-20 order-1 lg:order-2 w-full max-w-lg lg:max-w-xl">
           {/* Active Custom Build Badge Pill */}
-          <div className="flex items-center space-x-1.5 sm:space-x-2 px-3 py-1 rounded-full bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-sm text-[10px] sm:text-[11px] font-extrabold uppercase tracking-wider mb-1">
+          <div className="flex items-center space-x-1.5 sm:space-x-2 px-3 py-1 rounded-full bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-sm text-[9.5px] sm:text-[11px] font-extrabold uppercase tracking-wider mb-0.5 sm:mb-1">
             <span
               className="w-2 h-2 rounded-full animate-pulse shadow-sm"
               style={{ backgroundColor: activeTeam.accentHex }}
@@ -1220,7 +1234,7 @@ export function Slide3CollectorSeries({
               duration: 4.8,
               ease: 'easeInOut',
             }}
-            className="relative w-64 sm:w-80 md:w-96 lg:w-[400px] xl:w-[440px] aspect-[16/11] flex items-center justify-center cursor-grab active:cursor-grabbing z-10"
+            className="relative w-48 sm:w-68 md:w-80 lg:w-[380px] xl:w-[430px] aspect-[16/11] flex items-center justify-center cursor-grab active:cursor-grabbing z-10"
           >
             {/* Dynamic Core Radial Glow */}
             <div
@@ -1245,7 +1259,8 @@ export function Slide3CollectorSeries({
                   alt={`Custom PS5 DualSense Controller - ${activeTeam.editionName} (${activeTeam.teamName})`}
                   fill
                   unoptimized
-                  priority
+                  loading="lazy"
+                  {...({ fetchPriority: 'low' } as any)}
                   className="object-contain"
                   style={{
                     filter: `drop-shadow(0 18px 30px rgba(0, 0, 0, 0.22)) drop-shadow(0 0 28px ${activeTeam.glowRgba})`,
@@ -1256,7 +1271,7 @@ export function Slide3CollectorSeries({
           </motion.div>
 
           {/* Illuminated Perspective Orbital Halo Ring (Image 1 Style) */}
-          <div className="relative -mt-10 sm:-mt-12 md:-mt-14 lg:-mt-16 w-72 sm:w-88 md:w-[420px] lg:w-[480px] xl:w-[520px] h-18 sm:h-22 md:h-26 flex items-center justify-center pointer-events-none z-0">
+          <div className="relative -mt-8 sm:-mt-12 md:-mt-14 lg:-mt-16 w-60 sm:w-84 md:w-[400px] lg:w-[460px] xl:w-[500px] h-14 sm:h-20 md:h-24 flex items-center justify-center pointer-events-none z-0">
             {/* SVG 3D Perspective Ellipse Rings */}
             <svg
               viewBox="0 0 400 90"
@@ -1345,7 +1360,7 @@ export function Slide3CollectorSeries({
           </div>
 
           {/* Interactive Slider Navigation Controls (Image 1 Signature [ ← ] [ ••• ] [ → ]) */}
-          <div className="flex items-center space-x-2.5 sm:space-x-3 mt-1 sm:mt-1.5 z-20">
+          <div className="flex items-center space-x-2 sm:space-x-3 mt-0.5 sm:mt-1.5 z-20">
             <button
               type="button"
               onClick={handlePrevTeam}
@@ -1394,7 +1409,7 @@ export function Slide3CollectorSeries({
           </div>
 
           {/* Active Gamepad Name (No visible price or subtitle) */}
-          <div className="flex flex-col items-center text-center mt-1 select-none">
+          <div className="flex flex-col items-center text-center mt-0.5 sm:mt-1 select-none">
             <div className="flex items-center space-x-1.5">
               <span
                 className="w-2 h-2 rounded-full shadow-xs shrink-0"
@@ -1412,7 +1427,7 @@ export function Slide3CollectorSeries({
           </div>
 
           {/* CTA Button with Active Team Accent Gradient (No visible price) */}
-          <div className="w-full flex justify-center z-20 mt-2 sm:mt-2.5">
+          <div className="w-full flex justify-center z-20 mt-1.5 sm:mt-2.5">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -1430,7 +1445,7 @@ export function Slide3CollectorSeries({
         </div>
 
         {/* RIGHT FLANKING COLUMN: 2 Floating Collector Cards (Genshin Blue & Cyber Green) */}
-        <div className="flex lg:flex-col items-center justify-center gap-2.5 sm:gap-3.5 z-20 shrink-0 w-full lg:w-48 xl:w-56 order-3">
+        <div className="flex lg:flex-col items-center justify-center gap-2 sm:gap-3 z-20 shrink-0 w-full lg:w-48 xl:w-56 order-3">
           {rightTeams.map((team) => renderTeamCard(team))}
         </div>
       </div>
@@ -1547,7 +1562,7 @@ export function Slide4GamesArchive({
   ];
 
   return (
-    <div className="relative w-full h-full flex flex-col justify-between pt-2 pb-24 sm:pb-28 lg:pb-32 px-3 sm:px-6 lg:px-10 bg-gradient-to-b from-white via-slate-50 to-blue-50/30 text-slate-900 font-sans select-none overflow-hidden">
+    <div className="relative w-full h-full flex flex-col justify-between pt-2 pb-16 sm:pb-20 lg:pb-24 px-10 sm:px-14 lg:px-20 bg-gradient-to-b from-white via-slate-50 to-blue-50/30 text-slate-900 font-sans select-none overflow-hidden">
       {/* Dynamic Ambient Spotlight matching active game color */}
       <div
         className="absolute inset-0 pointer-events-none -z-10 transition-all duration-700"
@@ -1574,10 +1589,10 @@ export function Slide4GamesArchive({
           setIsHoveredShelf(false);
           onInteractionEnd?.();
         }}
-        className="relative w-full max-w-5xl lg:max-w-6xl mx-auto flex-1 flex flex-col items-center justify-center z-20 my-auto px-2 sm:px-4"
+        className="relative w-full max-w-5xl lg:max-w-6xl mx-auto flex-1 flex flex-col items-center justify-center z-20 my-auto px-1 sm:px-3"
       >
-        {/* Main Highlight Card - Responsive 16:10 / 16:9 Frame Tuned to Keep Character Faces Centered */}
-        <div className="relative w-full max-w-4xl sm:max-w-5xl aspect-[4/3] sm:aspect-[16/10] md:aspect-[16/9] max-h-[380px] sm:max-h-[450px] md:max-h-[500px] lg:max-h-[530px] rounded-3xl overflow-hidden shadow-2xl shadow-blue-950/25 border-2 border-white/80 bg-slate-950 flex items-center justify-center group transition-all duration-500">
+        {/* Main Highlight Card - Responsive 4:3 / 16:10 / 16:9 Frame Tuned to Keep Character Faces Centered */}
+        <div className="relative w-full max-w-4xl sm:max-w-5xl aspect-[4/3] sm:aspect-[16/10] md:aspect-[16/9] max-h-[370px] sm:max-h-[450px] md:max-h-[500px] lg:max-h-[530px] rounded-3xl overflow-hidden shadow-2xl shadow-blue-950/25 border-2 border-white/80 bg-slate-950 flex items-center justify-center group transition-all duration-500">
           <AnimatePresence mode="popLayout">
             <motion.div
               key={currentGame.id}
@@ -1592,7 +1607,8 @@ export function Slide4GamesArchive({
                 alt={currentGame.title}
                 fill
                 unoptimized
-                priority
+                loading="lazy"
+                {...({ fetchPriority: 'low' } as any)}
                 className="object-cover group-hover:scale-105 transition-transform duration-700"
                 style={{
                   objectPosition: currentGame.objectPosition,
@@ -1655,7 +1671,7 @@ export function Slide4GamesArchive({
           {/* Bottom Card Showcase Details - Sleek low-profile bar so faces remain unobstructed */}
           <div className="absolute bottom-2.5 sm:bottom-4 left-3 sm:left-5 right-3 sm:right-5 flex flex-col md:flex-row md:items-end md:justify-between gap-2 z-10 px-3.5 py-2.5 sm:px-5 sm:py-3 rounded-2xl bg-slate-950/70 backdrop-blur-md border border-white/10 shadow-2xl">
             <div className="max-w-2xl">
-              <h3 className="text-base sm:text-xl md:text-2xl lg:text-3xl font-black text-white tracking-tight leading-tight">
+              <h3 className="text-[clamp(1rem,0.8rem+1.25vw,1.875rem)] font-black text-white tracking-tight leading-tight">
                 {currentGame.title}
               </h3>
               <p className="text-[11px] sm:text-xs md:text-sm font-medium text-slate-200 mt-0.5 max-w-xl line-clamp-1">
