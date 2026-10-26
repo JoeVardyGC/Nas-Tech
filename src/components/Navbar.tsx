@@ -141,31 +141,33 @@ export default function Navbar() {
   };
 
   return (
-    <header className={`fixed top-0 z-50 w-full bg-white/95 backdrop-blur-xl border-b border-slate-200/80 shadow-md transition-all duration-300 ease-in-out ${
-      isScrolled ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0 pointer-events-none'
-    }`}>
+    <header
+      data-testid="adaptive-navbar"
+      data-theme="light"
+      className="adaptive-navbar sticky top-0 z-50 w-full bg-white/95 backdrop-blur-xl border-b border-slate-200/80 shadow-md transition-all duration-300 ease-in-out"
+    >
       {/* ========================================================
           TIER 1: MAIN BRAND & GLOBAL SEARCH ROW (Height: 80px)
           Floating Pill & Frosted Glass Aesthetic with Montserrat
          ======================================================== */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20 gap-3 sm:gap-6">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16 sm:h-20 gap-2 sm:gap-6">
 
           {/* 1. BRAND LOGO */}
-          <a href="#" className="flex items-center space-x-3.5 group shrink-0">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-cyan-400 flex items-center justify-center text-white shadow-lg shadow-blue-500/25 group-hover:scale-105 group-hover:shadow-blue-500/40 transition-all duration-300">
-              <Gamepad2 className="w-6 h-6 stroke-[2.2]" />
+          <a href="#" className="flex items-center space-x-2 sm:space-x-3.5 group shrink-0 min-w-0">
+            <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-cyan-400 flex items-center justify-center text-white shadow-lg shadow-blue-500/25 group-hover:scale-105 group-hover:shadow-blue-500/40 transition-all duration-300 shrink-0">
+              <Gamepad2 className="w-5 h-5 sm:w-6 sm:h-6 stroke-[2.2]" />
             </div>
-            <div>
-              <div className="flex items-center space-x-2">
-                <span className="text-xl sm:text-2xl font-extrabold tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors">
+            <div className="min-w-0">
+              <div className="flex items-center space-x-1.5 sm:space-x-2">
+                <span className="text-base sm:text-2xl font-extrabold tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors truncate">
                   NAS TECH
                 </span>
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200 tracking-wide">
+                <span className="text-[9px] sm:text-[10px] font-bold px-1.5 sm:px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200 tracking-wide shrink-0">
                   GH
                 </span>
               </div>
-              <p className="text-[10px] font-semibold tracking-wider uppercase text-slate-500 flex items-center space-x-1.5 mt-0.5">
+              <p className="text-[9px] sm:text-[10px] font-semibold tracking-wider uppercase text-slate-500 flex items-center space-x-1 sm:space-x-1.5 mt-0.5 truncate">
                 <span>GAMING HUB</span>
                 <span className="text-slate-300">•</span>
                 <span className="text-blue-600 font-bold">KUMASI</span>
@@ -391,7 +393,7 @@ export default function Navbar() {
           </div>
 
           {/* 3. RIGHT UTILITY CONTROLS */}
-          <div className="flex items-center space-x-2 sm:space-x-3 shrink-0">
+          <div className="flex items-center space-x-1.5 sm:space-x-3 shrink-0">
             {/* Direct Shop WhatsApp Button */}
             <a
               href="https://wa.me/233500000000"
@@ -407,7 +409,7 @@ export default function Navbar() {
             <button
               onClick={toggleTheme}
               aria-label="Toggle theme"
-              className="p-2.5 rounded-full border border-slate-200 text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all active:scale-95"
+              className="p-2 sm:p-2.5 rounded-full border border-slate-200 text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all active:scale-95"
             >
               {theme === 'dark' ? (
                 <Sun className="w-4 h-4 text-amber-500" />
@@ -419,7 +421,8 @@ export default function Navbar() {
             {/* Cart Drawer Trigger */}
             <button
               onClick={() => setIsCartOpen(true)}
-              className="relative flex items-center space-x-2 px-4 py-2.5 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-xs shadow-md shadow-blue-600/20 active:scale-95 transition-all"
+              aria-label={`Open shopping cart containing ${cartCount} items`}
+              className="relative flex items-center space-x-2 px-3 py-2 sm:px-4 sm:py-2.5 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-xs shadow-md shadow-blue-600/20 active:scale-95 transition-all"
             >
               <ShoppingBag className="w-4 h-4" />
               <span className="hidden sm:inline">Cart</span>
@@ -434,10 +437,10 @@ export default function Navbar() {
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-2.5 rounded-full border border-slate-200 text-slate-700 hover:bg-slate-100 transition-colors"
+              className="md:hidden p-2 sm:p-2.5 rounded-full border border-slate-200 text-slate-700 hover:bg-slate-100 transition-colors"
               aria-label="Toggle Navigation Menu"
             >
-              {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {isMobileMenuOpen ? <X className="w-4 h-4 sm:w-5 sm:h-5" /> : <Menu className="w-4 h-4 sm:w-5 sm:h-5" />}
             </button>
           </div>
 
@@ -574,7 +577,7 @@ export default function Navbar() {
               </div>
 
               {/* Navigation Links */}
-              <nav className="flex items-center space-x-1 lg:space-x-1.5 font-semibold text-slate-700">
+              <nav className="flex items-center space-x-1 lg:space-x-1.5 font-semibold text-slate-700 whitespace-nowrap overflow-x-auto no-scrollbar">
                 {/* Hot Deals Badge */}
                 <a
                   href="#storefront"
@@ -624,7 +627,7 @@ export default function Navbar() {
             </div>
 
             {/* Right: Physical Kumasi Shop Presence & Status */}
-            <div className="flex items-center space-x-2 text-xs">
+            <div className="hidden xl:flex items-center space-x-2 text-xs shrink-0">
               <div className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-slate-100/90 border border-slate-200/80 text-slate-700 shadow-2xs">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                 <span className="font-bold text-slate-900 flex items-center space-x-1">

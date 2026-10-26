@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useRef, useCallback, KeyboardEvent, TouchEvent } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import AdaptiveNavbar from './AdaptiveNavbar';
 import {
   Slide1PS5Master,
   Slide2DualSenseColorways,
@@ -230,19 +229,8 @@ export default function HeroCarousel({
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
       onTouchCancel={handleTouchCancel}
-      className={`hero-carousel relative w-full min-h-[92vh] sm:min-h-screen flex flex-col justify-between overflow-hidden select-none bg-gradient-to-b from-white via-slate-50 to-blue-50/20 text-slate-900 font-sans focus:outline-none transform-gpu will-change-transform duration-500 ${className}`}
+      className={`hero-carousel relative w-full min-h-[640px] sm:min-h-[calc(100vh-128px)] flex flex-col justify-between overflow-hidden select-none bg-gradient-to-b from-white via-slate-50 to-blue-50/20 text-slate-900 font-sans focus:outline-none transform-gpu will-change-transform duration-500 ${className}`}
     >
-      {/* 1. TOP FLOATING PILL NAVBAR */}
-      <div className="w-full flex justify-center z-40 pt-4 sm:pt-6 px-3 sm:px-6">
-        <AdaptiveNavbar
-          activeSlide={activeSlide}
-          navbarTheme={currentMeta.navbarTheme}
-          onSlideSelect={goToSlide}
-          onInteractionStart={() => setIsInteracting(true)}
-          onInteractionEnd={() => setIsInteracting(false)}
-        />
-      </div>
-
       {/* Screen Reader Live Announcements */}
       <div className="sr-only" aria-atomic="true">
         Showing slide {activeSlide + 1} of {TOTAL_SLIDES}: {currentMeta.title}
