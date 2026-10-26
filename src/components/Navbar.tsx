@@ -71,12 +71,16 @@ export default function Navbar() {
         setIsScrolled(pastHero);
         if (!pastHero) {
           setIsAllCategoriesOpen(false);
+          setIsCategoryDropdownOpen(false);
+          setIsSearchFocused(false);
         }
       } else {
         const scrolled = window.scrollY > 350;
         setIsScrolled(scrolled);
         if (!scrolled) {
           setIsAllCategoriesOpen(false);
+          setIsCategoryDropdownOpen(false);
+          setIsSearchFocused(false);
         }
       }
     };
@@ -193,8 +197,17 @@ export default function Navbar() {
             </div>
           </a>
 
-          {/* 2. FLOATING PILL SEARCH BAR WITH CATEGORY SELECTOR */}
-          <div ref={searchContainerRef} className="relative flex-1 max-w-2xl hidden md:block">
+          {/* 2. FLOATING PILL SEARCH BAR WITH CATEGORY SELECTOR (Hidden on Hero Section; displayed on Second Section) */}
+          <div
+            ref={searchContainerRef}
+            data-testid="navbar-search-bar"
+            aria-hidden={!isScrolled}
+            className={`relative flex-1 max-w-2xl hidden md:block transition-all duration-300 ease-in-out ${
+              isScrolled
+                ? 'opacity-100 scale-100 translate-y-0 visible pointer-events-auto'
+                : 'opacity-0 scale-95 -translate-y-1 invisible pointer-events-none'
+            }`}
+          >
             <div className="relative flex items-center bg-slate-50/80 hover:bg-white focus-within:bg-white rounded-full border border-slate-200/90 hover:border-slate-300 focus-within:border-blue-600 focus-within:ring-4 focus-within:ring-blue-500/15 transition-all p-1.5 shadow-sm">
               
               {/* Category Selector Pill */}
@@ -464,8 +477,15 @@ export default function Navbar() {
 
         </div>
 
-        {/* Mobile Search Bar (Only visible on mobile) */}
-        <div className="md:hidden pb-3">
+        {/* Mobile Search Bar (Hidden on Hero section; visible on mobile at second section) */}
+        <div
+          aria-hidden={!isScrolled}
+          className={`md:hidden transition-all duration-300 ease-in-out overflow-hidden ${
+            isScrolled
+              ? 'max-h-14 pb-3 opacity-100 visible pointer-events-auto'
+              : 'max-h-0 pb-0 opacity-0 invisible pointer-events-none'
+          }`}
+        >
           <div className="relative flex items-center bg-slate-100 rounded-full border border-slate-200 p-1">
             <Search className="w-4 h-4 text-slate-400 ml-3 mr-2 shrink-0" />
             <input
