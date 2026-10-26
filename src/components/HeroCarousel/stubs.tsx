@@ -1543,14 +1543,12 @@ export function Slide4GamesArchive({
         }}
       />
 
-      {/* Header - Only Main Heading per user request */}
-      <div className="w-full text-center mt-1 sm:mt-2 z-10">
-        <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-950 leading-tight font-sans">
-          Over 2,000 Games Available
-        </h2>
-        <div className="sr-only">
+      {/* Screen-reader heading & metadata (visible heading removed per user request) */}
+      <div className="sr-only">
+        <h2 className="font-sans">Over 2,000 Games Available</h2>
+        <span>
           DIRECT-TO-DRIVE PRE-LOAD SERVICE // IN-SHOP CONSOLE & PC GAME PRE-LOADS // BRING YOUR DRIVE TO ADUM, KUMASI (Adum, Kumasi Showroom)
-        </div>
+        </span>
       </div>
 
       {/* Auto-Scrolling Game Showcase Stage */}
