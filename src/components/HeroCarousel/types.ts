@@ -13,8 +13,8 @@ export type SlideIndex = 0 | 1 | 2 | 3 | 4;
 /** Total number of slides in the carousel */
 export const TOTAL_SLIDES = 5;
 
-/** Default auto-advance interval in milliseconds (3 seconds as requested) */
-export const DEFAULT_AUTOPLAY_INTERVAL = 3000;
+/** Default auto-advance interval in milliseconds (7 seconds as requested) */
+export const DEFAULT_AUTOPLAY_INTERVAL = 7000;
 
 /**
  * Navbar theme options for optimal visual contrast against slide backgrounds:

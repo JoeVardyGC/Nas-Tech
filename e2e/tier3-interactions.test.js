@@ -62,7 +62,7 @@ test('T3.I01: Pairwise: Auto-advance timer + Hover interruption + Mouse leave re
 
       // 2. Mouse leaves
       await page.mouse.move(0, 0);
-      await sleep(5500); // Allow rotation to resume
+      await sleep(6500); // Allow 7s rotation to resume and complete
       const stateResume = await getCarouselState(page);
       assert.notEqual(stateResume.activeIndex, 0, 'Slide rotated after mouse leave');
     }

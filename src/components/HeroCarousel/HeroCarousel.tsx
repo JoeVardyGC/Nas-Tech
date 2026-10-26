@@ -106,7 +106,7 @@ export default function HeroCarousel({
 
     const tick = (currentTime: number) => {
       const rawDelta = currentTime - lastTimeRef.current;
-      const delta = Math.min(Math.max(rawDelta, 0), 100);
+      const delta = Math.min(Math.max(rawDelta, 0), 1000);
       lastTimeRef.current = currentTime;
 
       if (!isPausedRef.current) {
@@ -220,11 +220,15 @@ export default function HeroCarousel({
       onMouseMove={(e) => {
         if (e.clientX <= 0 && e.clientY <= 0) {
           setIsHovered(false);
+          setIsInteracting(false);
           return;
         }
         setIsHovered(true);
       }}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseLeave={() => {
+        setIsHovered(false);
+        setIsInteracting(false);
+      }}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
       onTouchCancel={handleTouchCancel}

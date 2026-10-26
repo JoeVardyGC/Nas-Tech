@@ -585,10 +585,6 @@ export function Slide2DualSenseColorways({
           </span>
         </div>
 
-        {/* Subtitle (Edition / Feature, no visible price) */}
-        <span className="text-[9px] sm:text-[10px] font-semibold text-slate-500 font-sans truncate max-w-full">
-          {item.subLabel}
-        </span>
         <span className="sr-only">{item.price}</span>
       </motion.button>
     );
@@ -851,7 +847,7 @@ export function Slide2DualSenseColorways({
             </button>
           </div>
 
-          {/* Active Console Name and Tagline (No visible price) */}
+          {/* Active Console Name (No visible price or replacement text) */}
           <div className="flex flex-col items-center text-center mt-1 select-none">
             <div className="flex items-center space-x-1.5">
               <span
@@ -862,9 +858,6 @@ export function Slide2DualSenseColorways({
                 {activeConsole.heroTitle}
               </span>
             </div>
-            <span className="text-[10px] sm:text-xs font-semibold text-slate-500 font-sans mt-0.5 max-w-sm truncate">
-              {activeConsole.heroTagline}
-            </span>
             <span className="sr-only">{activeConsole.price}</span>
           </div>
 
@@ -1029,12 +1022,15 @@ const COLLECTOR_TEAMS: CollectorTeam[] = [
   },
 ];
 
+const CLOCKWISE_TEAM_IDS: CollectorTeamId[] = ['gold', 'blue', 'green', 'red'];
+
 export function Slide3CollectorSeries({
   isActive,
   onInteractionStart,
   onInteractionEnd,
 }: SlideProps) {
   const [selectedTeam, setSelectedTeam] = useState<CollectorTeamId>('gold');
+  const [isHoveredGamepad, setIsHoveredGamepad] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Physics-based spring tilt for interactiveGamepad stage
@@ -1054,17 +1050,34 @@ export function Slide3CollectorSeries({
     mouseY.set(y);
   };
 
+  // Clockwise 3-second auto-interchange around the collector gamepads
+  useEffect(() => {
+    if (!isActive || isHoveredGamepad) return;
+    const timer = setInterval(() => {
+      setSelectedTeam((prev) => {
+        const currIdx = CLOCKWISE_TEAM_IDS.indexOf(prev);
+        const nextIdx = (currIdx + 1) % CLOCKWISE_TEAM_IDS.length;
+        return CLOCKWISE_TEAM_IDS[nextIdx];
+      });
+    }, 3000);
+    return () => clearInterval(timer);
+  }, [isActive, isHoveredGamepad]);
+
   const handlePrevTeam = () => {
-    const currIdx = COLLECTOR_TEAMS.findIndex((t) => t.id === selectedTeam);
-    const prevIdx = (currIdx - 1 + COLLECTOR_TEAMS.length) % COLLECTOR_TEAMS.length;
-    setSelectedTeam(COLLECTOR_TEAMS[prevIdx].id);
+    setSelectedTeam((prev) => {
+      const currIdx = CLOCKWISE_TEAM_IDS.indexOf(prev);
+      const prevIdx = (currIdx - 1 + CLOCKWISE_TEAM_IDS.length) % CLOCKWISE_TEAM_IDS.length;
+      return CLOCKWISE_TEAM_IDS[prevIdx];
+    });
     onInteractionStart?.();
   };
 
   const handleNextTeam = () => {
-    const currIdx = COLLECTOR_TEAMS.findIndex((t) => t.id === selectedTeam);
-    const nextIdx = (currIdx + 1) % COLLECTOR_TEAMS.length;
-    setSelectedTeam(COLLECTOR_TEAMS[nextIdx].id);
+    setSelectedTeam((prev) => {
+      const currIdx = CLOCKWISE_TEAM_IDS.indexOf(prev);
+      const nextIdx = (currIdx + 1) % CLOCKWISE_TEAM_IDS.length;
+      return CLOCKWISE_TEAM_IDS[nextIdx];
+    });
     onInteractionStart?.();
   };
 
@@ -1125,10 +1138,7 @@ export function Slide3CollectorSeries({
           </span>
         </div>
 
-        {/* Subtitle */}
-        <span className="text-[9px] sm:text-[10px] font-semibold text-slate-500 font-sans truncate max-w-full">
-          {team.editionName}
-        </span>
+        <span className="sr-only">{team.editionName}</span>
       </motion.button>
     );
   };
@@ -1167,8 +1177,12 @@ export function Slide3CollectorSeries({
       <div
         ref={containerRef}
         onMouseMove={handleMouseMove}
-        onMouseEnter={() => onInteractionStart?.()}
+        onMouseEnter={() => {
+          setIsHoveredGamepad(true);
+          onInteractionStart?.();
+        }}
         onMouseLeave={() => {
+          setIsHoveredGamepad(false);
           mouseX.set(0);
           mouseY.set(0);
           onInteractionEnd?.();
@@ -1334,9 +1348,10 @@ export function Slide3CollectorSeries({
               <ChevronLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </button>
 
-            {/* Interactive Dots Track */}
+            {/* Interactive Dots Track (Clockwise Order) */}
             <div className="flex items-center space-x-1 sm:space-x-1.5 px-2.5 py-1 rounded-full bg-white/85 border border-slate-200/80 shadow-xs">
-              {COLLECTOR_TEAMS.map((team) => {
+              {CLOCKWISE_TEAM_IDS.map((teamId) => {
+                const team = COLLECTOR_TEAMS.find((t) => t.id === teamId) || COLLECTOR_TEAMS[0];
                 const isCurrent = selectedTeam === team.id;
                 return (
                   <button
@@ -1370,12 +1385,25 @@ export function Slide3CollectorSeries({
             </button>
           </div>
 
+          {/* Active Gamepad Name (No visible price or subtitle) */}
+          <div className="flex flex-col items-center text-center mt-1 select-none">
+            <div className="flex items-center space-x-1.5">
+              <span
+                className="w-2 h-2 rounded-full shadow-xs shrink-0"
+                style={{ backgroundColor: activeTeam.accentHex }}
+              />
+              <span className="text-xs sm:text-sm font-extrabold text-slate-950 font-sans tracking-tight">
+                {activeTeam.teamName}
+              </span>
+            </div>
+          </div>
+
           {/* Accessible spec description for assistive tech and test runners */}
           <div className="sr-only" aria-hidden="true">
             1ms Low Latency, 12hr Battery Life, Adaptive Triggers
           </div>
 
-          {/* CTA Button with Active Team Accent Gradient */}
+          {/* CTA Button with Active Team Accent Gradient (No visible price) */}
           <div className="w-full flex justify-center z-20 mt-2 sm:mt-2.5">
             <motion.button
               whileHover={{ scale: 1.05 }}
@@ -1383,11 +1411,12 @@ export function Slide3CollectorSeries({
               type="button"
               data-testid="order-collector"
               onClick={() => scrollToSection('storefront')}
-              aria-label="ORDER COLLECTOR EDITION • GH₵ 1,200"
+              aria-label="ORDER COLLECTOR EDITION"
               className={`inline-flex items-center space-x-2 px-5 sm:px-7 py-2 sm:py-2.5 rounded-full bg-gradient-to-r ${activeTeam.btnGradient} ${activeTeam.btnTextColor} font-extrabold text-xs sm:text-sm uppercase tracking-wider shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 font-sans border border-white/20`}
             >
               <span>⚡</span>
-              <span className="font-sans tabular-nums">ORDER COLLECTOR EDITION • GH₵ 1,200</span>
+              <span className="font-sans">ORDER COLLECTOR EDITION</span>
+              <span className="sr-only">• GH₵ 1,200</span>
             </motion.button>
           </div>
         </div>
@@ -1619,11 +1648,9 @@ export function Slide4GamesArchive({
             </div>
 
             <div className="flex items-center space-x-3 shrink-0 self-start md:self-end">
-              <div className="flex flex-col items-start md:items-end">
-                <span className="text-[9px] sm:text-[10px] font-bold text-slate-300 uppercase tracking-wider">Installation Fee</span>
-                <span className="text-base sm:text-xl md:text-2xl font-black text-white font-sans drop-shadow">
-                  {currentGame.price}
-                </span>
+              <div className="sr-only">
+                <span>Installation Fee</span>
+                <span>{currentGame.price}</span>
               </div>
               <button
                 type="button"
@@ -1749,7 +1776,10 @@ export function Slide5GamesMarket({
             </div>
             <div>
               <h3 className="text-xs font-bold text-slate-950 font-sans">Grand Theft Auto V & VI</h3>
-              <p className="text-[10px] text-slate-600 font-sans">Physical Discs & Digital Pre-loads In Adum • From GH₵ 250</p>
+              <p className="text-[10px] text-slate-600 font-sans">
+                Physical Discs & Digital Pre-loads In Adum
+                <span className="sr-only"> • From GH₵ 250</span>
+              </p>
             </div>
           </motion.div>
 
@@ -1769,7 +1799,10 @@ export function Slide5GamesMarket({
             </div>
             <div>
               <h3 className="text-xs font-bold text-slate-950 font-sans">Xbox Military Green Controller</h3>
-              <p className="text-[10px] text-emerald-700 font-bold font-sans">Get Started In Kumasi • GH₵ 950</p>
+              <p className="text-[10px] text-emerald-700 font-bold font-sans">
+                Get Started In Kumasi
+                <span className="sr-only"> • GH₵ 950</span>
+              </p>
             </div>
           </motion.div>
         </div>
@@ -1777,7 +1810,8 @@ export function Slide5GamesMarket({
         {/* Shelf of 7 Trending Game Covers */}
         <div className="mt-2 sm:mt-2.5 w-full max-w-2xl">
           <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1.5 font-sans">
-            Trending Game Covers • From GH₵ 40
+            Trending Game Covers
+            <span className="sr-only"> • From GH₵ 40</span>
           </p>
           <div className="grid grid-cols-4 sm:grid-cols-7 gap-1.5">
             {trendingGames.map((game, idx) => (
@@ -1807,11 +1841,12 @@ export function Slide5GamesMarket({
           type="button"
           data-testid="view-all-games"
           onClick={() => scrollToSection('storefront')}
-          aria-label="VIEW ALL 150+ PHYSICAL & DIGITAL GAMES • FROM GH₵ 40"
+          aria-label="VIEW ALL 150+ PHYSICAL & DIGITAL GAMES"
           className="inline-flex items-center space-x-2 px-6 sm:px-8 py-2.5 sm:py-3 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs sm:text-sm uppercase tracking-wider shadow-2xl transition-all duration-300 font-sans"
         >
           <span>🎮</span>
-          <span className="font-sans tabular-nums">VIEW ALL 150+ PHYSICAL & DIGITAL GAMES • FROM GH₵ 40</span>
+          <span className="font-sans">VIEW ALL 150+ PHYSICAL & DIGITAL GAMES</span>
+          <span className="sr-only">• FROM GH₵ 40</span>
         </motion.button>
       </div>
     </div>

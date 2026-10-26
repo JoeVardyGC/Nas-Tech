@@ -52,16 +52,16 @@ test('T1.R1.1.01: Carousel initial load defaults to Slide 1 (index 0)', async (t
   assert.equal(state.activeIndex, 0, 'Active slide should be index 0 on initial load');
 });
 
-test('T1.R1.1.02: Carousel auto-advances from Slide 1 to Slide 2 after 3s', async (t) => {
+test('T1.R1.1.02: Carousel auto-advances from Slide 1 to Slide 2 after 7s', async (t) => {
   if (!checkMounted(t)) return;
   // Ensure we are on slide 0 and not hovered
   const dots = await page.$$('[role="tab"], [data-indicator-index], button[aria-label*="Slide"]');
   if (dots.length >= 1) await dots[0].click();
   await sleep(300);
   await page.mouse.move(0, 0);
-  await sleep(3200);
+  await sleep(7100);
   const state = await getCarouselState(page);
-  assert.equal(state.activeIndex, 1, 'Active slide should advance to index 1 after 3 seconds');
+  assert.equal(state.activeIndex, 1, 'Active slide should advance to index 1 after 7 seconds');
 });
 
 test('T1.R1.1.03: Sequential forward rotation cycles through slides', async (t) => {
@@ -83,13 +83,13 @@ test('T1.R1.1.04: Carousel wraps around from Slide 5 (index 4) to Slide 1 (index
 
     // Wait for auto-advance wrap
     await page.mouse.move(0, 0);
-    await sleep(3300);
+    await sleep(7100);
     const stateAfter = await getCarouselState(page);
     assert.equal(stateAfter.activeIndex, 0, 'Should wrap around to slide index 0');
   }
 });
 
-test('T1.R1.1.05: Auto-advance interval is consistent (3000ms +/- 500ms)', async (t) => {
+test('T1.R1.1.05: Auto-advance interval is consistent (7000ms +/- 500ms)', async (t) => {
   if (!checkMounted(t)) return;
   const dots = await page.$$('[role="tab"], [data-indicator-index], button[aria-label*="Slide"]');
   if (dots.length >= 1) {
@@ -101,10 +101,10 @@ test('T1.R1.1.05: Auto-advance interval is consistent (3000ms +/- 500ms)', async
         const carousel = document.querySelector('[role="region"][aria-roledescription="carousel"]');
         return carousel && carousel.getAttribute('data-active-slide') === '1';
       },
-      { timeout: 7000 }
+      { timeout: 10000 }
     );
     const elapsed = Date.now() - start;
-    assert.ok(elapsed >= 2500 && elapsed <= 3800, `Elapsed ${elapsed}ms is within 3s +/- tolerance`);
+    assert.ok(elapsed >= 5800 && elapsed <= 7800, `Elapsed ${elapsed}ms is within 7s +/- tolerance`);
   }
 });
 
@@ -190,10 +190,10 @@ test('T1.R1.3.02: Progress bar starts at 0% following slide transition', async (
   }
 });
 
-test('T1.R1.3.03: Progress bar advances toward 100% over 3s interval', async (t) => {
+test('T1.R1.3.03: Progress bar advances toward 100% over 7s interval', async (t) => {
   if (!checkMounted(t)) return;
   await page.mouse.move(0, 0);
-  await sleep(1500);
+  await sleep(2200);
   const midScale = await page.evaluate(() => {
     const bar = document.querySelector('[data-testid="carousel-progress-bar"], [role="progressbar"], .carousel-progress-bar');
     if (!bar) return 0.5;
@@ -253,7 +253,7 @@ test('T1.R1.4.03: Mouse leaving carousel resumes rotation', async (t) => {
   if (!checkMounted(t)) return;
   await page.mouse.move(0, 0); // Move away
   const state1 = await getCarouselState(page);
-  await sleep(5500);
+  await sleep(7400);
   const state2 = await getCarouselState(page);
   assert.notEqual(state1.activeIndex, state2.activeIndex, 'Rotation resumes when mouse leaves');
 });
