@@ -329,13 +329,12 @@ export default function AdaptiveNavbar({
                 <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2 font-sans">
                   Featured Hero Slides
                 </p>
-                <div className="grid grid-cols-5 gap-1.5">
+                <div className="grid grid-cols-4 gap-1.5">
                   {[
                     { name: 'PS5', idx: 0 as SlideIndex },
                     { name: 'Consoles', idx: 1 as SlideIndex },
                     { name: 'Collector', idx: 2 as SlideIndex },
                     { name: 'Games', idx: 3 as SlideIndex },
-                    { name: 'Market', idx: 4 as SlideIndex },
                   ].map(({ name, idx }) => (
                     <button
                       key={name}

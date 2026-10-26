@@ -9,7 +9,6 @@ import {
   Slide2DualSenseColorways,
   Slide3CollectorSeries,
   Slide4GamesArchive,
-  Slide5GamesMarket,
 } from './stubs';
 import {
   SlideIndex,
@@ -199,7 +198,6 @@ export default function HeroCarousel({
     Slide2DualSenseColorways,
     Slide3CollectorSeries,
     Slide4GamesArchive,
-    Slide5GamesMarket,
   ];
 
   return (

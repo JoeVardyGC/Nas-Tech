@@ -158,29 +158,23 @@ test('T4.S04: Scenario 4: Direct-to-Drive In-Person Game Pre-Load Customer in Ad
   assert.ok(text.includes('25'), 'Price GH₵ 25/GAME verified');
 });
 
-test('T4.S05: Scenario 5: Trending Games Explorer Browsing Kumasi Market', async (t) => {
+test('T4.S05: Scenario 5: Games Explorer Browsing Featured Titles on Slide 4', async (t) => {
   if (!checkMounted(t)) return;
-  // 1. Navigate to Slide 5
+  // 1. Navigate to Slide 4 (index 3)
   const dots = await page.$$('[role="tab"], [data-indicator-index], button[aria-label*="Slide"]');
-  if (dots.length >= 5) await dots[4].click();
+  if (dots.length >= 4) await dots[3].click();
   await sleep(400);
 
   // 2. Verify white navbar on bright slide
   const state = await getCarouselState(page);
-  assert.ok(state.navbarClasses.includes('bg-white') || state.navbarTheme === 'light', 'Navbar is white theme on Slide 5');
+  assert.ok(state.navbarClasses.includes('bg-white') || state.navbarTheme === 'light', 'Navbar is white theme on Slide 4');
 
-  // 3. Hover over trending shelf covers
-  const covers = await page.$$('[data-testid="game-cover-card"], .game-cover-card');
-  for (const c of covers.slice(0, 3)) {
+  // 3. Hover over game selector cards
+  const cards = await page.$$('button[data-game-choice]');
+  for (const c of cards.slice(0, 3)) {
     await c.hover();
     await sleep(100);
   }
 
-  // 4. Click View All 150+ Games CTA
-  const viewBtn = await page.$('button[data-testid="view-all-games"], button[aria-label*="VIEW ALL"]');
-  if (viewBtn) {
-    await viewBtn.click();
-    await sleep(300);
-  }
   assert.ok(true, 'Scenario 5 completed successfully');
 });

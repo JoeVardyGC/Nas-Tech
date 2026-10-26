@@ -1549,7 +1549,7 @@ export function Slide4GamesArchive({
           Over 2,000 Games Available
         </h2>
         <div className="sr-only">
-          DIRECT-TO-DRIVE PRE-LOAD SERVICE // IN-SHOP CONSOLE & PC GAME PRE-LOADS // BRING YOUR DRIVE TO ADUM, KUMASI
+          DIRECT-TO-DRIVE PRE-LOAD SERVICE // IN-SHOP CONSOLE & PC GAME PRE-LOADS // BRING YOUR DRIVE TO ADUM, KUMASI (Adum, Kumasi Showroom)
         </div>
       </div>
 

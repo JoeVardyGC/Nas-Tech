@@ -1,17 +1,16 @@
 import React from 'react';
 
 /**
- * Valid slide indices for the 5-slide Hero Carousel (0-indexed).
+ * Valid slide indices for the 4-slide Hero Carousel (0-indexed).
  * 0: Slide 1 - PlayStation 5 "Feel the Game" Master Stage
  * 1: Slide 2 - DualSense™ Wireless Controllers Showcase
  * 2: Slide 3 - Limited Edition Collector Series
  * 3: Slide 4 - Over 2,000 Games & Direct-to-Drive Hub
- * 4: Slide 5 - Games Market & Trending Releases
  */
-export type SlideIndex = 0 | 1 | 2 | 3 | 4;
+export type SlideIndex = 0 | 1 | 2 | 3;
 
 /** Total number of slides in the carousel */
-export const TOTAL_SLIDES = 5;
+export const TOTAL_SLIDES = 4;
 
 /** Default auto-advance interval in milliseconds (7 seconds as requested) */
 export const DEFAULT_AUTOPLAY_INTERVAL = 7000;
@@ -19,9 +18,7 @@ export const DEFAULT_AUTOPLAY_INTERVAL = 7000;
 /**
  * Navbar theme options for optimal visual contrast against slide backgrounds:
  * - 'light': Crisp white pill navbar (#FFFFFF background, slate-900 text, border-white/90).
- *            Used on dark slide canvases (Slide 1, Slide 3, Slide 4).
  * - 'dark':  Solid dark obsidian pill navbar (#060913 background, white text, border-slate-800).
- *            Used on bright/high-contrast slide canvases (Slide 2, Slide 5).
  */
 export type NavbarTheme = 'light' | 'dark';
 
@@ -36,11 +33,10 @@ export const SLIDE_NAVBAR_THEMES: Record<SlideIndex, NavbarTheme> = {
   1: 'light', // Slide 2 (DualSense Colorways) -> Crisp White Pill Navbar
   2: 'light', // Slide 3 (Collector Series) -> Crisp White Pill Navbar
   3: 'light', // Slide 4 (Games Archive) -> Crisp White Pill Navbar
-  4: 'light', // Slide 5 (Games Market) -> Crisp White Pill Navbar
 };
 
 /**
- * Universal props contract accepted by every slide component (Slides 1 through 5).
+ * Universal props contract accepted by every slide component (Slides 1 through 4).
  */
 export interface SlideProps {
   /** Whether the slide is currently active and visible to the user */
@@ -82,7 +78,7 @@ export interface SlideMetadata {
 }
 
 /**
- * Full carousel configuration definitions for all 5 slides.
+ * Full carousel configuration definitions for all 4 slides.
  */
 export const SLIDE_METADATA: readonly SlideMetadata[] = [
   {
@@ -94,7 +90,7 @@ export const SLIDE_METADATA: readonly SlideMetadata[] = [
     subtitle: 'PlayStation 5 Console & DualSense Wireless Controller',
     theme: 'light',
     navbarTheme: 'light',
-    ariaLabel: 'Slide 1 of 5: PlayStation 5 Feel the Game',
+    ariaLabel: 'Slide 1 of 4: PlayStation 5 Feel the Game',
   },
   {
     index: 1,
@@ -104,7 +100,7 @@ export const SLIDE_METADATA: readonly SlideMetadata[] = [
     eyebrow: 'IN-STOCK IN KUMASI // ADUM SHOWROOM',
     theme: 'light',
     navbarTheme: 'light',
-    ariaLabel: 'Slide 2 of 5: PlayStation 5 Consoles and DualSense Controllers',
+    ariaLabel: 'Slide 2 of 4: PlayStation 5 Consoles and DualSense Controllers',
   },
   {
     index: 2,
@@ -114,7 +110,7 @@ export const SLIDE_METADATA: readonly SlideMetadata[] = [
     eyebrow: 'EXCLUSIVE CUSTOM BUILDS',
     theme: 'light',
     navbarTheme: 'light',
-    ariaLabel: 'Slide 3 of 5: Limited Edition Collector Series',
+    ariaLabel: 'Slide 3 of 4: Limited Edition Collector Series',
   },
   {
     index: 3,
@@ -125,18 +121,7 @@ export const SLIDE_METADATA: readonly SlideMetadata[] = [
     subtitle: 'IN-SHOP CONSOLE & PC GAME PRE-LOADS // BRING YOUR DRIVE TO ADUM, KUMASI',
     theme: 'light',
     navbarTheme: 'light',
-    ariaLabel: 'Slide 4 of 5: Over 2,000 Games Archive Hub',
-  },
-  {
-    index: 4,
-    id: 'games-market',
-    title: 'Games Market & Trending Releases',
-    shortLabel: '05 / RELEASES',
-    eyebrow: 'KUMASI GAMING HUB // PHYSICAL & DIGITAL',
-    subtitle: '',
-    theme: 'light',
-    navbarTheme: 'light',
-    ariaLabel: 'Slide 5 of 5: Games Market and Trending Releases',
+    ariaLabel: 'Slide 4 of 4: Over 2,000 Games Archive Hub',
   },
 ] as const;
 

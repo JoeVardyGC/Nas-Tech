@@ -337,23 +337,23 @@ test('T2.B4.05: Visibility change / tab switch simulation pauses carousel', asyn
 // --------------------------------------------------------------------------
 // B5: Edge Slide Wrapping & Index Boundaries (5 tests)
 // --------------------------------------------------------------------------
-test('T2.B5.01: Next navigation on Slide 5 (index 4) transitions seamlessly to Slide 1 (index 0)', async (t) => {
+test('T2.B5.01: Next navigation on Slide 4 (index 3) transitions seamlessly to Slide 1 (index 0)', async (t) => {
   if (!checkMounted(t)) return;
   const dots = await page.$$('[role="tab"], [data-indicator-index], button[aria-label*="Slide"]');
-  if (dots.length >= 5) {
-    await dots[4].click();
+  if (dots.length >= 4) {
+    await dots[3].click();
     await sleep(300);
     const nextBtn = await page.$('button[aria-label*="Next"], button[data-testid="carousel-next"]');
     if (nextBtn) {
       await nextBtn.click();
       await sleep(400);
       const state = await getCarouselState(page);
-      assert.equal(state.activeIndex, 0, 'Wraps from slide 4 to slide 0');
+      assert.equal(state.activeIndex, 0, 'Wraps from slide 3 to slide 0');
     }
   }
 });
 
-test('T2.B5.02: Prev navigation on Slide 1 (index 0) transitions seamlessly to Slide 5 (index 4)', async (t) => {
+test('T2.B5.02: Prev navigation on Slide 1 (index 0) transitions seamlessly to Slide 4 (index 3)', async (t) => {
   if (!checkMounted(t)) return;
   const dots = await page.$$('[role="tab"], [data-indicator-index], button[aria-label*="Slide"]');
   if (dots.length >= 1) {
@@ -364,41 +364,41 @@ test('T2.B5.02: Prev navigation on Slide 1 (index 0) transitions seamlessly to S
       await prevBtn.click();
       await sleep(400);
       const state = await getCarouselState(page);
-      assert.equal(state.activeIndex, 4, 'Wraps backwards from slide 0 to slide 4');
+      assert.equal(state.activeIndex, 3, 'Wraps backwards from slide 0 to slide 3');
     }
   }
 });
 
-test('T2.B5.03: Direct jump from Slide 1 (index 0) to Slide 5 (index 4) animates properly', async (t) => {
+test('T2.B5.03: Direct jump from Slide 1 (index 0) to Slide 4 (index 3) animates properly', async (t) => {
   if (!checkMounted(t)) return;
   const dots = await page.$$('[role="tab"], [data-indicator-index], button[aria-label*="Slide"]');
-  if (dots.length >= 5) {
+  if (dots.length >= 4) {
     await dots[0].click();
     await sleep(200);
-    await dots[4].click();
+    await dots[3].click();
     await sleep(550);
     const state = await getCarouselState(page);
-    assert.equal(state.activeIndex, 4, 'Jumped from 0 to 4 directly');
+    assert.equal(state.activeIndex, 3, 'Jumped from 0 to 3 directly');
   }
 });
 
-test('T2.B5.04: Direct jump from Slide 5 (index 4) to Slide 1 (index 0) animates properly', async (t) => {
+test('T2.B5.04: Direct jump from Slide 4 (index 3) to Slide 1 (index 0) animates properly', async (t) => {
   if (!checkMounted(t)) return;
   const dots = await page.$$('[role="tab"], [data-indicator-index], button[aria-label*="Slide"]');
-  if (dots.length >= 5) {
-    await dots[4].click();
+  if (dots.length >= 4) {
+    await dots[3].click();
     await sleep(200);
     await dots[0].click();
     await sleep(550);
     const state = await getCarouselState(page);
-    assert.equal(state.activeIndex, 0, 'Jumped from 4 to 0 directly');
+    assert.equal(state.activeIndex, 0, 'Jumped from 3 to 0 directly');
   }
 });
 
 test('T2.B5.05: Modulo arithmetic prevents negative or undefined indices', async (t) => {
   if (!checkMounted(t)) return;
   const state = await getCarouselState(page);
-  assert.ok(state.activeIndex >= 0 && state.activeIndex <= 4, 'Active index is strictly clamped between 0 and 4');
+  assert.ok(state.activeIndex >= 0 && state.activeIndex <= 3, 'Active index is strictly clamped between 0 and 3');
 });
 
 // --------------------------------------------------------------------------

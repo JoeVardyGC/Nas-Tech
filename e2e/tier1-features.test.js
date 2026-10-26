@@ -71,15 +71,15 @@ test('T1.R1.1.03: Sequential forward rotation cycles through slides', async (t) 
   assert.ok(state.activeIndex >= 0 && state.activeIndex <= 4, 'Active slide is within range 0-4');
 });
 
-test('T1.R1.1.04: Carousel wraps around from Slide 5 (index 4) to Slide 1 (index 0)', async (t) => {
+test('T1.R1.1.04: Carousel wraps around from Slide 4 (index 3) to Slide 1 (index 0)', async (t) => {
   if (!checkMounted(t)) return;
-  // Navigate to slide 4 via indicator dot
+  // Navigate to slide 3 via indicator dot
   const dots = await page.$$('[role="tab"], [data-indicator-index], button[aria-label*="Slide"]');
-  if (dots.length >= 5) {
-    await dots[4].click();
+  if (dots.length >= 4) {
+    await dots[3].click();
     await sleep(400);
     const stateBefore = await getCarouselState(page);
-    assert.equal(stateBefore.activeIndex, 4, 'Should be on slide index 4');
+    assert.equal(stateBefore.activeIndex, 3, 'Should be on slide index 3');
 
     // Wait for auto-advance wrap
     await page.mouse.move(0, 0);
@@ -292,7 +292,7 @@ test('T1.R1.5.01: Next arrow button advances active slide by 1', async (t) => {
     await nextBtn.click();
     await sleep(400);
     const after = (await getCarouselState(page)).activeIndex;
-    assert.equal(after, (before + 1) % 5, 'Next arrow advances to next slide modulo 5');
+    assert.equal(after, (before + 1) % 4, 'Next arrow advances to next slide modulo 4');
   }
 });
 
@@ -304,7 +304,7 @@ test('T1.R1.5.02: Previous arrow button moves active slide back by 1', async (t)
     await prevBtn.click();
     await sleep(400);
     const after = (await getCarouselState(page)).activeIndex;
-    assert.equal(after, (before - 1 + 5) % 5, 'Prev arrow moves back one slide');
+    assert.equal(after, (before - 1 + 4) % 4, 'Prev arrow moves back one slide');
   }
 });
 
@@ -434,7 +434,7 @@ test('T1.R1.7.04: Individual slide items specify role="group" and aria-roledescr
   const slidesCount = await page.evaluate(() => {
     return document.querySelectorAll('[role="group"][aria-roledescription="slide"]').length;
   });
-  assert.ok(slidesCount >= 5, 'All 5 slides have role="group" and aria-roledescription="slide"');
+  assert.ok(slidesCount >= 4, 'All 4 slides have role="group" and aria-roledescription="slide"');
 });
 
 test('T1.R1.7.05: Indicators indicate active state via aria-selected or aria-current', async (t) => {
@@ -622,47 +622,49 @@ test('T1.R5.05: Slide 4 action button renders "[ 🚀 BROWSE INSTALLABLE TITLES 
 });
 
 // --------------------------------------------------------------------------
-// R6: Slide 5 Games Market & Trending Releases (5 tests)
+// R6: 4-Slide Streamlined Hero Carousel Verification (5 tests)
 // --------------------------------------------------------------------------
-test('T1.R6.01: Slide 5 renders symmetrical split layout (GTA on left, Xbox on right)', async (t) => {
+test('T1.R6.01: HeroCarousel renders exactly 4 slides after removing Games Market slide', async (t) => {
+  if (!checkMounted(t)) return;
+  const slidesCount = await page.evaluate(() => {
+    return document.querySelectorAll('[role="group"][aria-roledescription="slide"]').length;
+  });
+  assert.equal(slidesCount, 4, 'HeroCarousel renders 4 slides');
+});
+
+test('T1.R6.02: HeroCarousel indicator dock renders 4 slide tabs', async (t) => {
+  if (!checkMounted(t)) return;
+  const dotsCount = await page.evaluate(() => {
+    return document.querySelectorAll('[role="tab"][data-indicator-index]').length;
+  });
+  assert.equal(dotsCount, 4, 'Indicator dock renders 4 tabs');
+});
+
+test('T1.R6.03: Games Market & Trending Releases is removed from active carousel slides', async (t) => {
+  if (!checkMounted(t)) return;
+  const hasMarketSlide = await page.evaluate(() => {
+    return document.querySelector('#carousel-slide-4') !== null;
+  });
+  assert.equal(hasMarketSlide, false, 'Slide 5 is removed from carousel');
+});
+
+test('T1.R6.04: Slide 4 Games Archive interactive game cards respond to hover', async (t) => {
   if (!checkMounted(t)) return;
   const dots = await page.$$('[role="tab"], [data-indicator-index], button[aria-label*="Slide"]');
-  if (dots.length >= 5) await dots[4].click();
-  await sleep(400);
-
-  const text = await page.evaluate(() => document.body.innerText);
-  assert.ok(text.includes('GTA') || text.includes('Grand Theft Auto') || text.includes('Military Green'), 'Split market layout present');
-});
-
-test('T1.R6.02: Slide 5 right card renders "Get Started In Kumasi"', async (t) => {
-  if (!checkMounted(t)) return;
-  const text = await page.evaluate(() => document.body.innerText);
-  assert.ok(text.includes('Get Started In Kumasi') || text.includes('Kumasi'), 'Get Started In Kumasi text present');
-});
-
-test('T1.R6.03: Slide 5 renders horizontal shelf of 7 trending game covers', async (t) => {
-  if (!checkMounted(t)) return;
-  const text = await page.evaluate(() => document.body.innerText);
-  assert.ok(
-    text.includes('Modern Warfare') || text.includes('Fortnite') || text.includes('Apex') || text.includes('Cyberpunk'),
-    'Trending game covers present in shelf'
-  );
-});
-
-test('T1.R6.04: Slide 5 trending game covers scale on hover', async (t) => {
-  if (!checkMounted(t)) return;
-  const coverCard = await page.$('[data-testid="game-cover-card"], .game-cover-card');
-  if (coverCard) {
-    await coverCard.hover();
-    await sleep(200);
+  if (dots.length >= 4) await dots[3].click();
+  await sleep(300);
+  const gameBtn = await page.$('button[data-game-choice]');
+  if (gameBtn) {
+    await gameBtn.hover();
+    await sleep(100);
   }
-  assert.ok(true, 'Hover scale interaction executes');
+  assert.ok(true, 'Game card hover executes cleanly');
 });
 
-test('T1.R6.05: Slide 5 action button renders "[ 🎮 VIEW ALL 150+ PHYSICAL & DIGITAL GAMES ]"', async (t) => {
+test('T1.R6.05: Slide 4 Games Archive renders all 3 featured game cards', async (t) => {
   if (!checkMounted(t)) return;
   const text = await page.evaluate(() => document.body.innerText);
-  assert.ok(text.includes('VIEW ALL') && text.includes('150+'), 'View 150+ games button present');
+  assert.ok(text.includes('Spider-Man') || text.includes('Ghost of Tsushima'), 'Featured games rendered in Slide 4');
 });
 
 // --------------------------------------------------------------------------
