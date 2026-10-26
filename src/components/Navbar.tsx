@@ -64,11 +64,29 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 180);
+      const heroEl = document.getElementById('nas-tech-hero-carousel');
+      if (heroEl) {
+        const rect = heroEl.getBoundingClientRect();
+        const pastHero = rect.bottom <= Math.min(window.innerHeight * 0.45, 360);
+        setIsScrolled(pastHero);
+        if (!pastHero) {
+          setIsAllCategoriesOpen(false);
+        }
+      } else {
+        const scrolled = window.scrollY > 350;
+        setIsScrolled(scrolled);
+        if (!scrolled) {
+          setIsAllCategoriesOpen(false);
+        }
+      }
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll, { passive: true });
     handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
   }, []);
 
   const searchContainerRef = useRef<HTMLDivElement>(null);
@@ -468,9 +486,17 @@ export default function Navbar() {
 
       {/* ========================================================
           TIER 2: AP RAZOX GAMING NAVIGATION ROW (Height: 48px)
-          All Categories Pill Menu + Navigation Links + Kumasi Hub Status
+          Hidden on Hero Section; displayed when scrolled to Second Section
          ======================================================== */}
-      <div className="border-t border-slate-200/80 bg-white/95 backdrop-blur-md hidden md:block">
+      <div
+        data-testid="navbar-tier-2"
+        aria-hidden={!isScrolled}
+        className={`border-t bg-white/95 backdrop-blur-md hidden md:block transition-all duration-300 ease-in-out ${
+          isScrolled
+            ? 'max-h-14 opacity-100 translate-y-0 visible pointer-events-auto border-slate-200/80 overflow-visible'
+            : 'max-h-0 opacity-0 -translate-y-2 invisible pointer-events-none border-transparent overflow-hidden'
+        }`}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-12 text-xs">
             

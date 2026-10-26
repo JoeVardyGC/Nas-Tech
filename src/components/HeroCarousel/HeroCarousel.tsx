@@ -229,7 +229,7 @@ export default function HeroCarousel({
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
       onTouchCancel={handleTouchCancel}
-      className={`hero-carousel relative w-full min-h-[640px] sm:min-h-[calc(100vh-128px)] flex flex-col justify-between overflow-hidden select-none bg-gradient-to-b from-white via-slate-50 to-blue-50/20 text-slate-900 font-sans focus:outline-none transform-gpu will-change-transform duration-500 ${className}`}
+      className={`hero-carousel relative w-full min-h-[640px] sm:min-h-[calc(100vh-80px)] flex flex-col justify-between overflow-hidden select-none bg-gradient-to-b from-white via-slate-50 to-blue-50/20 text-slate-900 font-sans focus:outline-none transform-gpu will-change-transform duration-500 ${className}`}
     >
       {/* Screen Reader Live Announcements */}
       <div className="sr-only" aria-atomic="true">
