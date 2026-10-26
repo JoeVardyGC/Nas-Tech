@@ -1208,7 +1208,7 @@ export function Slide3CollectorSeries({
             <span>{activeTeam.badge}</span>
           </div>
 
-          {/* Floating Hero Scale Gamepad Container — Super-Sized to Command Hero Space */}
+          {/* Floating Hero Scale Gamepad Container — Balanced Hero Scale */}
           <motion.div
             style={{
               rotateX: tiltX,
@@ -1216,22 +1216,22 @@ export function Slide3CollectorSeries({
               transformStyle: 'preserve-3d',
             }}
             animate={{
-              y: [-6, 6, -6],
+              y: [-5, 5, -5],
             }}
             transition={{
               repeat: Infinity,
               duration: 4.8,
               ease: 'easeInOut',
             }}
-            className="relative w-[92vw] max-w-[440px] sm:max-w-[580px] md:max-w-[700px] lg:max-w-none lg:w-[760px] xl:w-[880px] 2xl:w-[960px] aspect-[15/10] flex items-center justify-center cursor-grab active:cursor-grabbing z-10"
+            className="relative w-[84vw] max-w-[360px] sm:max-w-[460px] md:max-w-[540px] lg:max-w-none lg:w-[580px] xl:w-[660px] 2xl:w-[720px] aspect-[16/11] flex items-center justify-center cursor-grab active:cursor-grabbing z-10"
           >
             {/* Dynamic Core Radial Glow */}
             <div
               className="absolute inset-0 rounded-full pointer-events-none transition-all duration-500"
               style={{
                 background: activeTeam.glowRgba,
-                filter: 'blur(60px)',
-                transform: 'scale(1.28)',
+                filter: 'blur(50px)',
+                transform: 'scale(1.2)',
               }}
             />
             <AnimatePresence mode="popLayout">
@@ -1250,9 +1250,9 @@ export function Slide3CollectorSeries({
                   unoptimized
                   loading="lazy"
                   {...({ fetchPriority: 'low' } as any)}
-                  className="object-contain scale-[1.2] sm:scale-[1.26] lg:scale-[1.32]"
+                  className="object-contain scale-[1.08] sm:scale-[1.12] lg:scale-[1.15]"
                   style={{
-                    filter: `drop-shadow(0 28px 46px rgba(0, 0, 0, 0.3)) drop-shadow(0 0 42px ${activeTeam.glowRgba})`,
+                    filter: `drop-shadow(0 24px 38px rgba(0, 0, 0, 0.26)) drop-shadow(0 0 36px ${activeTeam.glowRgba})`,
                   }}
                 />
               </motion.div>
@@ -1260,7 +1260,7 @@ export function Slide3CollectorSeries({
           </motion.div>
 
           {/* Illuminated Perspective Orbital Halo Ring (Image 1 Style) */}
-          <div className="relative -mt-12 sm:-mt-16 md:-mt-20 lg:-mt-24 w-[94vw] max-w-[460px] sm:max-w-[620px] md:max-w-[740px] lg:max-w-none lg:w-[800px] xl:w-[920px] 2xl:w-[1000px] h-20 sm:h-26 md:h-30 lg:h-36 flex items-center justify-center pointer-events-none z-0">
+          <div className="relative -mt-10 sm:-mt-14 md:-mt-16 lg:-mt-20 w-[88vw] max-w-[390px] sm:max-w-[500px] md:max-w-[580px] lg:max-w-none lg:w-[640px] xl:w-[720px] 2xl:w-[780px] h-16 sm:h-22 md:h-26 lg:h-28 flex items-center justify-center pointer-events-none z-0">
             {/* SVG 3D Perspective Ellipse Rings */}
             <svg
               viewBox="0 0 400 90"
