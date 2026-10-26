@@ -197,22 +197,22 @@ export function Slide1PS5Master({
               transformStyle: 'preserve-3d',
             }}
             animate={{
-              y: [-4, 4, -4],
+              y: [-5, 5, -5],
             }}
             transition={{
               repeat: Infinity,
               duration: 4.8,
               ease: 'easeInOut',
             }}
-            className="relative w-52 sm:w-68 md:w-80 lg:w-[360px] xl:w-[400px] aspect-[16/11] flex items-center justify-center cursor-grab active:cursor-grabbing z-10"
+            className="relative w-[76vw] max-w-[310px] sm:max-w-[390px] md:max-w-[460px] lg:max-w-none lg:w-[490px] xl:w-[550px] 2xl:w-[600px] aspect-[16/11] flex items-center justify-center cursor-grab active:cursor-grabbing z-10"
           >
             {/* Dynamic Core Radial Glow */}
             <div
               className="absolute inset-0 rounded-full pointer-events-none transition-all duration-500"
               style={{
                 background: 'rgba(0, 114, 245, 0.35)',
-                filter: 'blur(42px)',
-                transform: 'scale(1.15)',
+                filter: 'blur(44px)',
+                transform: 'scale(1.14)',
               }}
             />
             <div className="relative w-full h-full drop-shadow-[0_22px_38px_rgba(0,114,245,0.32)]">
@@ -223,10 +223,10 @@ export function Slide1PS5Master({
                 unoptimized
                 priority
                 {...({ fetchPriority: 'high' } as any)}
-                className="object-contain"
+                className="object-contain scale-100 sm:scale-[1.04] lg:scale-[1.06]"
                 style={{
                   filter:
-                    'drop-shadow(0 20px 30px rgba(0, 0, 0, 0.22)) drop-shadow(0 0 28px rgba(0, 114, 245, 0.45))',
+                    'drop-shadow(0 22px 34px rgba(0, 0, 0, 0.24)) drop-shadow(0 0 32px rgba(0, 114, 245, 0.45))',
                 }}
               />
             </div>
