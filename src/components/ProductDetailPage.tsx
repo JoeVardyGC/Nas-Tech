@@ -191,12 +191,6 @@ export default function ProductDetailPage({ product }: ProductDetailPageProps) {
                       {product.badge}
                     </span>
                   )}
-                  {product.swapEligible && (
-                    <span className="inline-flex items-center space-x-1 px-2.5 py-1 rounded-xl text-[11px] font-bold uppercase tracking-wider bg-blue-50 text-blue-700 border border-blue-200 shadow-2xs">
-                      <RefreshCw className="w-3 h-3" />
-                      <span>Swap Eligible</span>
-                    </span>
-                  )}
                 </div>
 
                 {/* Top Right Live Stock Chip */}
@@ -339,12 +333,6 @@ export default function ProductDetailPage({ product }: ProductDetailPageProps) {
                 </div>
               </div>
 
-              {/* Trade-In Swap Program Box (Matches screenshot) */}
-              <div className="flex items-center space-x-3 p-3.5 rounded-2xl bg-blue-50/80 border border-blue-200/90 text-xs text-blue-900 font-medium">
-                <RefreshCw className="w-5 h-5 text-blue-600 shrink-0" />
-                <span>Bring your old console or laptop to our shop for a trade-in credit toward this item!</span>
-              </div>
-
               {/* Quantity Stepper & Add to Cart */}
               <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                 {/* Stepper */}
@@ -397,13 +385,13 @@ export default function ProductDetailPage({ product }: ProductDetailPageProps) {
                 className="w-full flex items-center justify-center space-x-2.5 py-3 px-6 rounded-2xl border border-emerald-300 bg-emerald-50 hover:bg-emerald-100/90 text-emerald-800 font-extrabold text-xs transition-all shadow-xs active:scale-95"
               >
                 <WhatsAppIcon colored className="w-4 h-4 shrink-0" />
-                <span>Inquire / Reserve via WhatsApp</span>
+                <span>Inquire / Reserve via WhatsApp (+233 55 165 9683)</span>
               </button>
 
               {/* Showroom Status Footnote */}
               <div className="flex items-center space-x-2 text-[11px] text-slate-500 pt-1">
                 <MapPin className="w-3.5 h-3.5 text-blue-600 shrink-0" />
-                <span>Available for immediate walk-in pickup at Kumasi Hub (Adum) or dispatch across Ghana.</span>
+                <span>Available for immediate walk-in pickup at Kumasi Hub (Sawaba near St. Patrick Hotel) or dispatch across Ghana.</span>
               </div>
 
             </div>

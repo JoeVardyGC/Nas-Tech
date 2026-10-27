@@ -59,7 +59,7 @@ export default function Slide4DigitalArchive({ onExplore }: SlideProps) {
               Direct-to-Drive Installations
             </h2>
             <p className="text-xs sm:text-sm text-blue-100 font-medium leading-relaxed">
-              Skip slow internet downloads. Bring your external hard drive, PlayStation, or Xbox to our shop in Adum, Kumasi for instant game copies.
+              Skip slow internet downloads. Bring your external hard drive, PlayStation, or Xbox to our shop in Sawaba near St. Patrick Hotel, Kumasi for instant game copies.
             </p>
             <div className="pt-2 flex flex-wrap items-center gap-3">
               <button

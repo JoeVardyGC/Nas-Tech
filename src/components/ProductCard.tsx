@@ -76,12 +76,6 @@ export default function ProductCard({ product, onOpenDetails }: ProductCardProps
               {product.badge}
             </span>
           )}
-          {product.swapEligible && (
-            <span className="inline-flex items-center space-x-1 px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider bg-blue-50 text-blue-700 border border-blue-200">
-              <RefreshCw className="w-2.5 h-2.5" />
-              <span>Swap Eligible</span>
-            </span>
-          )}
         </div>
 
         {/* Condition Tag */}

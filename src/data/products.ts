@@ -16,10 +16,10 @@ export const PRODUCTS: Product[] = [
     stockCount: 5,
     badge: 'Best Seller',
     swapEligible: true,
-    image: 'https://images.unsplash.com/photo-1621259182978-fbf93132d53d?w=800&auto=format&fit=crop&q=80',
+    image: '/assets/hero/xbox_series_x_hero.jpg',
     gallery: [
-      'https://images.unsplash.com/photo-1621259182978-fbf93132d53d?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1605901309584-818e25960a8f?w=800&auto=format&fit=crop&q=80'
+      '/assets/hero/xbox_series_x_hero.jpg',
+      '/assets/hero/xbox_series_x_transparent.png'
     ],
     specs: {
       storage: '1TB Custom NVMe SSD',
@@ -43,9 +43,9 @@ export const PRODUCTS: Product[] = [
     stockCount: 8,
     badge: 'Special Deal',
     swapEligible: true,
-    image: 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=800&auto=format&fit=crop&q=80',
+    image: '/assets/hero/carousel/console_xboxone_isolated.png',
     gallery: [
-      'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=800&auto=format&fit=crop&q=80'
+      '/assets/hero/carousel/console_xboxone_isolated.png'
     ],
     specs: {
       storage: '512GB Custom NVMe SSD',
@@ -69,9 +69,10 @@ export const PRODUCTS: Product[] = [
     stockCount: 4,
     badge: 'Popular',
     swapEligible: true,
-    image: 'https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=800&auto=format&fit=crop&q=80',
+    image: '/assets/hero/ps5_pro_hero.jpg',
     gallery: [
-      'https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=800&auto=format&fit=crop&q=80'
+      '/assets/hero/ps5_pro_hero.jpg',
+      '/assets/hero/carousel/ps5_consoles_pedestal.png'
     ],
     specs: {
       storage: '1TB High-Speed Custom SSD',
@@ -94,9 +95,9 @@ export const PRODUCTS: Product[] = [
     stockCount: 3,
     badge: 'Great Value',
     swapEligible: true,
-    image: 'https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=800&auto=format&fit=crop&q=80',
+    image: '/assets/hero/carousel/console_xboxone_isolated.png',
     gallery: [
-      'https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=800&auto=format&fit=crop&q=80'
+      '/assets/hero/carousel/console_xboxone_isolated.png'
     ],
     specs: {
       storage: '1TB HDD (Optional SSD Upgrade available)',
@@ -121,9 +122,9 @@ export const PRODUCTS: Product[] = [
     stockCount: 2,
     badge: 'Top Pick',
     swapEligible: true,
-    image: 'https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=800&auto=format&fit=crop&q=80',
+    image: '/assets/hero/rog_laptop_hero.jpg',
     gallery: [
-      'https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=800&auto=format&fit=crop&q=80'
+      '/assets/hero/rog_laptop_hero.jpg'
     ],
     specs: {
       processor: 'AMD Ryzen 7 7735HS 8-Core',
@@ -203,13 +204,13 @@ export const PRODUCTS: Product[] = [
     stockCount: 15,
     badge: 'Must Have',
     swapEligible: true,
-    image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&auto=format&fit=crop&q=80',
-    gallery: ['https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&auto=format&fit=crop&q=80'],
+    image: '/assets/hero/gtav_cover.jpg',
+    gallery: ['/assets/hero/gtav_cover.jpg'],
     specs: {
       compatibility: 'PS5 / PS4 / Xbox One / Series X',
       edition: 'Premium Edition with Criminal Enterprise Starter Pack'
     },
-    description: 'Factory sealed genuine game disc. Eligible for our Disc Swap program when you finish the story!'
+    description: 'Factory sealed genuine game disc. Available in stock at our Kumasi showroom.'
   },
   {
     id: 'prod-disc-fc-25',
@@ -225,8 +226,8 @@ export const PRODUCTS: Product[] = [
     stockCount: 10,
     badge: 'New Release',
     swapEligible: true,
-    image: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&auto=format&fit=crop&q=80',
-    gallery: ['https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&auto=format&fit=crop&q=80'],
+    image: '/assets/hero/fc25_cover.jpg',
+    gallery: ['/assets/hero/fc25_cover.jpg'],
     specs: {
       compatibility: 'PS5 Disc Edition',
       edition: 'Standard Physical Disc'
@@ -245,15 +246,15 @@ export const PRODUCTS: Product[] = [
     reviewsCount: 28,
     inStock: true,
     stockCount: 4,
-    badge: 'Hot Swap',
+    badge: 'Popular',
     swapEligible: true,
-    image: 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=800&auto=format&fit=crop&q=80',
-    gallery: ['https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=800&auto=format&fit=crop&q=80'],
+    image: '/assets/hero/spiderman_card_art.jpg',
+    gallery: ['/assets/hero/spiderman_card_art.jpg'],
     specs: {
       compatibility: 'PS5 Only',
       edition: 'Complete in original box, scratch-free disc'
     },
-    description: 'Tested and buffed 100% scratch-free disc. Swap with another PS5 title anytime at our shop.'
+    description: 'Tested and buffed 100% scratch-free disc. Inspected and verified in our Kumasi workshop.'
   },
 
   // 4. PARTS & ACCESSORIES
@@ -271,8 +272,11 @@ export const PRODUCTS: Product[] = [
     stockCount: 7,
     badge: 'Featured',
     swapEligible: true,
-    image: 'https://images.unsplash.com/photo-1526509867162-5b0c0d1b4b33?w=800&auto=format&fit=crop&q=80',
-    gallery: ['https://images.unsplash.com/photo-1526509867162-5b0c0d1b4b33?w=800&auto=format&fit=crop&q=80'],
+    image: '/assets/hero/dualsense_hero_perfect.jpg',
+    gallery: [
+      '/assets/hero/dualsense_hero_perfect.jpg',
+      '/assets/hero/carousel/collector_genshin_cyan.jpg'
+    ],
     specs: {
       compatibility: 'PS5, PC, Mobile via Bluetooth',
       edition: 'Haptic Feedback & Adaptive Triggers'
@@ -293,8 +297,8 @@ export const PRODUCTS: Product[] = [
     stockCount: 12,
     badge: 'Popular',
     swapEligible: true,
-    image: 'https://images.unsplash.com/photo-1592840496694-26d035b52b48?w=800&auto=format&fit=crop&q=80',
-    gallery: ['https://images.unsplash.com/photo-1592840496694-26d035b52b48?w=800&auto=format&fit=crop&q=80'],
+    image: '/assets/hero/carousel/console_xboxone_isolated.png',
+    gallery: ['/assets/hero/carousel/console_xboxone_isolated.png'],
     specs: {
       compatibility: 'Xbox Series X|S, Xbox One, Windows PC, Android, iOS'
     },

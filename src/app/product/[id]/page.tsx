@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   return {
     title: `${product.name} | Nas Tech Ghana (Kumasi)`,
-    description: `${product.description} Available now at Nas Tech Kumasi showroom in Adum. GH₵ ${product.priceGHS}.`,
+    description: `${product.description} Available now at Nas Tech Kumasi showroom in Sawaba near St. Patrick Hotel. GH₵ ${product.priceGHS}.`,
     openGraph: {
       title: `${product.name} | Nas Tech Ghana`,
       description: product.description,
