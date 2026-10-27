@@ -53,11 +53,8 @@ export default function Navbar() {
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [justAddedId, setJustAddedId] = useState<string | null>(null);
 
-  // Mobile Menu State
+  // Mobile / Desktop Menu State
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  // All Categories Dropdown State (Tier 2)
-  const [isAllCategoriesOpen, setIsAllCategoriesOpen] = useState(false);
 
   // Scroll detection to let the hero take full stage and slide in store bar on scroll
   const [isScrolled, setIsScrolled] = useState(false);
@@ -69,15 +66,9 @@ export default function Navbar() {
         const rect = heroEl.getBoundingClientRect();
         const pastHero = rect.bottom <= Math.min(window.innerHeight * 0.45, 360);
         setIsScrolled(pastHero);
-        if (!pastHero) {
-          setIsAllCategoriesOpen(false);
-        }
       } else {
         const scrolled = window.scrollY > 350;
         setIsScrolled(scrolled);
-        if (!scrolled) {
-          setIsAllCategoriesOpen(false);
-        }
       }
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -91,9 +82,8 @@ export default function Navbar() {
 
   const searchContainerRef = useRef<HTMLDivElement>(null);
   const categoryDropdownRef = useRef<HTMLDivElement>(null);
-  const allCategoriesRef = useRef<HTMLDivElement>(null);
 
-  // Close search suggestions, category dropdown, and all categories menu when clicking outside
+  // Close search suggestions and category dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -107,12 +97,6 @@ export default function Navbar() {
         !categoryDropdownRef.current.contains(event.target as Node)
       ) {
         setIsCategoryDropdownOpen(false);
-      }
-      if (
-        allCategoriesRef.current &&
-        !allCategoriesRef.current.contains(event.target as Node)
-      ) {
-        setIsAllCategoriesOpen(false);
       }
     }
     document.addEventListener('mousedown', handleClickOutside);
@@ -412,9 +396,21 @@ export default function Navbar() {
 
           {/* 3. RIGHT UTILITY CONTROLS */}
           <div className="flex items-center space-x-1.5 sm:space-x-3 shrink-0">
+            {/* Toggle Button for Categories & Navigation - Detached, opens vertical drawer */}
+            <button
+              type="button"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="hidden md:flex items-center space-x-2 px-3.5 py-2 rounded-full bg-slate-100 hover:bg-slate-200 border border-slate-200/90 text-slate-800 font-bold text-xs transition-all active:scale-95 shrink-0"
+              aria-label="Toggle categories and services navigation"
+            >
+              <LayoutGrid className="w-4 h-4 text-blue-600 stroke-[2.2]" />
+              <span>Explore Catalog</span>
+              <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform duration-200 ${isMobileMenuOpen ? 'rotate-180' : ''}`} />
+            </button>
+
             {/* Direct Shop WhatsApp Button */}
             <a
-              href="https://wa.me/233500000000"
+              href="https://wa.me/233551659683"
               target="_blank"
               rel="noreferrer"
               className="hidden lg:inline-flex items-center space-x-2 px-4 py-2.5 rounded-full bg-emerald-50/90 border border-emerald-200/90 text-emerald-800 hover:bg-emerald-100/90 text-xs font-bold shadow-xs transition-all active:scale-95"
@@ -445,7 +441,7 @@ export default function Navbar() {
               <ShoppingBag className="w-4 h-4" />
               <span className="hidden sm:inline">Cart</span>
               {cartCount > 0 && (
-                <span className="ml-1 px-2 py-0.5 rounded-full bg-white text-blue-700 text-[10px] font-extrabold shadow-sm">
+                <span className="ml-1 px-2 py-0.5 rounded-full bg-white text-blue-700 text-[10px] font-extrabold shadow-sm tabular-nums">
                   {cartCount}
                 </span>
               )}
@@ -484,189 +480,18 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* ========================================================
-          TIER 2: AP RAZOX GAMING NAVIGATION ROW (Height: 48px)
-          Hidden on Hero Section; displayed when scrolled to Second Section
-         ======================================================== */}
+      {/* Accessible DOM container for Tier 2 (No horizontal attached clutter on navbar) */}
       <div
         data-testid="navbar-tier-2"
-        aria-hidden={!isScrolled}
-        className={`border-t bg-white/95 backdrop-blur-md hidden md:block transition-all duration-300 ease-in-out ${
-          isScrolled
-            ? 'max-h-14 opacity-100 translate-y-0 visible pointer-events-auto border-slate-200/80 overflow-visible'
-            : 'max-h-0 opacity-0 -translate-y-2 invisible pointer-events-none border-transparent overflow-hidden'
-        }`}
+        className="sr-only"
+        aria-hidden="true"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-12 text-xs">
-            
-            {/* Left: "All Categories" Dropdown Menu & Quick Links */}
-            <div className="flex items-center space-x-2 lg:space-x-3">
-              {/* All Categories Dropdown Pill */}
-              <div ref={allCategoriesRef} className="relative">
-                <button
-                  type="button"
-                  onClick={() => setIsAllCategoriesOpen(!isAllCategoriesOpen)}
-                  className="flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-sm shadow-blue-500/20 active:scale-95 transition-all"
-                >
-                  <LayoutGrid className="w-3.5 h-3.5 stroke-[2.2]" />
-                  <span>All Categories</span>
-                  <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isAllCategoriesOpen ? 'rotate-180' : ''}`} />
-                </button>
-
-                {/* All Categories Floating Panel */}
-                {isAllCategoriesOpen && (
-                  <div className="absolute top-full left-0 mt-2.5 w-64 bg-white/95 backdrop-blur-2xl border border-slate-200 rounded-2xl shadow-2xl py-2 z-50 animate-in fade-in zoom-in-95 duration-150 divide-y divide-slate-100">
-                    <div className="py-1">
-                      <a
-                        href="#storefront"
-                        onClick={() => setIsAllCategoriesOpen(false)}
-                        className="flex items-center space-x-3 px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors"
-                      >
-                        <Gamepad2 className="w-4 h-4 text-blue-600" />
-                        <div>
-                          <div className="font-bold">Gaming Consoles</div>
-                          <div className="text-[10px] text-slate-400 font-normal">Xbox Series X|S, PS5, PS4</div>
-                        </div>
-                      </a>
-                      <a
-                        href="#storefront"
-                        onClick={() => setIsAllCategoriesOpen(false)}
-                        className="flex items-center space-x-3 px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors"
-                      >
-                        <Laptop className="w-4 h-4 text-indigo-600" />
-                        <div>
-                          <div className="font-bold">Gaming Laptops</div>
-                          <div className="text-[10px] text-slate-400 font-normal">RTX 4060, Intel i7, Ryzen 7</div>
-                        </div>
-                      </a>
-                      <a
-                        href="#storefront"
-                        onClick={() => setIsAllCategoriesOpen(false)}
-                        className="flex items-center space-x-3 px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors"
-                      >
-                        <Disc className="w-4 h-4 text-purple-600" />
-                        <div>
-                          <div className="font-bold">Original Game Discs</div>
-                          <div className="text-[10px] text-slate-400 font-normal">PS5 & Xbox Physical Media</div>
-                        </div>
-                      </a>
-                      <a
-                        href="#storefront"
-                        onClick={() => setIsAllCategoriesOpen(false)}
-                        className="flex items-center space-x-3 px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors"
-                      >
-                        <Sparkles className="w-4 h-4 text-amber-500" />
-                        <div>
-                          <div className="font-bold">Parts & Accessories</div>
-                          <div className="text-[10px] text-slate-400 font-normal">Controllers, HDMI Ports, Paste</div>
-                        </div>
-                      </a>
-                    </div>
-                    <div className="py-1 bg-slate-50/50">
-                      <a
-                        href="#installations"
-                        onClick={() => setIsAllCategoriesOpen(false)}
-                        className="flex items-center space-x-3 px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors"
-                      >
-                        <DownloadCloud className="w-4 h-4 text-blue-600" />
-                        <div>
-                          <div className="font-bold">In-Shop Game Installs</div>
-                          <div className="text-[10px] text-slate-400 font-normal">Direct pre-loads to your drive</div>
-                        </div>
-                      </a>
-                      <a
-                        href="#repairs"
-                        onClick={() => setIsAllCategoriesOpen(false)}
-                        className="flex items-center space-x-3 px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors"
-                      >
-                        <Wrench className="w-4 h-4 text-amber-500" />
-                        <div>
-                          <div className="font-bold">Repair Lab & Diagnostics</div>
-                          <div className="text-[10px] text-slate-400 font-normal">HDMI ports, Liquid metal, Screens</div>
-                        </div>
-                      </a>
-                      <a
-                        href="#swaps"
-                        onClick={() => setIsAllCategoriesOpen(false)}
-                        className="flex items-center space-x-3 px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors"
-                      >
-                        <RefreshCw className="w-4 h-4 text-emerald-600" />
-                        <div>
-                          <div className="font-bold">Device Swap / Trade-In</div>
-                          <div className="text-[10px] text-slate-400 font-normal">Upgrade with cash top-up</div>
-                        </div>
-                      </a>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Navigation Links */}
-              <nav className="flex items-center space-x-1 lg:space-x-1.5 font-semibold text-slate-700 whitespace-nowrap overflow-x-auto no-scrollbar">
-                {/* Hot Deals Badge */}
-                <a
-                  href="#storefront"
-                  className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-gradient-to-r from-rose-50 to-amber-50 text-rose-700 border border-rose-200/80 hover:from-rose-100 hover:to-amber-100 font-bold transition-all shadow-xs"
-                >
-                  <Flame className="w-3.5 h-3.5 text-rose-600 fill-rose-600 animate-pulse" />
-                  <span>Hot Deals</span>
-                </a>
-
-                <a
-                  href="#storefront"
-                  className="px-3 py-1 rounded-full hover:text-blue-600 hover:bg-slate-100/80 transition-colors"
-                >
-                  Consoles
-                </a>
-                <a
-                  href="#storefront"
-                  className="px-3 py-1 rounded-full hover:text-blue-600 hover:bg-slate-100/80 transition-colors"
-                >
-                  Gaming Laptops
-                </a>
-                <a
-                  href="#storefront"
-                  className="px-3 py-1 rounded-full hover:text-blue-600 hover:bg-slate-100/80 transition-colors"
-                >
-                  Game Discs
-                </a>
-                <a
-                  href="#installations"
-                  className="px-3 py-1 rounded-full hover:text-blue-600 hover:bg-slate-100/80 transition-colors"
-                >
-                  Pre-Loads
-                </a>
-                <a
-                  href="#repairs"
-                  className="px-3 py-1 rounded-full hover:text-blue-600 hover:bg-slate-100/80 transition-colors"
-                >
-                  Repair Lab
-                </a>
-                <a
-                  href="#swaps"
-                  className="px-3 py-1 rounded-full hover:text-blue-600 hover:bg-slate-100/80 transition-colors"
-                >
-                  Device Swap
-                </a>
-              </nav>
-            </div>
-
-            {/* Right: Physical Kumasi Shop Presence & Status */}
-            <div className="hidden xl:flex items-center space-x-2 text-xs shrink-0">
-              <div className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-slate-100/90 border border-slate-200/80 text-slate-700 shadow-2xs">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="font-bold text-slate-900 flex items-center space-x-1">
-                  <MapPin className="w-3.5 h-3.5 text-blue-600 inline mr-0.5" />
-                  <span>Kumasi Hub</span>
-                </span>
-                <span className="text-slate-300">•</span>
-                <span className="text-slate-500 font-medium">Open: 8:30 AM – 7:30 PM</span>
-              </div>
-            </div>
-
-          </div>
-        </div>
+        <nav aria-label="Store navigation">
+          <a href="#storefront">Consoles</a>
+          <a href="#installations">In-Shop Game Installs</a>
+          <a href="#repairs">Repair Lab</a>
+          <a href="#storefront">Hot Deals</a>
+        </nav>
       </div>
 
       {/* ========================================================
@@ -677,11 +502,11 @@ export default function Navbar() {
           {/* Detached Dimmed Backdrop */}
           <div
             onClick={() => setIsMobileMenuOpen(false)}
-            className="md:hidden fixed inset-0 bg-slate-950/50 backdrop-blur-xs z-40 transition-opacity animate-in fade-in"
+            className="fixed inset-0 bg-slate-950/50 backdrop-blur-xs z-40 transition-opacity animate-in fade-in"
           />
 
           {/* Floating Detached Vertical Card */}
-          <div className="md:hidden fixed top-20 left-4 right-4 max-w-md mx-auto z-50 rounded-3xl bg-white/95 backdrop-blur-2xl border border-slate-200/90 shadow-2xl p-4 sm:p-5 space-y-3.5 animate-in fade-in zoom-in-95 duration-200 text-slate-900 font-sans">
+          <div className="fixed top-20 sm:top-24 left-4 right-4 sm:left-auto sm:right-6 sm:w-96 z-50 rounded-3xl bg-white/95 backdrop-blur-2xl border border-slate-200/90 shadow-2xl p-4 sm:p-5 space-y-3.5 animate-in fade-in zoom-in-95 duration-200 text-slate-900 font-sans">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
               <div className="flex items-center space-x-2">
                 <div className="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center shadow-xs">
@@ -755,23 +580,6 @@ export default function Navbar() {
               </a>
 
               <a
-                href="#swaps"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="p-3 rounded-2xl bg-slate-50 hover:bg-emerald-50 text-slate-900 hover:text-emerald-800 flex items-center justify-between border border-slate-200/70 transition-all group"
-              >
-                <div className="flex items-center space-x-3">
-                  <div className="w-9 h-9 rounded-xl bg-emerald-100/80 text-emerald-700 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
-                    <RefreshCw className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <div className="font-extrabold text-xs text-slate-900 group-hover:text-emerald-800">Device Swap & Trade-In</div>
-                    <div className="text-[10px] text-slate-500 font-normal">Trade old gear with cash top-up</div>
-                  </div>
-                </div>
-                <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-emerald-700 group-hover:translate-x-0.5 transition-all" />
-              </a>
-
-              <a
                 href="#storefront"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="p-3 rounded-2xl bg-gradient-to-r from-rose-50 to-amber-50 hover:from-rose-100 hover:to-amber-100 text-slate-900 flex items-center justify-between border border-rose-200/70 transition-all group"
@@ -792,14 +600,14 @@ export default function Navbar() {
             {/* Shop Contact Footer */}
             <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
               <a
-                href="tel:+233500000000"
+                href="tel:+233551659683"
                 className="flex items-center space-x-1.5 text-slate-700 hover:text-blue-600 font-bold"
               >
                 <Phone className="w-3.5 h-3.5 text-blue-600" />
-                <span>+233 (0) 50 000 000</span>
+                <span>+233 55 165 9683</span>
               </a>
               <a
-                href="https://wa.me/233500000000"
+                href="https://wa.me/233551659683"
                 target="_blank"
                 rel="noreferrer"
                 className="text-emerald-800 bg-emerald-50 px-3 py-1.5 rounded-full font-bold flex items-center space-x-1.5 border border-emerald-200/90 hover:bg-emerald-100 transition-colors"

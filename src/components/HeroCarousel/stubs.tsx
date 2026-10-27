@@ -1635,8 +1635,8 @@ export function Slide4GamesArchive({
         }}
       />
 
-      {/* 1. EYEBROW & DISPLAY HEADLINE (Matching Slide 1, 2 & 3 Structure) */}
-      <div className="w-full text-center mt-1 sm:mt-2 z-10 font-sans">
+      {/* 1. EYEBROW & DISPLAY HEADLINE (Visible on Mobile, Hidden on PC view per user request) */}
+      <div className="w-full text-center mt-1 sm:mt-2 z-10 font-sans md:hidden">
         <p
           className="text-[8px] sm:text-xs font-bold tracking-[0.22em] sm:tracking-[0.42em] uppercase font-sans whitespace-pre flex items-center justify-center gap-1 transition-colors duration-300 text-blue-600"
           aria-label="THE NEXT GENERATION OF PLAY"
@@ -1693,7 +1693,7 @@ export function Slide4GamesArchive({
         className="relative w-full max-w-5xl lg:max-w-6xl mx-auto flex-1 flex flex-col items-center justify-center z-20 my-auto px-1 sm:px-3"
       >
         {/* Main Highlight Card - Responsive Frame (Taller on mobile to eliminate blank space) */}
-        <div className="relative w-full max-w-4xl sm:max-w-5xl h-[390px] sm:h-[450px] md:h-auto aspect-auto md:aspect-[16/9] max-h-[420px] sm:max-h-[480px] md:max-h-[500px] lg:max-h-[530px] rounded-3xl overflow-hidden shadow-2xl shadow-blue-950/25 border-2 border-white/80 bg-slate-950 flex items-center justify-center group transition-all duration-500">
+        <div className="relative w-full max-w-4xl sm:max-w-5xl h-[440px] sm:h-[490px] md:h-auto aspect-auto md:aspect-[16/9] max-h-[480px] sm:max-h-[520px] md:max-h-[500px] lg:max-h-[530px] rounded-3xl overflow-hidden shadow-2xl shadow-blue-950/25 border-2 border-white/80 bg-slate-950 flex items-center justify-center group transition-all duration-500">
           <AnimatePresence mode="popLayout">
             <motion.div
               key={currentGame.id}

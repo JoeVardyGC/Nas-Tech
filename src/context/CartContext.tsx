@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { Product, CartItem } from '@/types';
+import { buildWhatsAppMessage, whatsappUrl, Fulfillment, WhatsAppOrder } from '@/lib/whatsapp';
 
 interface CartContextType {
   cart: CartItem[];
@@ -12,7 +13,8 @@ interface CartContextType {
   cartCount: number;
   totalGHS: number;
   formatGHS: (amount: number) => string;
-  generateWhatsAppLink: (customerName?: string, deliveryAddress?: string) => string;
+  generateWhatsAppLink: (customerName?: string, deliveryAddress?: string, fulfillment?: Fulfillment) => string;
+  buildCartOrder: () => WhatsAppOrder;
   isCartOpen: boolean;
   setIsCartOpen: (open: boolean) => void;
 }
@@ -87,23 +89,34 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }).format(amount).replace('GHS', 'GH₵');
   };
 
-  const generateWhatsAppLink = (customerName = '', deliveryAddress = '') => {
-    const shopPhone = '233500000000'; // Replace with Nas Tech phone
-    let message = `*NEW ORDER - NAS TECH GAMING*\n`;
-    if (customerName) message += `Customer: ${customerName}\n`;
-    if (deliveryAddress) message += `Delivery Address: ${deliveryAddress}\n`;
-    message += `\n*Items Ordered:*\n`;
+  const buildCartOrder = (): WhatsAppOrder => ({
+    intent: 'order the following from Nas Tech',
+    lines: cart.map((item) => {
+      const isInstall = item.product.kind === 'game_install';
+      const details: string[] = [];
+      if (isInstall && item.product.installMeta) {
+        details.push(`Game installation • ${item.product.installMeta.platformCategory} • ${item.product.installMeta.sizeGB} GB`);
+      } else {
+        details.push(`Condition: ${item.product.condition}`);
+      }
+      if (item.selectedColor) details.push(`Colour/Edition: ${item.selectedColor}`);
+      return {
+        label: item.product.name,
+        quantity: item.quantity,
+        amountGHS: item.product.priceGHS * item.quantity,
+        details,
+      };
+    }),
+    totalGHS,
+    note: cart.some((i) => i.product.kind === 'game_install')
+      ? '💾 For the game installs I will bring my console / laptop / drive to the shop.'
+      : undefined,
+  });
 
-    cart.forEach((item, index) => {
-      message += `${index + 1}. ${item.product.name} (x${item.quantity}) - ${formatGHS(item.product.priceGHS * item.quantity)}\n`;
-      if (item.selectedColor) message += `   Color/Edition: ${item.selectedColor}\n`;
-      message += `   Condition: ${item.product.condition}\n`;
-    });
-
-    message += `\n*Total Amount:* ${formatGHS(totalGHS)}\n`;
-    message += `\nPlease confirm item availability and pickup/dispatch details. Thank you!`;
-
-    return `https://wa.me/${shopPhone}?text=${encodeURIComponent(message)}`;
+  const generateWhatsAppLink = (customerName = '', deliveryAddress = '', fulfillment: Fulfillment = 'pickup') => {
+    return whatsappUrl(
+      buildWhatsAppMessage(buildCartOrder(), { name: customerName, location: deliveryAddress, fulfillment })
+    );
   };
 
   return (
@@ -118,6 +131,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         totalGHS,
         formatGHS,
         generateWhatsAppLink,
+        buildCartOrder,
         isCartOpen,
         setIsCartOpen,
       }}

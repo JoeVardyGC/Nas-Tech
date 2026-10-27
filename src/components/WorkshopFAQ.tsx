@@ -64,7 +64,7 @@ export default function WorkshopFAQ() {
                 <MapPin className="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" />
                 <div>
                   <div className="font-bold text-white">Showroom & Workshop Address:</div>
-                  <div className="text-slate-400">Kumasi Gaming Commercial Center, Ashanti Region, Ghana</div>
+                  <div className="text-slate-400">Kumasi Gaming Commercial Center, Sawaba near St. Patrick Hotel, Ashanti Region, Ghana</div>
                 </div>
               </div>
 
@@ -80,7 +80,7 @@ export default function WorkshopFAQ() {
                 <Phone className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
                 <div>
                   <div className="font-bold text-white">Direct Line / WhatsApp Dispatch:</div>
-                  <div className="text-emerald-400 font-sans font-bold">+233 50 000 0000</div>
+                  <a href="tel:+233551659683" className="text-emerald-400 font-sans font-bold hover:underline">+233 55 165 9683</a>
                 </div>
               </div>
             </div>

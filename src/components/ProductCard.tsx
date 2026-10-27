@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Product } from '@/types';
 import { useCart } from '@/context/CartContext';
+import { useWhatsApp } from '@/context/WhatsAppContext';
 import { ShoppingBag, RefreshCw, Star } from 'lucide-react';
 import WhatsAppIcon from '@/components/icons/WhatsAppIcon';
 
@@ -15,14 +16,30 @@ interface ProductCardProps {
 
 export default function ProductCard({ product, onOpenDetails }: ProductCardProps) {
   const { addToCart, formatGHS } = useCart();
+  const { requestWhatsApp } = useWhatsApp();
   const router = useRouter();
 
   const handleWhatsAppInquiry = (e: React.MouseEvent) => {
     e.stopPropagation();
     e.preventDefault();
-    const phone = '233500000000'; // Nas Tech WhatsApp
-    const msg = `Hello Nas Tech! I am interested in purchasing:\n*${product.name}*\nPrice: ${formatGHS(product.priceGHS)}\nCondition: ${product.condition}\nIs it in stock at your shop right now?`;
-    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
+    requestWhatsApp({
+      intent: `purchase the following device / item`,
+      lines: [
+        {
+          label: product.name,
+          quantity: 1,
+          amountGHS: product.priceGHS,
+          details: [
+            `Condition: ${product.condition}`,
+            `Category: ${product.category}`,
+            product.specs.storage ? `Storage: ${product.specs.storage}` : '',
+            product.specs.ram ? `RAM: ${product.specs.ram}` : '',
+          ].filter(Boolean),
+        },
+      ],
+      totalGHS: product.priceGHS,
+      note: 'Please confirm availability at your Sawaba, Kumasi shop.',
+    });
   };
 
   const handleAddToCart = (e: React.MouseEvent) => {

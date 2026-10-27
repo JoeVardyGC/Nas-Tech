@@ -50,7 +50,6 @@ export default function Footer() {
               <li><a href="#repairs" className="hover:text-blue-600 transition-colors">Xbox & PS5 HDMI Port Micro-Soldering</a></li>
               <li><a href="#repairs" className="hover:text-blue-600 transition-colors">PS5 Liquid Metal Clean & Overheating Overhaul</a></li>
               <li><a href="#repairs" className="hover:text-blue-600 transition-colors">Laptop Screen, Battery & SSD Upgrades</a></li>
-              <li><a href="#swaps" className="hover:text-blue-600 transition-colors">Device & Finished Game Disc Trade-Ins (Swaps)</a></li>
             </ul>
           </div>
 
@@ -60,7 +59,7 @@ export default function Footer() {
             <div className="space-y-2.5 text-xs text-slate-600">
               <div className="flex items-start space-x-2.5">
                 <MapPin className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" />
-                <span>Kumasi Gaming Commercial Center, Ashanti Region, Ghana</span>
+                <span>Kumasi Gaming Commercial Center, Sawaba near St. Patrick Hotel, Ashanti Region, Ghana</span>
               </div>
               <div className="flex items-center space-x-2.5">
                 <Clock className="w-4 h-4 text-blue-600 flex-shrink-0" />
@@ -68,17 +67,17 @@ export default function Footer() {
               </div>
               <div className="flex items-center space-x-2.5">
                 <Phone className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                <span>+233 (0) 50 000 0000</span>
+                <a href="tel:+233551659683" className="hover:text-blue-600 font-semibold">+233 55 165 9683</a>
               </div>
               <div className="pt-2">
                 <a
-                  href="https://wa.me/233500000000"
+                  href="https://wa.me/233551659683"
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex items-center space-x-2 px-3.5 py-2 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 hover:bg-emerald-100 font-bold transition-all shadow-xs"
                 >
                   <WhatsAppIcon colored className="w-4 h-4 shrink-0" />
-                  <span>Chat With Us On WhatsApp</span>
+                  <span>Chat With Us On WhatsApp (+233 55 165 9683)</span>
                 </a>
               </div>
             </div>

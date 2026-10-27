@@ -1,308 +1,433 @@
 'use client';
 
-import React, { useState } from 'react';
-import { INSTALLABLE_GAMES, InstallableGame } from '@/data/servicesData';
+import React, { useState, useMemo } from 'react';
+import {
+  INSTALLABLE_GAMES,
+  InstallableGame,
+  GamePlatformCategory,
+  gameToProduct,
+} from '@/data/servicesData';
 import { useCart } from '@/context/CartContext';
-import { HardDrive, Check, Plus, Trash2, MapPin, AlertCircle, Info } from 'lucide-react';
+import { useWhatsApp } from '@/context/WhatsAppContext';
+import {
+  HardDrive,
+  Search,
+  ShoppingCart,
+  Check,
+  ChevronDown,
+  ChevronUp,
+  Cpu,
+  Monitor,
+  Flame,
+  Layers,
+  Sparkles,
+  Info,
+  ExternalLink,
+} from 'lucide-react';
 import WhatsAppIcon from '@/components/icons/WhatsAppIcon';
 
-interface DriveTier {
-  id: string;
-  name: string;
-  usableGB: number;
-}
+type FilterCategory = 'ALL' | GamePlatformCategory;
 
-const DRIVE_TIERS: DriveTier[] = [
-  { id: 'ps5-internal', name: 'PS5 Console (825 GB Internal)', usableGB: 667 },
-  { id: 'ps4-1tb', name: 'PS4 / Xbox One (1TB Drive)', usableGB: 860 },
-  { id: 'xbox-series-x', name: 'Xbox Series X (1TB NVMe)', usableGB: 802 },
-  { id: 'xbox-series-s', name: 'Xbox Series S (512GB NVMe)', usableGB: 364 },
-  { id: 'laptop-1tb', name: 'Gaming Laptop / External SSD (1TB)', usableGB: 930 },
-  { id: 'laptop-2tb', name: 'Gaming Laptop / External SSD (2TB)', usableGB: 1860 },
+const CATEGORIES: FilterCategory[] = [
+  'ALL',
+  'PS Games',
+  'Xbox Games',
+  'PC Games',
+  'Mobile Phone Games',
+  'Console Classics',
 ];
 
 export default function GameInstallerHub() {
-  const { formatGHS } = useCart();
-  const [selectedDrive, setSelectedDrive] = useState<DriveTier>(DRIVE_TIERS[0]);
-  const [selectedGames, setSelectedGames] = useState<InstallableGame[]>([
-    INSTALLABLE_GAMES[0], // GTA V
-    INSTALLABLE_GAMES[1], // FC 25
-  ]);
-  const [selectedCategory, setSelectedCategory] = useState<string>('All');
+  const { addToCart, formatGHS } = useCart();
+  const { requestWhatsApp } = useWhatsApp();
 
-  // Storage math
-  const usedGB = selectedGames.reduce((acc, g) => acc + g.sizeGB, 0);
-  const remainingGB = selectedDrive.usableGB - usedGB;
-  const storagePercentage = Math.min(100, Math.round((usedGB / selectedDrive.usableGB) * 100));
+  const [activeCategory, setActiveCategory] = useState<FilterCategory>('ALL');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [expandedSpecsId, setExpandedSpecsId] = useState<string | null>(null);
+  const [justAddedId, setJustAddedId] = useState<string | null>(null);
 
-  // Pricing math & discounts
-  const rawTotalGHS = selectedGames.reduce((acc, g) => acc + g.installPriceGHS, 0);
-  let discountPercent = 0;
-  if (selectedGames.length >= 6) discountPercent = 25;
-  else if (selectedGames.length >= 4) discountPercent = 15;
-  else if (selectedGames.length >= 3) discountPercent = 10;
+  // Filtered games calculation
+  const filteredGames = useMemo(() => {
+    return INSTALLABLE_GAMES.filter((game) => {
+      const matchesCategory =
+        activeCategory === 'ALL' || game.platformCategory === activeCategory;
+      const q = searchQuery.trim().toLowerCase();
+      const matchesSearch =
+        q === '' ||
+        game.title.toLowerCase().includes(q) ||
+        game.category.toLowerCase().includes(q) ||
+        game.platformCategory.toLowerCase().includes(q) ||
+        game.platforms.some((p) => p.toLowerCase().includes(q)) ||
+        game.details.toLowerCase().includes(q);
 
-  const discountedTotalGHS = Math.round(rawTotalGHS * (1 - discountPercent / 100));
-
-  const toggleGame = (game: InstallableGame) => {
-    if (selectedGames.some((g) => g.id === game.id)) {
-      setSelectedGames(selectedGames.filter((g) => g.id !== game.id));
-    } else {
-      if (usedGB + game.sizeGB > selectedDrive.usableGB) {
-        alert(`Cannot add ${game.title}! It requires ${game.sizeGB}GB, but your selected drive only has ${remainingGB}GB remaining.`);
-        return;
-      }
-      setSelectedGames([...selectedGames, game]);
-    }
-  };
-
-  const handleWhatsAppBooking = () => {
-    const phone = '233500000000'; // Nas Tech WhatsApp
-    let msg = `*GAME INSTALLATION INQUIRY - NAS TECH KUMASI*\n`;
-    msg += `Device: ${selectedDrive.name}\n`;
-    msg += `Storage Used: ${usedGB} GB / ${selectedDrive.usableGB} GB\n\n`;
-    msg += `*Selected Games to Install (${selectedGames.length}):*\n`;
-    selectedGames.forEach((g, idx) => {
-      msg += `${idx + 1}. ${g.title} (${g.sizeGB} GB)\n`;
+      return matchesCategory && matchesSearch;
     });
-    msg += `\n*Total In-Shop Fee:* ${formatGHS(discountedTotalGHS)}\n`;
-    msg += `\nI will bring my console/drive to your shop in Kumasi. Please confirm your availability!`;
+  }, [activeCategory, searchQuery]);
 
-    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
+  // Category counts badge
+  const categoryCounts = useMemo(() => {
+    const counts: Record<string, number> = { ALL: INSTALLABLE_GAMES.length };
+    CATEGORIES.forEach((cat) => {
+      if (cat !== 'ALL') {
+        counts[cat] = INSTALLABLE_GAMES.filter((g) => g.platformCategory === cat).length;
+      }
+    });
+    return counts;
+  }, []);
+
+  const handleAddToCart = (e: React.MouseEvent, game: InstallableGame) => {
+    e.stopPropagation();
+    const product = gameToProduct(game);
+    addToCart(product, 1);
+    setJustAddedId(game.id);
+    setTimeout(() => setJustAddedId(null), 2000);
   };
 
-  const categories = ['All', 'Action', 'Sports', 'RPG / Adventure', 'Racing', 'Shooter'];
-  const filteredLibrary = selectedCategory === 'All'
-    ? INSTALLABLE_GAMES
-    : INSTALLABLE_GAMES.filter((g) => g.category === selectedCategory);
+  const handleDirectWhatsApp = (e: React.MouseEvent, game: InstallableGame) => {
+    e.stopPropagation();
+    requestWhatsApp({
+      intent: `install the game "${game.title}" directly to my device / hard drive`,
+      lines: [
+        {
+          label: `${game.title} (Digital Game Install)`,
+          quantity: 1,
+          amountGHS: game.installPriceGHS,
+          details: [
+            `Platform: ${game.platformCategory} (${game.platforms.join(', ')})`,
+            `Storage Required: ${game.systemRequirements.storage}`,
+            `RAM Required: ${game.systemRequirements.ram}`,
+            `GPU/Processor: ${game.systemRequirements.gpuOrProcessor}`,
+            `OS: ${game.systemRequirements.os}`,
+          ],
+        },
+      ],
+      totalGHS: game.installPriceGHS,
+      note: '💾 I will bring my console, laptop, or external hard drive to your shop in Sawaba, Kumasi.',
+    });
+  };
+
+  const toggleSpecs = (id: string) => {
+    setExpandedSpecsId((prev) => (prev === id ? null : id));
+  };
 
   return (
-    <section id="installations" className="rounded-3xl bg-white border border-slate-200/90 p-6 sm:p-8 lg:p-10 shadow-lg space-y-8">
-      
-      {/* Header & In-Person Logic Explanation */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-6">
-        <div className="space-y-1">
-          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-sans font-bold tracking-wide">
+    <section
+      id="installations"
+      className="rounded-3xl bg-white border border-slate-200/90 p-5 sm:p-8 lg:p-10 shadow-xl space-y-8 font-sans"
+    >
+      {/* 1. SECTION HEADER (Light eyebrow + Bold display title) */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-slate-200/90 pb-6">
+        <div className="space-y-2 max-w-3xl">
+          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-[11px] font-bold tracking-wider uppercase font-sans">
             <HardDrive className="w-3.5 h-3.5" />
-            <span>IN-PERSON SHOP SERVICE • KUMASI</span>
+            <span>SAWABA, KUMASI • IN-SHOP DIGITAL PRE-LOAD ARCHIVE</span>
           </div>
-          <h3 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-            AVAILABLE GAMES FOR IN-SHOP INSTALLATION
-          </h3>
-          <p className="text-slate-600 text-xs sm:text-sm max-w-2xl leading-relaxed">
-            We display all games available in our shop archive below. Pick the games you want, see the installation price, and <strong>bring your console, laptop, or external hard drive to us in person</strong>. We install everything on the spot with zero data wasted!
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-950 tracking-tight">
+            AVAILABLE GAMES & DIRECT PRE-LOADS
+          </h2>
+          <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
+            Browse our full archive of console, PC, and mobile titles below. Pick your games, verify your system requirements, and either <strong>add them to your cart</strong> or order directly on WhatsApp. Bring your console, gaming laptop, or external hard drive to our shop in <strong>Sawaba, near St. Patrick Hotel, Kumasi</strong> for fast, in-person installation!
           </p>
         </div>
 
-        {/* Selected Price Preview Chip */}
-        <div className="flex items-center space-x-3 bg-slate-50 border border-slate-200 rounded-2xl p-3 px-5 flex-shrink-0">
+        {/* Live Total Games Badge */}
+        <div className="flex items-center space-x-3 bg-gradient-to-tr from-slate-50 to-blue-50/50 border border-slate-200 rounded-2xl p-3.5 px-5 shrink-0 self-start md:self-auto">
+          <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-black text-sm shadow-md shadow-blue-600/25">
+            <Layers className="w-5 h-5" />
+          </div>
           <div>
-            <div className="text-[10px] text-slate-500 uppercase font-sans font-bold">In-Shop Install Fee:</div>
-            <div className="text-xl font-sans font-black text-blue-700">
-              {formatGHS(discountedTotalGHS)}
+            <div className="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Archive Library</div>
+            <div className="text-lg font-black text-slate-900">
+              {INSTALLABLE_GAMES.length} <span className="text-xs font-semibold text-blue-600">TITLES READY</span>
             </div>
           </div>
-          {discountPercent > 0 && (
-            <span className="px-2 py-1 rounded-lg text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
-              {discountPercent}% OFF
-            </span>
-          )}
         </div>
       </div>
 
-      {/* In-Person Shop Notice Alert */}
-      <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200 text-xs text-amber-900 flex items-start space-x-3">
-        <Info className="w-4 h-4 text-amber-700 flex-shrink-0 mt-0.5" />
-        <div className="leading-relaxed">
-          <strong>How this works:</strong> You do not need to download anything online. Just browse our collection, pick your favorite titles, check your drive space, and bring your device into our shop. Turnaround is typically <strong>2 to 4 hours</strong>.
-        </div>
-      </div>
-
-      {/* Step 1: Select Device & Drive Capacity */}
-      <div className="space-y-3">
-        <label className="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center space-x-2">
-          <span>Step 1: Select Your Device / Drive Storage:</span>
-        </label>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
-          {DRIVE_TIERS.map((tier) => {
-            const isSelected = selectedDrive.id === tier.id;
+      {/* 2. CATEGORY FILTERS & SEARCH BAR */}
+      <div className="space-y-4">
+        {/* Category Filters Row */}
+        <div className="flex flex-wrap items-center gap-2">
+          {CATEGORIES.map((cat) => {
+            const isActive = activeCategory === cat;
             return (
               <button
-                key={tier.id}
-                onClick={() => setSelectedDrive(tier)}
-                className={`p-3 rounded-xl border text-left transition-all ${
-                  isSelected
-                    ? 'border-blue-600 bg-blue-50/80 text-blue-900 shadow-xs'
-                    : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50'
+                key={cat}
+                type="button"
+                onClick={() => setActiveCategory(cat)}
+                className={`relative px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center space-x-2 shadow-2xs ${
+                  isActive
+                    ? 'bg-slate-950 text-white shadow-md shadow-slate-900/20 scale-[1.02]'
+                    : 'bg-slate-50 hover:bg-white border border-slate-200/90 text-slate-600 hover:text-slate-900 hover:border-slate-300'
                 }`}
               >
-                <div className="text-xs font-bold truncate">{tier.name.split(' (')[0]}</div>
-                <div className="text-[11px] font-sans text-blue-700 font-semibold mt-0.5">
-                  {tier.usableGB} GB Usable
-                </div>
+                <span>{cat === 'ALL' ? 'ALL GAMES' : cat}</span>
+                <span
+                  className={`px-1.5 py-0.5 rounded-full text-[10px] font-black tabular-nums ${
+                    isActive
+                      ? 'bg-white/20 text-white'
+                      : 'bg-slate-200/70 text-slate-700'
+                  }`}
+                >
+                  {categoryCounts[cat] || 0}
+                </span>
               </button>
             );
           })}
         </div>
-      </div>
 
-      {/* Step 2: Storage Meter */}
-      <div className="p-4 sm:p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
-        <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
-          <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-            <span className="font-bold text-slate-800">{selectedDrive.name}</span>
-            <span className="text-slate-300 hidden sm:inline">|</span>
-            <span className="text-slate-600">
-              Selected: <strong className="text-blue-700 font-sans">{usedGB} GB</strong>
-            </span>
-            <span className="text-slate-300">|</span>
-            <span className="text-slate-600">
-              Free: <strong className="text-emerald-700 font-sans">{remainingGB} GB</strong>
-            </span>
-          </div>
-          <span className="font-sans font-bold text-xs text-slate-700">
-            {storagePercentage}% Filled
-          </span>
-        </div>
-
-        {/* Bar */}
-        <div className="w-full h-3.5 bg-slate-200 rounded-full overflow-hidden p-0.5">
-          <div
-            className={`h-full rounded-full transition-all duration-500 ${
-              storagePercentage > 90
-                ? 'bg-rose-500'
-                : storagePercentage > 75
-                ? 'bg-amber-500'
-                : 'bg-blue-600'
-            }`}
-            style={{ width: `${storagePercentage}%` }}
-          />
-        </div>
-
-        {remainingGB < 50 && (
-          <div className="flex items-center space-x-2 text-[11px] text-amber-700 font-medium">
-            <AlertCircle className="w-3.5 h-3.5" />
-            <span>Almost full! Remove a game or upgrade to an external drive.</span>
-          </div>
-        )}
-      </div>
-
-      {/* Step 3: Browse Available Games Grid */}
-      <div className="space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <label className="text-xs font-bold text-slate-800 uppercase tracking-wider">
-            Step 2: Browse & Select Games to Install ({selectedGames.length} selected):
-          </label>
-          <div className="flex space-x-1.5 overflow-x-auto pb-1">
-            {categories.map((cat) => (
+        {/* Search & Active Results Indicator */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
+          <div className="relative w-full sm:max-w-md">
+            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search games by title, genre, or platform..."
+              className="w-full pl-9 pr-4 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20 shadow-2xs transition-all font-sans"
+            />
+            {searchQuery && (
               <button
-                key={cat}
-                onClick={() => setSelectedCategory(cat)}
-                className={`px-3 py-1 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
-                  selectedCategory === cat
-                    ? 'bg-slate-900 text-white'
-                    : 'bg-white border border-slate-200 text-slate-600 hover:text-slate-900'
-                }`}
+                onClick={() => setSearchQuery('')}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 text-xs font-bold"
               >
-                {cat}
+                ✕
               </button>
-            ))}
+            )}
+          </div>
+
+          <div className="text-xs text-slate-500 font-medium">
+            Showing <strong className="text-slate-900 font-bold">{filteredGames.length}</strong> of{' '}
+            <strong className="text-slate-900 font-bold">{INSTALLABLE_GAMES.length}</strong> games
           </div>
         </div>
+      </div>
 
-        {/* Games Library Cards */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-          {filteredLibrary.map((game) => {
-            const isSelected = selectedGames.some((g) => g.id === game.id);
+      {/* 3. GAMES GRID */}
+      {filteredGames.length === 0 ? (
+        <div className="p-12 text-center rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+          <Info className="w-8 h-8 text-slate-400 mx-auto" />
+          <h3 className="font-bold text-slate-800 text-sm">No games found matching your filter</h3>
+          <p className="text-xs text-slate-500 max-w-sm mx-auto">
+            Try adjusting your search query or selecting &quot;ALL GAMES&quot; above to view our complete collection.
+          </p>
+          <button
+            onClick={() => {
+              setActiveCategory('ALL');
+              setSearchQuery('');
+            }}
+            className="px-4 py-2 rounded-xl bg-blue-600 text-white text-xs font-bold hover:bg-blue-700 transition-colors"
+          >
+            Reset Filters
+          </button>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+          {filteredGames.map((game) => {
+            const isSpecsExpanded = expandedSpecsId === game.id;
+            const isJustAdded = justAddedId === game.id;
+
             return (
               <div
                 key={game.id}
-                onClick={() => toggleGame(game)}
-                className={`group relative rounded-2xl border p-3 flex flex-col justify-between cursor-pointer transition-all duration-200 min-w-0 w-full ${
-                  isSelected
-                    ? 'border-blue-600 bg-blue-50/70 shadow-sm'
-                    : 'border-slate-200 bg-white hover:border-slate-300 hover:shadow-xs'
-                }`}
+                className="group relative rounded-2xl bg-white border border-slate-200/90 hover:border-blue-300 hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden"
               >
-                <div className="relative w-full h-32 rounded-xl overflow-hidden bg-slate-100 mb-2.5">
+                {/* Upper: Cover Image, Badges & Size */}
+                <div className="relative w-full aspect-[16/10] bg-slate-100 overflow-hidden">
                   <img
                     src={game.coverImage}
                     alt={game.title}
-                    className="w-full h-full max-w-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
+                    loading="lazy"
+                    className="w-full h-full object-cover object-center group-hover:scale-106 transition-transform duration-500"
                   />
-                  <div className="absolute top-2 left-2">
-                    <span className="px-2 py-0.5 rounded-md text-[10px] font-sans font-bold bg-white/95 text-slate-800 shadow-2xs border border-slate-200">
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent pointer-events-none" />
+
+                  {/* Top Category Badge */}
+                  <div className="absolute top-2.5 left-2.5 flex flex-wrap gap-1.5">
+                    <span className="px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider bg-slate-950/90 text-white backdrop-blur-xs border border-white/20 shadow-xs">
+                      {game.platformCategory}
+                    </span>
+                    {game.badge && (
+                      <span className="px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider bg-amber-500 text-slate-950 shadow-xs">
+                        {game.badge}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Top Right File Size Tag */}
+                  <div className="absolute top-2.5 right-2.5">
+                    <span className="px-2 py-0.5 rounded-md text-[10px] font-black bg-blue-600 text-white shadow-xs">
                       {game.sizeGB} GB
                     </span>
                   </div>
 
-                  {isSelected && (
-                    <div className="absolute top-2 right-2 w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-xs shadow-md">
-                      <Check className="w-3.5 h-3.5 stroke-[3]" />
-                    </div>
-                  )}
-                </div>
-
-                <div className="space-y-1">
-                  <h4 className="font-bold text-xs text-slate-900 group-hover:text-blue-600 transition-colors line-clamp-1">
-                    {game.title}
-                  </h4>
-                  <div className="flex items-center justify-between text-[11px]">
-                    <span className="text-slate-500">{game.category}</span>
-                    <span className="font-sans font-bold text-slate-900">
-                      {formatGHS(game.installPriceGHS)}
+                  {/* Bottom Platforms Overlay */}
+                  <div className="absolute bottom-2 left-2.5 right-2.5 flex items-center justify-between text-[11px] text-white">
+                    <span className="font-semibold truncate drop-shadow-sm">
+                      {game.platforms.join(' • ')}
+                    </span>
+                    <span className="font-black text-amber-300 shrink-0 ml-2 drop-shadow-sm">
+                      ★ {game.rating.toFixed(1)}
                     </span>
                   </div>
                 </div>
 
-                <button
-                  type="button"
-                  className={`mt-2.5 w-full py-1.5 rounded-lg text-xs font-bold transition-all flex items-center justify-center space-x-1 ${
-                    isSelected
-                      ? 'bg-rose-50 text-rose-700 hover:bg-rose-100'
-                      : 'bg-slate-100 text-slate-700 hover:bg-blue-600 hover:text-white'
-                  }`}
-                >
-                  {isSelected ? (
-                    <>
-                      <Trash2 className="w-3 h-3" />
-                      <span>Remove</span>
-                    </>
-                  ) : (
-                    <>
-                      <Plus className="w-3 h-3" />
-                      <span>Add to Pre-Load List</span>
-                    </>
-                  )}
-                </button>
+                {/* Body: Title, Price & Synopsis */}
+                <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
+                  <div className="space-y-1.5">
+                    <div className="flex items-start justify-between gap-2">
+                      <h3 className="font-extrabold text-sm text-slate-950 group-hover:text-blue-600 transition-colors line-clamp-1 leading-snug">
+                        {game.title}
+                      </h3>
+                    </div>
+
+                    {/* Price in Ghanaian Cedis */}
+                    <div className="flex items-baseline space-x-2">
+                      <span className="text-base font-black text-blue-700 font-sans tracking-tight">
+                        {formatGHS(game.installPriceGHS)}
+                      </span>
+                      {game.originalPriceGHS && (
+                        <span className="text-[11px] text-slate-400 line-through">
+                          {formatGHS(game.originalPriceGHS)}
+                        </span>
+                      )}
+                      <span className="text-[10px] text-slate-500 font-semibold uppercase">
+                        • Direct In-Shop Install
+                      </span>
+                    </div>
+
+                    <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed">
+                      {game.details}
+                    </p>
+                  </div>
+
+                  {/* System Requirements Section before downloading/installing */}
+                  <div className="pt-2 border-t border-slate-100 space-y-1.5">
+                    <button
+                      type="button"
+                      onClick={() => toggleSpecs(game.id)}
+                      className="w-full flex items-center justify-between py-1 text-[11px] font-bold text-slate-700 hover:text-blue-600 transition-colors"
+                    >
+                      <span className="flex items-center space-x-1.5">
+                        <Cpu className="w-3.5 h-3.5 text-blue-600" />
+                        <span>System Requirements:</span>
+                      </span>
+                      <span className="flex items-center text-[10px] text-blue-600 font-bold">
+                        {isSpecsExpanded ? (
+                          <>
+                            <span>Hide Specs</span>
+                            <ChevronUp className="w-3.5 h-3.5 ml-0.5" />
+                          </>
+                        ) : (
+                          <>
+                            <span>View Specs</span>
+                            <ChevronDown className="w-3.5 h-3.5 ml-0.5" />
+                          </>
+                        )}
+                      </span>
+                    </button>
+
+                    {/* Requirements Breakdown Card */}
+                    {isSpecsExpanded ? (
+                      <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200/90 text-[10px] space-y-1.5 text-slate-700 animate-in fade-in duration-200">
+                        <div className="flex items-start justify-between">
+                          <span className="font-bold text-slate-500 uppercase">Storage:</span>
+                          <span className="font-semibold text-slate-900 text-right">{game.systemRequirements.storage}</span>
+                        </div>
+                        <div className="flex items-start justify-between">
+                          <span className="font-bold text-slate-500 uppercase">RAM:</span>
+                          <span className="font-semibold text-slate-900 text-right">{game.systemRequirements.ram}</span>
+                        </div>
+                        <div className="flex items-start justify-between">
+                          <span className="font-bold text-slate-500 uppercase">GPU / CPU:</span>
+                          <span className="font-semibold text-slate-900 text-right max-w-[65%] line-clamp-2">
+                            {game.systemRequirements.gpuOrProcessor}
+                          </span>
+                        </div>
+                        <div className="flex items-start justify-between">
+                          <span className="font-bold text-slate-500 uppercase">OS:</span>
+                          <span className="font-semibold text-slate-900 text-right">{game.systemRequirements.os}</span>
+                        </div>
+                        {game.systemRequirements.additionalNotes && (
+                          <div className="pt-1 border-t border-slate-200/60 text-[9.5px] text-slate-500 italic">
+                            * {game.systemRequirements.additionalNotes}
+                          </div>
+                        )}
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-1.5 text-[10px] text-slate-500 truncate">
+                        <span className="px-1.5 py-0.5 rounded bg-slate-100 font-semibold">{game.systemRequirements.ram} RAM</span>
+                        <span className="px-1.5 py-0.5 rounded bg-slate-100 font-semibold">{game.systemRequirements.storage}</span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* 4. ACTION BUTTONS: ADD TO CART & ORDER ON WHATSAPP */}
+                  <div className="grid grid-cols-2 gap-2 pt-2">
+                    <button
+                      type="button"
+                      onClick={(e) => handleAddToCart(e, game)}
+                      className={`w-full py-2.5 px-2 rounded-xl text-xs font-extrabold flex items-center justify-center space-x-1.5 transition-all shadow-xs ${
+                        isJustAdded
+                          ? 'bg-emerald-600 text-white shadow-emerald-600/30'
+                          : 'bg-slate-900 hover:bg-blue-600 text-white'
+                      }`}
+                    >
+                      {isJustAdded ? (
+                        <>
+                          <Check className="w-3.5 h-3.5 stroke-[3]" />
+                          <span>Added!</span>
+                        </>
+                      ) : (
+                        <>
+                          <ShoppingCart className="w-3.5 h-3.5" />
+                          <span>Add to Cart</span>
+                        </>
+                      )}
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={(e) => handleDirectWhatsApp(e, game)}
+                      className="w-full py-2.5 px-2 rounded-xl text-xs font-extrabold bg-emerald-50 hover:bg-emerald-600 text-emerald-700 hover:text-white border border-emerald-300 hover:border-emerald-600 transition-all flex items-center justify-center space-x-1.5 shadow-2xs"
+                    >
+                      <WhatsAppIcon colored={false} className="w-3.5 h-3.5 shrink-0" />
+                      <span>WhatsApp</span>
+                    </button>
+                  </div>
+                </div>
               </div>
             );
           })}
         </div>
-      </div>
+      )}
 
-      {/* Step 4: Drop-Off Action Bar */}
-      <div className="p-6 rounded-2xl bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 flex flex-col md:flex-row items-center justify-between gap-4">
+      {/* 5. SHOP WALK-IN INSTRUCTIONS FOOTER */}
+      <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-blue-50/80 via-indigo-50/80 to-slate-50 border border-blue-200/80 flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="space-y-1 text-center md:text-left">
-          <div className="text-sm font-bold text-slate-900 flex items-center space-x-2 justify-center md:justify-start">
-            <MapPin className="w-4 h-4 text-blue-600" />
-            <span>Ready to Install {selectedGames.length} Games ({usedGB} GB) in Person</span>
+          <div className="text-sm font-extrabold text-slate-900 flex items-center space-x-2 justify-center md:justify-start">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
+            <span>Ready to Install Games On-the-Spot in Kumasi</span>
           </div>
-          <p className="text-xs text-slate-600">
-            Bring your device or external drive into our Kumasi shop. We load it for you and test it before you leave!
+          <p className="text-xs text-slate-600 max-w-2xl">
+            Visit <strong>Nas Tech</strong> at <strong>Sawaba near St. Patrick Hotel, Kumasi</strong> with your PlayStation, Xbox, gaming laptop, or external hard drive. We test every installation before you walk out!
           </p>
         </div>
 
         <button
-          onClick={handleWhatsAppBooking}
-          disabled={selectedGames.length === 0}
-          className="flex items-center space-x-2.5 px-6 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider shadow-md shadow-emerald-600/20 transition-all active:scale-95 disabled:opacity-50"
+          onClick={() => {
+            requestWhatsApp({
+              intent: 'ask about game installations and custom drive packages at your Sawaba shop',
+              note: 'I want to know your current queue and how soon I can bring my device in.',
+            });
+          }}
+          className="flex items-center space-x-2 px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs uppercase tracking-wider shadow-md shadow-emerald-600/25 transition-all active:scale-95 shrink-0"
         >
           <WhatsAppIcon colored className="w-4 h-4 shrink-0" />
-          <span>Confirm on WhatsApp ({formatGHS(discountedTotalGHS)})</span>
+          <span>Chat With Our Game Tech</span>
         </button>
       </div>
-
     </section>
   );
 }

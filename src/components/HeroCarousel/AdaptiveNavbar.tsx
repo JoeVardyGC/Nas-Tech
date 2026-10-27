@@ -274,107 +274,141 @@ export default function AdaptiveNavbar({
           </button>
         </div>
 
-        {/* 5. RESPONSIVE MOBILE DRAWER WITH FRAMER MOTION ANIMATION */}
+        {/* 5. DETACHED VERTICAL NAVIGATION PANEL (Brought down vertically, NOT attached to navbar) */}
         <AnimatePresence>
           {isMobileMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, y: -8, scale: 0.98 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -8, scale: 0.98 }}
-              transition={{ duration: 0.2 }}
-              style={{ backgroundColor: 'rgba(255, 255, 255, 0.98)' }}
-              className="absolute top-full left-0 right-0 mt-3 p-4 sm:p-5 rounded-3xl backdrop-blur-2xl border border-slate-200 shadow-2xl shadow-black/15 transition-all z-50 font-sans text-slate-900"
-            >
-              {/* Mobile Search Input */}
-              <form onSubmit={handleSearchSubmit} className="mb-3">
-                <div className="flex items-center rounded-2xl px-3 py-2 border bg-slate-100 border-slate-200 text-slate-900">
-                  <Search className="w-4 h-4 text-slate-400 mr-2 shrink-0" aria-hidden="true" />
-                  <input
-                    type="text"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Search Xbox, PS5, Games..."
-                    aria-label="Search store items in mobile menu"
-                    className="w-full bg-transparent text-xs font-medium focus:outline-none font-sans"
-                  />
+            <>
+              {/* Detached Dimmed Backdrop */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="fixed inset-0 bg-slate-950/60 backdrop-blur-xs z-40"
+              />
+
+              {/* Floating Detached Vertical Card - brought down vertically */}
+              <motion.div
+                initial={{ opacity: 0, y: -16, scale: 0.96 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -16, scale: 1 }}
+                transition={{ type: 'spring', damping: 25, stiffness: 350 }}
+                className="fixed top-20 sm:top-24 left-4 right-4 sm:left-auto sm:right-6 sm:w-96 p-4 sm:p-5 rounded-3xl bg-white/95 backdrop-blur-2xl border border-slate-200/90 shadow-2xl z-50 font-sans text-slate-900"
+              >
+                <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-3">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-8 h-8 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-md shadow-blue-600/25">
+                      <Gamepad2 className="w-4 h-4 stroke-[2.2]" />
+                    </div>
+                    <div>
+                      <span className="font-black text-xs tracking-tight text-slate-950 uppercase block">
+                        Nas Tech Catalog
+                      </span>
+                      <span className="text-[10px] text-slate-500 font-medium">Sawaba Hub, Kumasi</span>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="w-7 h-7 rounded-full border border-slate-200 flex items-center justify-center text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors"
+                    aria-label="Close menu"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
                 </div>
-              </form>
 
-              {/* Mobile Links List */}
-              <div className="space-y-1">
-                {[
-                  { label: 'Consoles & Game Discs', target: 'storefront', icon: Gamepad2, desc: 'PS5, Xbox & 4K Discs' },
-                  { label: 'In-Shop Game Installs', target: 'installations', icon: DownloadCloud, desc: '2,000+ Pre-loads to drive' },
-                  { label: 'Repair Lab & Diagnostics', target: 'repairs', icon: Wrench, desc: 'HDMI & overheating fix' },
-                  { label: 'Device Swap & Trade-In', target: 'swaps', icon: RefreshCw, desc: 'Trade gear with cash top-up' },
-                  { label: 'Hot Deals & Pre-Orders', target: 'hero', icon: Flame, desc: 'GTA VI, FC 27 & Limited Bundles' },
-                ].map((link) => {
-                  const IconComponent = link.icon;
-                  return (
-                    <button
-                      key={link.label}
-                      type="button"
-                      onClick={() => scrollToSection(link.target)}
-                      className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-colors font-sans text-slate-800 hover:bg-slate-100 hover:text-blue-600"
-                    >
-                      <div className="flex items-center space-x-2.5 text-left">
-                        <IconComponent className="w-4 h-4 text-blue-600 shrink-0" />
-                        <div>
-                          <div className="text-xs font-bold text-slate-800 leading-tight">{link.label}</div>
-                          <div className="text-[10px] text-slate-400 font-normal">{link.desc}</div>
-                        </div>
-                      </div>
-                      <ChevronRight className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                    </button>
-                  );
-                })}
-              </div>
+                {/* Mobile Search Input */}
+                <form onSubmit={handleSearchSubmit} className="mb-3">
+                  <div className="flex items-center rounded-2xl px-3 py-2 border bg-slate-100 border-slate-200 text-slate-900">
+                    <Search className="w-4 h-4 text-slate-400 mr-2 shrink-0" aria-hidden="true" />
+                    <input
+                      type="text"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      placeholder="Search Xbox, PS5, Games..."
+                      aria-label="Search store items in mobile menu"
+                      className="w-full bg-transparent text-xs font-medium focus:outline-none font-sans"
+                    />
+                  </div>
+                </form>
 
-              {/* Slide Quick Jumper */}
-              <div className="mt-3.5 pt-3 border-t border-slate-200">
-                <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2 font-sans">
-                  Featured Hero Slides
-                </p>
-                <div className="grid grid-cols-4 gap-1.5">
+                {/* Vertical Links List */}
+                <div className="space-y-1.5">
                   {[
-                    { name: 'PS5', idx: 0 as SlideIndex },
-                    { name: 'Consoles', idx: 1 as SlideIndex },
-                    { name: 'Collector', idx: 2 as SlideIndex },
-                    { name: 'Games', idx: 3 as SlideIndex },
-                  ].map(({ name, idx }) => (
-                    <button
-                      key={name}
-                      type="button"
-                      onClick={() => {
-                        onSlideSelect?.(idx);
-                        setIsMobileMenuOpen(false);
-                        onInteractionEnd?.();
-                      }}
-                      className={`py-1.5 text-[9px] font-extrabold rounded-lg transition-all font-sans ${
-                        activeSlide === idx
-                          ? 'bg-blue-600 text-white shadow-xs'
-                          : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                      }`}
-                    >
-                      {name}
-                    </button>
-                  ))}
+                    { label: 'Gaming Consoles & Discs', target: 'storefront', icon: Gamepad2, desc: 'PS5, Xbox & 4K Discs' },
+                    { label: 'In-Shop Game Installs', target: 'installations', icon: DownloadCloud, desc: '2,000+ Pre-loads to drive' },
+                    { label: 'Repair Lab & Diagnostics', target: 'repairs', icon: Wrench, desc: 'HDMI & overheating fix' },
+                    { label: 'Hot Deals & Pre-Orders', target: 'hero', icon: Flame, desc: 'GTA VI, FC 27 & Limited Bundles' },
+                  ].map((link) => {
+                    const IconComponent = link.icon;
+                    return (
+                      <button
+                        key={link.label}
+                        type="button"
+                        onClick={() => scrollToSection(link.target)}
+                        className="w-full flex items-center justify-between p-2.5 rounded-2xl text-xs font-bold transition-all font-sans text-slate-800 bg-slate-50/80 hover:bg-blue-50 hover:text-blue-600 border border-slate-200/60"
+                      >
+                        <div className="flex items-center space-x-2.5 text-left">
+                          <div className="w-8 h-8 rounded-xl bg-white border border-slate-200/80 flex items-center justify-center text-blue-600 shrink-0 shadow-2xs">
+                            <IconComponent className="w-4 h-4" />
+                          </div>
+                          <div>
+                            <div className="text-xs font-extrabold text-slate-900 leading-tight">{link.label}</div>
+                            <div className="text-[10px] text-slate-500 font-normal">{link.desc}</div>
+                          </div>
+                        </div>
+                        <ChevronRight className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                      </button>
+                    );
+                  })}
                 </div>
-              </div>
 
-              {/* Direct WhatsApp Shop Link */}
-              <div className="mt-3.5 pt-3 border-t border-slate-200">
-                <a
-                  href="https://wa.me/233500000000"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="w-full flex items-center justify-center space-x-2 px-4 py-2.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-all shadow-md font-sans"
-                >
-                  <WhatsAppIcon colored={false} className="w-4 h-4 fill-white" />
-                  <span>Chat with Kumasi Shop on WhatsApp</span>
-                </a>
-              </div>
-            </motion.div>
+                {/* Featured Hero Slides Quick Access */}
+                <div className="mt-3 pt-3 border-t border-slate-200">
+                  <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2 font-sans">
+                    Featured Hero Slides
+                  </p>
+                  <div className="grid grid-cols-4 gap-1.5">
+                    {[
+                      { name: 'PS5', idx: 0 as SlideIndex },
+                      { name: 'Consoles', idx: 1 as SlideIndex },
+                      { name: 'Collector', idx: 2 as SlideIndex },
+                      { name: 'Games', idx: 3 as SlideIndex },
+                    ].map(({ name, idx }) => (
+                      <button
+                        key={name}
+                        type="button"
+                        onClick={() => {
+                          onSlideSelect?.(idx);
+                          setIsMobileMenuOpen(false);
+                          onInteractionEnd?.();
+                        }}
+                        className={`py-1.5 text-[9px] font-extrabold rounded-lg transition-all font-sans ${
+                          activeSlide === idx
+                            ? 'bg-blue-600 text-white shadow-xs'
+                            : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                        }`}
+                      >
+                        {name}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Direct WhatsApp Shop Link */}
+                <div className="mt-3 pt-3 border-t border-slate-200">
+                  <a
+                    href="https://wa.me/233551659683"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="w-full flex items-center justify-center space-x-2 px-4 py-2.5 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white text-xs font-bold transition-all shadow-md font-sans"
+                  >
+                    <WhatsAppIcon colored={false} className="w-4 h-4 fill-white" />
+                    <span>Chat with Kumasi Shop on WhatsApp</span>
+                  </a>
+                </div>
+              </motion.div>
+            </>
           )}
         </AnimatePresence>
       </header>

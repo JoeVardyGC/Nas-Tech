@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { Product } from '@/types';
 import { useCart } from '@/context/CartContext';
+import { useWhatsApp } from '@/context/WhatsAppContext';
 import { X, Star, ShoppingBag, ShieldCheck, RefreshCw } from 'lucide-react';
 import WhatsAppIcon from '@/components/icons/WhatsAppIcon';
 
@@ -13,6 +14,7 @@ interface ProductDetailModalProps {
 
 export default function ProductDetailModal({ product, onClose }: ProductDetailModalProps) {
   const { addToCart, formatGHS } = useCart();
+  const { requestWhatsApp } = useWhatsApp();
   const [selectedImage, setSelectedImage] = useState<string>('');
   const [quantity, setQuantity] = useState(1);
 
@@ -26,9 +28,27 @@ export default function ProductDetailModal({ product, onClose }: ProductDetailMo
   };
 
   const handleWhatsAppOrder = () => {
-    const phone = '233500000000'; // Nas Tech WhatsApp
-    const msg = `Hello Nas Tech! I want to purchase this item from your Kumasi shop:\n- Product: ${product.name}\n- Condition: ${product.condition}\n- Quantity: ${quantity}\n- Price: ${formatGHS(product.priceGHS * quantity)}\n\nPlease let me know when I can pick it up.`;
-    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
+    requestWhatsApp(
+      {
+        intent: `purchase the following item from your Kumasi shop`,
+        lines: [
+          {
+            label: product.name,
+            quantity,
+            amountGHS: product.priceGHS * quantity,
+            details: [
+              `Condition: ${product.condition}`,
+              product.specs.storage ? `Storage: ${product.specs.storage}` : '',
+              product.specs.ram ? `RAM: ${product.specs.ram}` : '',
+              product.specs.compatibility ? `Compatibility: ${product.specs.compatibility}` : '',
+            ].filter(Boolean),
+          },
+        ],
+        totalGHS: product.priceGHS * quantity,
+        note: 'Please confirm availability at your Sawaba, Kumasi shop.',
+      },
+      onClose
+    );
   };
 
   return (

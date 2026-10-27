@@ -7,10 +7,9 @@ import ProductCard from '@/components/ProductCard';
 import ProductDetailModal from '@/components/ProductDetailModal';
 import GameInstallerHub from '@/components/GameInstallerHub';
 import RepairAndTrackingHub from '@/components/RepairAndTrackingHub';
-import SwapValuationHub from '@/components/SwapValuationHub';
 import { PRODUCTS } from '@/data/products';
 import { Product, ProductCategory } from '@/types';
-import { Gamepad2, HardDrive, Wrench, RefreshCw, Sparkles, MapPin, CheckCircle2 } from 'lucide-react';
+import { Gamepad2, HardDrive, Wrench, Sparkles, MapPin, CheckCircle2 } from 'lucide-react';
 
 export default function HomePage() {
   const [selectedCategory, setSelectedCategory] = useState<ProductCategory>('all');
@@ -80,11 +79,11 @@ export default function HomePage() {
 
           <div className="flex items-center space-x-3 p-2">
             <div className="w-11 h-11 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-700">
-              <RefreshCw className="w-6 h-6" />
+              <CheckCircle2 className="w-6 h-6" />
             </div>
             <div>
-              <div className="text-sm font-bold text-slate-900">Trade-In Swaps</div>
-              <div className="text-[11px] text-slate-500 font-medium">Consoles, Laptops & Discs</div>
+              <div className="text-sm font-bold text-slate-900">1-Year Shop Warranty</div>
+              <div className="text-[11px] text-slate-500 font-medium">Sawaba, Kumasi Showroom</div>
             </div>
           </div>
 
@@ -176,12 +175,7 @@ export default function HomePage() {
         <RepairAndTrackingHub />
       </section>
 
-      {/* 6. DEVICE & GAME DISC TRADE-IN (SWAP) SECTION */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <SwapValuationHub />
-      </section>
-
-      {/* 7. Product Detail Modal */}
+      {/* 6. Product Detail Modal */}
       <ProductDetailModal
         product={activeModalProduct}
         onClose={() => setActiveModalProduct(null)}

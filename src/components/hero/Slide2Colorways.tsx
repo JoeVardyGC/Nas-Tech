@@ -131,7 +131,7 @@ export default function Slide2Colorways({ onExplore }: SlideProps) {
             <span>Order Now • GH₵ {COLORWAYS[selectedColor].priceGHS}</span>
           </button>
           <a
-            href={`https://wa.me/233500000000?text=Hello%20Nas%20Tech,%20I%20want%20to%20reserve%20the%20${encodeURIComponent(COLORWAYS[selectedColor].name)}%20DualSense%20controller.`}
+            href={`https://wa.me/233551659683?text=Hello%20Nas%20Tech,%20I%20want%20to%20reserve%20the%20${encodeURIComponent(COLORWAYS[selectedColor].name)}%20DualSense%20controller.`}
             target="_blank"
             rel="noreferrer"
             className="hidden sm:flex items-center space-x-2 px-5 py-3 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 text-xs font-bold transition-all shadow-sm"

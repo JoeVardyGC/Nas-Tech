@@ -3,6 +3,7 @@ import { Montserrat } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/context/ThemeContext';
 import { CartProvider } from '@/context/CartContext';
+import { WhatsAppProvider } from '@/context/WhatsAppContext';
 import Navbar from '@/components/Navbar';
 import CartDrawer from '@/components/CartDrawer';
 import Footer from '@/components/Footer';
@@ -15,8 +16,8 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: 'Nas Tech | Gaming Consoles, Laptops, Game Installs, Repairs & Swaps',
-  description: 'Nas Tech Ghana: Buy Xbox & PS5 consoles, gaming laptops, game discs, and parts. In-person game installation, console/laptop repairs, and trade-in swaps.',
+  title: 'Nas Tech | Gaming Consoles, Laptops, Game Installs & Repairs — Sawaba, Kumasi',
+  description: 'Nas Tech Ghana (Sawaba, near St. Patrick Hotel, Kumasi): Buy Xbox & PS5 consoles, gaming laptops, game discs, and parts. In-person game installation and console/laptop repairs.',
 };
 
 export default function RootLayout({
@@ -28,12 +29,14 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${montserrat.className} ${montserrat.variable} font-sans min-h-screen flex flex-col bg-slate-50 text-slate-900 selection:bg-blue-600 selection:text-white overflow-x-hidden`}>
         <ThemeProvider>
-          <CartProvider>
-            <Navbar />
-            <main className="flex-1">{children}</main>
-            <CartDrawer />
-            <Footer />
-          </CartProvider>
+          <WhatsAppProvider>
+            <CartProvider>
+              <Navbar />
+              <main className="flex-1">{children}</main>
+              <CartDrawer />
+              <Footer />
+            </CartProvider>
+          </WhatsAppProvider>
         </ThemeProvider>
       </body>
     </html>

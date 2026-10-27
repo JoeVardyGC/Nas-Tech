@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { Product, ProductCategory } from '@/types';
 import { PRODUCTS } from '@/data/products';
 import { useCart } from '@/context/CartContext';
+import { useWhatsApp } from '@/context/WhatsAppContext';
 import CategoryFilter from '@/components/CategoryFilter';
 import ProductCard from '@/components/ProductCard';
 import WhatsAppIcon from '@/components/icons/WhatsAppIcon';
@@ -34,6 +35,7 @@ interface ProductDetailPageProps {
 
 export default function ProductDetailPage({ product }: ProductDetailPageProps) {
   const { addToCart, formatGHS, setIsCartOpen } = useCart();
+  const { requestWhatsApp } = useWhatsApp();
 
   // State
   const [selectedImage, setSelectedImage] = useState<string>(product.image);
@@ -56,9 +58,24 @@ export default function ProductDetailPage({ product }: ProductDetailPageProps) {
 
   // Direct WhatsApp inquiry handler
   const handleWhatsAppInquiry = () => {
-    const phone = '233500000000'; // Nas Tech WhatsApp
-    const msg = `Hello Nas Tech! I want to purchase/reserve this item from your Kumasi showroom:\n*${product.name}*\nPrice: ${formatGHS(product.priceGHS * quantity)}\nQuantity: ${quantity}\nCondition: ${product.condition}\n\nPlease confirm availability for shop pickup or delivery.`;
-    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
+    requestWhatsApp({
+      intent: `purchase / reserve this item from your Kumasi showroom`,
+      lines: [
+        {
+          label: product.name,
+          quantity,
+          amountGHS: product.priceGHS * quantity,
+          details: [
+            `Condition: ${product.condition}`,
+            `Brand: ${product.brand}`,
+            product.specs.storage ? `Storage: ${product.specs.storage}` : '',
+            product.specs.ram ? `RAM: ${product.specs.ram}` : '',
+          ].filter(Boolean),
+        },
+      ],
+      totalGHS: product.priceGHS * quantity,
+      note: 'Please confirm stock and collection details at Sawaba near St. Patrick Hotel, Kumasi.',
+    });
   };
 
   // Filtered Related Products displayed "down there"

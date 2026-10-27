@@ -28,6 +28,13 @@ export interface Product {
     compatibility?: string;
   };
   description: string;
+  /** Set for digital game installation services added from the Games archive. */
+  kind?: 'product' | 'game_install';
+  installMeta?: {
+    platformCategory: string;
+    sizeGB: number;
+    requirements: string[];
+  };
 }
 
 export interface CartItem {

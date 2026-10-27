@@ -3,11 +3,13 @@
 import React, { useState } from 'react';
 import { REPAIR_SERVICES, SAMPLE_TICKETS, RepairServiceItem, RepairTicketLookup } from '@/data/servicesData';
 import { useCart } from '@/context/CartContext';
+import { useWhatsApp } from '@/context/WhatsAppContext';
 import { Wrench, Search, Clock, ShieldCheck, MapPin, Info } from 'lucide-react';
 import WhatsAppIcon from '@/components/icons/WhatsAppIcon';
 
 export default function RepairAndTrackingHub() {
   const { formatGHS } = useCart();
+  const { requestWhatsApp } = useWhatsApp();
   const [selectedDevice, setSelectedDevice] = useState<string>('All');
   const [ticketInput, setTicketInput] = useState<string>('NT-REP-1048');
   const [lookedUpTicket, setLookedUpTicket] = useState<RepairTicketLookup | null>(SAMPLE_TICKETS['NT-REP-1048']);
@@ -41,9 +43,24 @@ export default function RepairAndTrackingHub() {
   ];
 
   const handleBookRepair = (service: RepairServiceItem) => {
-    const phone = '233500000000'; // Nas Tech WhatsApp
-    const msg = `Hello Nas Tech! I want to bring my *${service.deviceType}* to your Kumasi shop for repair:\nIssue: *${service.issueTitle}*\nSymptoms: ${service.symptoms}\nEstimated Cost: ${formatGHS(service.estimatedPriceGHS)}\nCan I bring it by today?`;
-    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
+    requestWhatsApp({
+      intent: `book a repair for my ${service.deviceType} at your Sawaba, Kumasi workshop`,
+      lines: [
+        {
+          label: `${service.deviceType} Repair: ${service.issueTitle}`,
+          quantity: 1,
+          amountGHS: service.estimatedPriceGHS,
+          details: [
+            `Symptoms: ${service.symptoms}`,
+            `Turnaround: ${service.turnaroundTime}`,
+            `Parts: ${service.partsUsed}`,
+            `Warranty: ${service.warrantyPeriod}`,
+          ],
+        },
+      ],
+      totalGHS: service.estimatedPriceGHS,
+      note: 'I will bring my device to your shop at Sawaba near St. Patrick Hotel, Kumasi.',
+    });
   };
 
   return (
@@ -59,7 +76,7 @@ export default function RepairAndTrackingHub() {
           CONSOLE, GAMEPAD & LAPTOP REPAIRS
         </h3>
         <p className="text-slate-600 text-xs sm:text-sm mt-1 max-w-2xl leading-relaxed">
-          Faulty Xbox, PS5, controller, or laptop? <strong>Bring the faulty gear directly to our workshop in Kumasi</strong>. We diagnose it on the bench, use genuine OEM parts, test under full gaming load, and provide a 90-day shop warranty.
+          Faulty Xbox, PS5, controller, or laptop? <strong>Bring the faulty gear directly to our workshop in Sawaba near St. Patrick Hotel, Kumasi</strong>. We diagnose it on the bench, use genuine OEM parts, test under full gaming load, and provide a 90-day shop warranty.
         </p>
       </div>
 

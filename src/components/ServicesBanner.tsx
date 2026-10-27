@@ -5,8 +5,8 @@ import { HardDrive, Wrench, RefreshCw, ArrowRight, CheckCircle2, MessageSquare }
 
 export default function ServicesBanner() {
   const handleInquireService = (serviceName: string) => {
-    const phone = '233500000000'; // Nas Tech WhatsApp
-    const msg = `Hello Nas Tech! I am interested in your *${serviceName}* service. Could you please give me more details on pricing and turnaround time at your shop?`;
+    const phone = '233551659683'; // Nas Tech WhatsApp
+    const msg = `Hello Nas Tech! I am interested in your *${serviceName}* service. Could you please give me more details on pricing and turnaround time at your Sawaba, Kumasi shop?`;
     window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
   };
 
