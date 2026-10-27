@@ -1189,7 +1189,7 @@ export function Slide3CollectorSeries({
   };
 
   return (
-    <div className="relative w-full h-full flex flex-col justify-center pt-2 sm:pt-4 pb-14 sm:pb-18 lg:pb-20 px-10 sm:px-14 lg:px-20 bg-gradient-to-b from-white via-slate-50 to-amber-50/20 text-slate-900 font-sans select-none overflow-hidden">
+    <div className="relative w-full h-full flex flex-col justify-between pt-1.5 sm:pt-2 pb-14 sm:pb-18 lg:pb-20 px-10 sm:px-14 lg:px-20 bg-gradient-to-b from-white via-slate-50 to-amber-50/20 text-slate-900 font-sans select-none overflow-hidden">
       {/* Ambient Electric Spotlight that shifts with active team color */}
       <div
         className="absolute inset-0 pointer-events-none -z-10 transition-all duration-700"
@@ -1205,19 +1205,48 @@ export function Slide3CollectorSeries({
         </span>
       </div>
 
-      {/* Light Wide-Spaced Capitalized Statement (Matching Slide 1 Style) */}
+      {/* 1. EYEBROW & DISPLAY HEADLINE (Matching Slide 1 & 2 Structure, Suited to Active Team Color) */}
       <div className="w-full text-center mt-1 sm:mt-2 z-10 font-sans">
         <p
-          className="text-[8px] sm:text-xs font-semibold tracking-[0.22em] sm:tracking-[0.42em] uppercase font-sans whitespace-pre flex items-center justify-center gap-1 transition-colors duration-300 opacity-85"
+          className="text-[8px] sm:text-xs font-bold tracking-[0.22em] sm:tracking-[0.42em] uppercase font-sans whitespace-pre flex items-center justify-center gap-1 transition-colors duration-300"
           style={{ color: activeTeam.accentHex }}
-          aria-label="CRAFTED FOR CHAMPIONS OF PLAY"
+          aria-label="THE NEXT GENERATION OF PLAY"
         >
-          <span>C R A F T E D</span>
-          <span>F O R</span>
-          <span>C H A M P I O N S</span>
+          <span>T H E</span>
+          <span>N E X T</span>
+          <span>G E N E R A T I O N</span>
           <span>O F</span>
           <span>P L A Y</span>
+          <span className="sr-only">NEXT GENERATION</span>
         </p>
+        <div className="py-0.5">
+          <h2
+            className="text-[clamp(2rem,1.25rem+4.5vw,5.5rem)] font-extrabold tracking-[-0.04em] text-slate-950 leading-none whitespace-nowrap font-sans transition-all duration-300"
+            style={{
+              filter: `drop-shadow(0 12px 24px ${activeTeam.glowRgba})`,
+            }}
+          >
+            Feel the Precision
+          </h2>
+        </div>
+      </div>
+
+      {/* 2. FLANKING KEYWORDS: CUSTOM & PRECISION (Suited to Active Edition Color) */}
+      <div className="w-full max-w-5xl lg:max-w-6xl mx-auto px-2 sm:px-6 flex items-center justify-between -mt-1 sm:mt-0 z-10 text-[8.5px] sm:text-[11px] font-bold tracking-[0.2em] sm:tracking-[0.28em] text-slate-600 uppercase font-sans">
+        <span className="flex items-center gap-1.5">
+          <span
+            className="w-1.5 h-1.5 rounded-full transition-colors duration-300 shadow-xs"
+            style={{ backgroundColor: activeTeam.accentHex }}
+          />
+          CUSTOM
+        </span>
+        <span className="flex items-center gap-1.5">
+          PRECISION
+          <span
+            className="w-1.5 h-1.5 rounded-full transition-colors duration-300 shadow-xs"
+            style={{ backgroundColor: activeTeam.ringBrightHex }}
+          />
+        </span>
       </div>
 
       {/* Header (Preserved in sr-only for accessibility & tests) */}
@@ -1597,7 +1626,7 @@ export function Slide4GamesArchive({
   ];
 
   return (
-    <div className="relative w-full h-full flex flex-col justify-between pt-2 pb-16 sm:pb-20 lg:pb-24 px-10 sm:px-14 lg:px-20 bg-gradient-to-b from-white via-slate-50 to-blue-50/30 text-slate-900 font-sans select-none overflow-hidden">
+    <div className="relative w-full h-full flex flex-col justify-between pt-1.5 sm:pt-2 pb-14 sm:pb-18 lg:pb-20 px-10 sm:px-14 lg:px-20 bg-gradient-to-b from-white via-slate-50 to-blue-50/30 text-slate-900 font-sans select-none overflow-hidden">
       {/* Dynamic Ambient Spotlight matching active game color */}
       <div
         className="absolute inset-0 pointer-events-none -z-10 transition-all duration-700"
@@ -1606,21 +1635,44 @@ export function Slide4GamesArchive({
         }}
       />
 
-      {/* Light Wide-Spaced Capitalized Statement (Matching Slide 1 Style) */}
+      {/* 1. EYEBROW & DISPLAY HEADLINE (Matching Slide 1, 2 & 3 Structure) */}
       <div className="w-full text-center mt-1 sm:mt-2 z-10 font-sans">
         <p
-          className="text-[8px] sm:text-xs font-semibold tracking-[0.22em] sm:tracking-[0.42em] uppercase text-blue-600/85 font-sans whitespace-pre flex items-center justify-center gap-1"
-          aria-label="EXPLORE ENDLESS WORLDS OF PLAY"
+          className="text-[8px] sm:text-xs font-bold tracking-[0.22em] sm:tracking-[0.42em] uppercase font-sans whitespace-pre flex items-center justify-center gap-1 transition-colors duration-300 text-blue-600"
+          aria-label="THE NEXT GENERATION OF PLAY"
         >
-          <span>E X P L O R E</span>
-          <span>E N D L E S S</span>
-          <span>W O R L D S</span>
+          <span>T H E</span>
+          <span>N E X T</span>
+          <span>G E N E R A T I O N</span>
           <span>O F</span>
           <span>P L A Y</span>
+          <span className="sr-only">NEXT GENERATION</span>
         </p>
+        <div className="py-0.5">
+          <h2
+            className="text-[clamp(2rem,1.25rem+4.5vw,5.5rem)] font-extrabold tracking-[-0.04em] text-slate-950 leading-none whitespace-nowrap font-sans transition-all duration-300"
+            style={{
+              filter: `drop-shadow(0 12px 24px ${currentGame.themeGlow})`,
+            }}
+          >
+            Feel the Action
+          </h2>
+        </div>
       </div>
 
-      {/* Screen-reader heading & metadata (visible heading removed per user request) */}
+      {/* 2. FLANKING KEYWORDS: PRE-LOADS & 2,000+ TITLES */}
+      <div className="w-full max-w-5xl lg:max-w-6xl mx-auto px-2 sm:px-6 flex items-center justify-between -mt-1 sm:mt-0 z-10 text-[8.5px] sm:text-[11px] font-bold tracking-[0.2em] sm:tracking-[0.28em] text-slate-600 uppercase font-sans">
+        <span className="flex items-center gap-1.5">
+          <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-xs" />
+          PRE-LOADS
+        </span>
+        <span className="flex items-center gap-1.5">
+          2,000+ TITLES
+          <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 shadow-xs" />
+        </span>
+      </div>
+
+      {/* Screen-reader heading & metadata (visible heading preserved in sr-only) */}
       <div className="sr-only">
         <h2 className="font-sans">Over 2,000 Games Available</h2>
         <span>
@@ -1640,8 +1692,8 @@ export function Slide4GamesArchive({
         }}
         className="relative w-full max-w-5xl lg:max-w-6xl mx-auto flex-1 flex flex-col items-center justify-center z-20 my-auto px-1 sm:px-3"
       >
-        {/* Main Highlight Card - Responsive 4:3 / 16:10 / 16:9 Frame Tuned to Keep Character Faces Centered */}
-        <div className="relative w-full max-w-4xl sm:max-w-5xl aspect-[4/3] sm:aspect-[16/10] md:aspect-[16/9] max-h-[370px] sm:max-h-[450px] md:max-h-[500px] lg:max-h-[530px] rounded-3xl overflow-hidden shadow-2xl shadow-blue-950/25 border-2 border-white/80 bg-slate-950 flex items-center justify-center group transition-all duration-500">
+        {/* Main Highlight Card - Responsive Frame (Taller on mobile to eliminate blank space) */}
+        <div className="relative w-full max-w-4xl sm:max-w-5xl h-[390px] sm:h-[450px] md:h-auto aspect-auto md:aspect-[16/9] max-h-[420px] sm:max-h-[480px] md:max-h-[500px] lg:max-h-[530px] rounded-3xl overflow-hidden shadow-2xl shadow-blue-950/25 border-2 border-white/80 bg-slate-950 flex items-center justify-center group transition-all duration-500">
           <AnimatePresence mode="popLayout">
             <motion.div
               key={currentGame.id}
