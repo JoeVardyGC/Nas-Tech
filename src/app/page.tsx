@@ -106,7 +106,7 @@ export default function HomePage() {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
           <div>
-            <div className="flex items-center space-x-2 text-blue-700 text-xs uppercase tracking-widest mb-1.5 font-bold">
+            <div className="sr-only">
               <Sparkles className="w-3.5 h-3.5" />
               <span>SHOP INVENTORY // KUMASI SHOWROOM</span>
             </div>

@@ -1,6 +1,8 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Product } from '@/types';
 import { useCart } from '@/context/CartContext';
 import { ShoppingBag, RefreshCw, Star } from 'lucide-react';
@@ -8,14 +10,16 @@ import WhatsAppIcon from '@/components/icons/WhatsAppIcon';
 
 interface ProductCardProps {
   product: Product;
-  onOpenDetails: (product: Product) => void;
+  onOpenDetails?: (product: Product) => void;
 }
 
 export default function ProductCard({ product, onOpenDetails }: ProductCardProps) {
   const { addToCart, formatGHS } = useCart();
+  const router = useRouter();
 
   const handleWhatsAppInquiry = (e: React.MouseEvent) => {
     e.stopPropagation();
+    e.preventDefault();
     const phone = '233500000000'; // Nas Tech WhatsApp
     const msg = `Hello Nas Tech! I am interested in purchasing:\n*${product.name}*\nPrice: ${formatGHS(product.priceGHS)}\nCondition: ${product.condition}\nIs it in stock at your shop right now?`;
     window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
@@ -23,13 +27,21 @@ export default function ProductCard({ product, onOpenDetails }: ProductCardProps
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation();
+    e.preventDefault();
     addToCart(product);
+  };
+
+  const handleCardClick = (e: React.MouseEvent) => {
+    if (onOpenDetails) {
+      onOpenDetails(product);
+    }
+    router.push(`/product/${product.id}`);
   };
 
   return (
     <div
-      onClick={() => onOpenDetails(product)}
-      className="group relative flex flex-col rounded-2xl bg-white border border-slate-200/90 hover:border-slate-300 hover:shadow-lg transition-all duration-300 overflow-hidden cursor-pointer min-w-0 w-full"
+      onClick={handleCardClick}
+      className="product-card group relative flex flex-col rounded-2xl bg-white border border-slate-200/90 hover:border-slate-300 hover:shadow-lg transition-all duration-300 overflow-hidden cursor-pointer min-w-0 w-full"
     >
       {/* Product Image Area */}
       <div className="relative w-full aspect-[4/3] bg-slate-50 overflow-hidden">
@@ -131,6 +143,7 @@ export default function ProductCard({ product, onOpenDetails }: ProductCardProps
 
           <div className="flex items-center space-x-1.5">
             <button
+              type="button"
               onClick={handleAddToCart}
               title="Add to cart"
               className="flex items-center space-x-1.5 px-3.5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-xs transition-all active:scale-95"
@@ -139,11 +152,12 @@ export default function ProductCard({ product, onOpenDetails }: ProductCardProps
               <span>Add</span>
             </button>
             <button
+              type="button"
               onClick={handleWhatsAppInquiry}
               title="Quick WhatsApp inquiry"
               className="p-2.5 rounded-xl border border-emerald-200 bg-emerald-50 hover:bg-emerald-100 transition-all active:scale-95 shadow-xs"
             >
-              <WhatsAppIcon colored className="w-4 h-4 shrink-0" />
+              <WhatsAppIcon colored className="w-3.5 h-3.5" />
             </button>
           </div>
         </div>

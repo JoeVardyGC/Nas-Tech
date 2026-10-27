@@ -1667,7 +1667,7 @@ export function Slide4GamesArchive({
           PRE-LOADS
         </span>
         <span className="flex items-center gap-1.5">
-          2,000+ TITLES
+          2,000 Games
           <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 shadow-xs" />
         </span>
       </div>

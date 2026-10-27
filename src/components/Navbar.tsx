@@ -670,64 +670,146 @@ export default function Navbar() {
       </div>
 
       {/* ========================================================
-          MOBILE EXPANDED SLIDE-DOWN DRAWER
+          DETACHED FLOATING VERTICAL NAVIGATION DRAWER (Detached from Navbar, Vertical Layout)
          ======================================================== */}
       {isMobileMenuOpen && (
-        <div className="md:hidden border-t border-slate-200 bg-white px-4 py-4 space-y-3 animate-in fade-in slide-in-from-top-2 duration-200">
-          <div className="grid grid-cols-2 gap-2 text-xs font-bold">
-            <a
-              href="#storefront"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="p-3 rounded-2xl bg-slate-50 hover:bg-blue-50 text-slate-800 hover:text-blue-600 flex items-center space-x-2 border border-slate-200/60"
-            >
-              <Gamepad2 className="w-4 h-4 text-blue-600" />
-              <span>Consoles & Discs</span>
-            </a>
-            <a
-              href="#installations"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="p-3 rounded-2xl bg-slate-50 hover:bg-blue-50 text-slate-800 hover:text-blue-600 flex items-center space-x-2 border border-slate-200/60"
-            >
-              <DownloadCloud className="w-4 h-4 text-blue-600" />
-              <span>Game Installs</span>
-            </a>
-            <a
-              href="#repairs"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="p-3 rounded-2xl bg-slate-50 hover:bg-blue-50 text-slate-800 hover:text-blue-600 flex items-center space-x-2 border border-slate-200/60"
-            >
-              <Wrench className="w-4 h-4 text-amber-500" />
-              <span>Repair Lab</span>
-            </a>
-            <a
-              href="#swaps"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="p-3 rounded-2xl bg-slate-50 hover:bg-blue-50 text-slate-800 hover:text-blue-600 flex items-center space-x-2 border border-slate-200/60"
-            >
-              <RefreshCw className="w-4 h-4 text-emerald-500" />
-              <span>Device Swap</span>
-            </a>
-          </div>
+        <>
+          {/* Detached Dimmed Backdrop */}
+          <div
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="md:hidden fixed inset-0 bg-slate-950/50 backdrop-blur-xs z-40 transition-opacity animate-in fade-in"
+          />
 
-          <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-            <a
-              href="tel:+233500000000"
-              className="flex items-center space-x-1.5 text-slate-700 font-bold"
-            >
-              <Phone className="w-3.5 h-3.5 text-blue-600" />
-              <span>+233 (0) 50 000 000</span>
-            </a>
-            <a
-              href="https://wa.me/233500000000"
-              target="_blank"
-              rel="noreferrer"
-              className="text-emerald-800 bg-emerald-50/90 px-3 py-1.5 rounded-full font-bold flex items-center space-x-1.5 border border-emerald-200"
-            >
-              <WhatsAppIcon colored className="w-3.5 h-3.5 shrink-0" />
-              <span>WhatsApp Chat</span>
-            </a>
+          {/* Floating Detached Vertical Card */}
+          <div className="md:hidden fixed top-20 left-4 right-4 max-w-md mx-auto z-50 rounded-3xl bg-white/95 backdrop-blur-2xl border border-slate-200/90 shadow-2xl p-4 sm:p-5 space-y-3.5 animate-in fade-in zoom-in-95 duration-200 text-slate-900 font-sans">
+            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+              <div className="flex items-center space-x-2">
+                <div className="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center shadow-xs">
+                  <Gamepad2 className="w-4 h-4 stroke-[2.2]" />
+                </div>
+                <span className="font-extrabold text-xs tracking-tight text-slate-900 uppercase">
+                  Nas Tech Navigation
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="w-7 h-7 rounded-full border border-slate-200 flex items-center justify-center text-slate-500 hover:text-slate-900 hover:bg-slate-100"
+                aria-label="Close menu"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            </div>
+
+            {/* Vertical Stacked Cards */}
+            <div className="flex flex-col space-y-2 text-xs font-bold">
+              <a
+                href="#storefront"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="p-3 rounded-2xl bg-slate-50 hover:bg-blue-50 text-slate-900 hover:text-blue-700 flex items-center justify-between border border-slate-200/70 transition-all group"
+              >
+                <div className="flex items-center space-x-3">
+                  <div className="w-9 h-9 rounded-xl bg-blue-100/80 text-blue-700 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                    <Gamepad2 className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <div className="font-extrabold text-xs text-slate-900 group-hover:text-blue-700">Consoles & Game Discs</div>
+                    <div className="text-[10px] text-slate-500 font-normal">Xbox, PS5, PS4 & 4K Discs</div>
+                  </div>
+                </div>
+                <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-0.5 transition-all" />
+              </a>
+
+              <a
+                href="#installations"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="p-3 rounded-2xl bg-slate-50 hover:bg-indigo-50 text-slate-900 hover:text-indigo-700 flex items-center justify-between border border-slate-200/70 transition-all group"
+              >
+                <div className="flex items-center space-x-3">
+                  <div className="w-9 h-9 rounded-xl bg-indigo-100/80 text-indigo-700 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                    <DownloadCloud className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <div className="font-extrabold text-xs text-slate-900 group-hover:text-indigo-700">In-Shop Game Installs</div>
+                    <div className="text-[10px] text-slate-500 font-normal">2,000+ Titles pre-loaded directly to drive</div>
+                  </div>
+                </div>
+                <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-indigo-600 group-hover:translate-x-0.5 transition-all" />
+              </a>
+
+              <a
+                href="#repairs"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="p-3 rounded-2xl bg-slate-50 hover:bg-amber-50 text-slate-900 hover:text-amber-800 flex items-center justify-between border border-slate-200/70 transition-all group"
+              >
+                <div className="flex items-center space-x-3">
+                  <div className="w-9 h-9 rounded-xl bg-amber-100/80 text-amber-700 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                    <Wrench className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <div className="font-extrabold text-xs text-slate-900 group-hover:text-amber-800">Repair Lab & Diagnostics</div>
+                    <div className="text-[10px] text-slate-500 font-normal">HDMI fix, liquid metal, overheating service</div>
+                  </div>
+                </div>
+                <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-amber-700 group-hover:translate-x-0.5 transition-all" />
+              </a>
+
+              <a
+                href="#swaps"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="p-3 rounded-2xl bg-slate-50 hover:bg-emerald-50 text-slate-900 hover:text-emerald-800 flex items-center justify-between border border-slate-200/70 transition-all group"
+              >
+                <div className="flex items-center space-x-3">
+                  <div className="w-9 h-9 rounded-xl bg-emerald-100/80 text-emerald-700 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                    <RefreshCw className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <div className="font-extrabold text-xs text-slate-900 group-hover:text-emerald-800">Device Swap & Trade-In</div>
+                    <div className="text-[10px] text-slate-500 font-normal">Trade old gear with cash top-up</div>
+                  </div>
+                </div>
+                <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-emerald-700 group-hover:translate-x-0.5 transition-all" />
+              </a>
+
+              <a
+                href="#storefront"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="p-3 rounded-2xl bg-gradient-to-r from-rose-50 to-amber-50 hover:from-rose-100 hover:to-amber-100 text-slate-900 flex items-center justify-between border border-rose-200/70 transition-all group"
+              >
+                <div className="flex items-center space-x-3">
+                  <div className="w-9 h-9 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                    <Flame className="w-3.5 h-3.5 text-rose-600 fill-rose-600 animate-pulse" />
+                  </div>
+                  <div>
+                    <div className="font-extrabold text-xs text-rose-900">Hot Deals & Limited Bundles</div>
+                    <div className="text-[10px] text-slate-500 font-normal">Discounted consoles & accessories</div>
+                  </div>
+                </div>
+                <ArrowRight className="w-3.5 h-3.5 text-rose-400 group-hover:text-rose-600 group-hover:translate-x-0.5 transition-all" />
+              </a>
+            </div>
+
+            {/* Shop Contact Footer */}
+            <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
+              <a
+                href="tel:+233500000000"
+                className="flex items-center space-x-1.5 text-slate-700 hover:text-blue-600 font-bold"
+              >
+                <Phone className="w-3.5 h-3.5 text-blue-600" />
+                <span>+233 (0) 50 000 000</span>
+              </a>
+              <a
+                href="https://wa.me/233500000000"
+                target="_blank"
+                rel="noreferrer"
+                className="text-emerald-800 bg-emerald-50 px-3 py-1.5 rounded-full font-bold flex items-center space-x-1.5 border border-emerald-200/90 hover:bg-emerald-100 transition-colors"
+              >
+                <WhatsAppIcon colored className="w-3.5 h-3.5 shrink-0" />
+                <span>WhatsApp Desk</span>
+              </a>
+            </div>
           </div>
-        </div>
+        </>
       )}
     </header>
   );

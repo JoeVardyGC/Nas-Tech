@@ -13,6 +13,9 @@ import {
   Layers,
   Wrench,
   Sparkles,
+  RefreshCw,
+  DownloadCloud,
+  Flame,
 } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import WhatsAppIcon from '@/components/icons/WhatsAppIcon';
@@ -300,11 +303,11 @@ export default function AdaptiveNavbar({
               {/* Mobile Links List */}
               <div className="space-y-1">
                 {[
-                  { label: 'Consoles & Hardware', target: 'storefront', icon: Gamepad2 },
-                  { label: 'Digital Games Archive', target: 'installations', icon: Disc },
-                  { label: 'DualSense & Controllers', target: 'storefront', icon: Sparkles },
-                  { label: 'Pre-Orders (GTA VI / FC 27)', target: 'hero', icon: Layers },
-                  { label: 'Kumasi Hub & Repairs', target: 'repairs', icon: Wrench },
+                  { label: 'Consoles & Game Discs', target: 'storefront', icon: Gamepad2, desc: 'PS5, Xbox & 4K Discs' },
+                  { label: 'In-Shop Game Installs', target: 'installations', icon: DownloadCloud, desc: '2,000+ Pre-loads to drive' },
+                  { label: 'Repair Lab & Diagnostics', target: 'repairs', icon: Wrench, desc: 'HDMI & overheating fix' },
+                  { label: 'Device Swap & Trade-In', target: 'swaps', icon: RefreshCw, desc: 'Trade gear with cash top-up' },
+                  { label: 'Hot Deals & Pre-Orders', target: 'hero', icon: Flame, desc: 'GTA VI, FC 27 & Limited Bundles' },
                 ].map((link) => {
                   const IconComponent = link.icon;
                   return (
@@ -314,11 +317,14 @@ export default function AdaptiveNavbar({
                       onClick={() => scrollToSection(link.target)}
                       className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-colors font-sans text-slate-800 hover:bg-slate-100 hover:text-blue-600"
                     >
-                      <div className="flex items-center space-x-2.5">
-                        <IconComponent className="w-4 h-4 text-slate-400" />
-                        <span>{link.label}</span>
+                      <div className="flex items-center space-x-2.5 text-left">
+                        <IconComponent className="w-4 h-4 text-blue-600 shrink-0" />
+                        <div>
+                          <div className="text-xs font-bold text-slate-800 leading-tight">{link.label}</div>
+                          <div className="text-[10px] text-slate-400 font-normal">{link.desc}</div>
+                        </div>
                       </div>
-                      <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
+                      <ChevronRight className="w-3.5 h-3.5 text-slate-400 shrink-0" />
                     </button>
                   );
                 })}
