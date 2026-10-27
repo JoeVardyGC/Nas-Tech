@@ -594,7 +594,7 @@ export function Slide2DualSenseColorways({
   };
 
   return (
-    <div className="relative w-full h-full flex flex-col justify-center pt-2 sm:pt-4 pb-14 sm:pb-18 lg:pb-20 px-10 sm:px-14 lg:px-20 bg-gradient-to-b from-white via-slate-50 to-blue-50/30 text-slate-900 font-sans select-none overflow-hidden">
+    <div className="relative w-full h-full flex flex-col justify-between pt-1.5 sm:pt-2 pb-14 sm:pb-18 lg:pb-20 px-10 sm:px-14 lg:px-20 bg-gradient-to-b from-white via-slate-50 to-blue-50/30 text-slate-900 font-sans select-none overflow-hidden">
       {/* Studio Ambient Radial Glow shifting with active console */}
       <div
         className="absolute inset-0 pointer-events-none -z-10 transition-all duration-700"
@@ -610,19 +610,48 @@ export function Slide2DualSenseColorways({
         </span>
       </div>
 
-      {/* 1. Light Wide-Spaced Capitalized Statement (Matching Slide 1 Style) */}
+      {/* 1. EYEBROW & DISPLAY HEADLINE (Matching Slide 1 Structure, Suited to Active Console Color) */}
       <div className="w-full text-center mt-1 sm:mt-2 z-10 font-sans">
         <p
-          className="text-[8px] sm:text-xs font-semibold tracking-[0.22em] sm:tracking-[0.42em] uppercase font-sans whitespace-pre flex items-center justify-center gap-1 transition-colors duration-300 opacity-85"
+          className="text-[8px] sm:text-xs font-bold tracking-[0.22em] sm:tracking-[0.42em] uppercase font-sans whitespace-pre flex items-center justify-center gap-1 transition-colors duration-300"
           style={{ color: activeConsole.accentHex }}
-          aria-label="POWER EVERY GENERATION OF PLAY"
+          aria-label="THE NEXT GENERATION OF PLAY"
         >
-          <span>P O W E R</span>
-          <span>E V E R Y</span>
+          <span>T H E</span>
+          <span>N E X T</span>
           <span>G E N E R A T I O N</span>
           <span>O F</span>
           <span>P L A Y</span>
+          <span className="sr-only">NEXT GENERATION</span>
         </p>
+        <div className="py-0.5">
+          <h2
+            className="text-[clamp(2rem,1.25rem+4.5vw,5.5rem)] font-extrabold tracking-[-0.04em] text-slate-950 leading-none whitespace-nowrap font-sans transition-all duration-300"
+            style={{
+              filter: `drop-shadow(0 12px 24px ${activeConsole.glowRgba})`,
+            }}
+          >
+            Feel the Power
+          </h2>
+        </div>
+      </div>
+
+      {/* 2. FLANKING KEYWORDS: POWER & PERFORMANCE (Suited to Active Console Color) */}
+      <div className="w-full max-w-5xl lg:max-w-6xl mx-auto px-2 sm:px-6 flex items-center justify-between -mt-1 sm:mt-0 z-10 text-[8.5px] sm:text-[11px] font-bold tracking-[0.2em] sm:tracking-[0.28em] text-slate-600 uppercase font-sans">
+        <span className="flex items-center gap-1.5">
+          <span
+            className="w-1.5 h-1.5 rounded-full transition-colors duration-300 shadow-xs"
+            style={{ backgroundColor: activeConsole.accentHex }}
+          />
+          POWER
+        </span>
+        <span className="flex items-center gap-1.5">
+          PERFORMANCE
+          <span
+            className="w-1.5 h-1.5 rounded-full transition-colors duration-300 shadow-xs"
+            style={{ backgroundColor: activeConsole.ringBrightHex }}
+          />
+        </span>
       </div>
 
       {/* Preserved in sr-only for accessibility & E2E suite */}
